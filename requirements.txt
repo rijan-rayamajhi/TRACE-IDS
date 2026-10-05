@@ -1,0 +1,7 @@
+# TRACE-IDS toolset
+pandas
+numpy
+scikit-learn
+shap
+matplotlib
+pyarrow
