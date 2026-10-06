@@ -3,10 +3,11 @@
 Solo, no GPU. **Core = Phases 0–3, 6–7** (answers RQ1) — this is what carries the LOR.
 Phases 4–5 (RQ2/RQ3) are **stretch**, touched only after the core result is written up.
 
-> **Status (real data):** CIC-IDS2017 (2.83M rows) + UNSW-NB15 (258k) built. Finding: per-dataset
-> normalization recovers cross-dataset attack detection (F1 0.00→0.51, gap 0.62→0.41); invariant-
-> feature *selection* does NOT help on the 5-feature common set (every feature carries signal).
-> Open decision: reframe contribution around alignment, or expand to a larger common feature set.
+> **Status (FINAL — NetFlow v3):** NF-CICIDS2018-v3 (~2M used) + NF-UNSW-NB15-v3 (~2.2M), 47 shared
+> features. Zero-shot cross-dataset transfer FAILS (recall 0.00); alignment, balanced weights, and
+> invariant selection do not fix it. Few-shot recovery works: 5 labeled/class → 0.88 recall, 10 →
+> 0.93, 50 → 0.99. Reliability flag tried but FAILED on this data (AUC 0.40) → dropped from paper.
+> Paper rewritten + humanized around zero-shot-fails / few-shot-recovers. Remaining: outreach.
 
 ## Phase 0 — Setup
 - [x] venv + `pip install -r requirements.txt` (pyarrow added for parquet)
@@ -59,3 +60,38 @@ Phases 4–5 (RQ2/RQ3) are **stretch**, touched only after the core result is wr
 - **RQ2** — Does explanation-guided invariant-feature selection further reduce it? **(no — hurts on
   the 5-feature common set; stated as a negative result + future work: larger feature space)**
 - **Stretch** — reliability flag vs. error; unsupervised channel on unseen attacks.
+
+---
+
+# Path to LOR + Funded MS/PhD (ponytail-ordered: leverage ÷ effort)
+
+Goal is not a grade. It is a professor who wants you in their lab (RA funding = their grant)
+and a citable result. Ordered so the cheapest high-leverage moves go first.
+
+## Step 1 — Email Dr. Glisson NOW (cost: ~0, leverage: highest)
+- [ ] Send the current PDF + a 5-line note: your result, that it aligns with his work, and a
+      direct ask about RA/PhD openings. Do NOT wait for a perfect paper — outreach is the
+      bottleneck for funding, not code. Mention you are extending it (Steps 3–4).
+
+## Step 2 — Reliability flag / RQ2 (cost: ~1 day, reuses current data)
+- [ ] Drift score: distance of UNSW flows from CIC training distribution
+- [ ] Show the score predicts WHERE the detector is wrong (flag vs error correlation)
+- [ ] Output = verdict + "trust/distrust" flag. Practical, less-obvious than normalization.
+
+## Step 3 — Larger feature set / rescue RQ1 (cost: ~1 week, the publishable lever)
+- [ ] Download NF-CIC-IDS2017 + NF-UNSW-NB15 (NetFlow-standardized, ~40 shared features)
+- [ ] Re-run alignment + invariant selection with many features (selection can finally help/fail
+      meaningfully) — this is what makes the study novel and defensible
+- [ ] Update results table + figures
+
+## Step 4 — Publish (cost: ~1 day, citable)
+- [ ] Fold Steps 2–3 into report.tex
+- [ ] Put on arXiv (cs.CR / cs.LG) — a preprint is citable and signals productivity
+- [ ] Link the arXiv + GitHub in your SOP and outreach
+
+## Step 5 — Broaden outreach (cost: low, parallel)
+- [ ] Same sharp email to 3–5 more professors whose FUNDED research matches (cross-dataset ML,
+      NIDS, domain adaptation). Funding = fit with an active grant.
+
+Reality check: this improves odds, it does not guarantee funding. The combination that works is
+a professor advocate + a preprint + strong SOP/LORs. Steps 1 and 3 move the needle most.

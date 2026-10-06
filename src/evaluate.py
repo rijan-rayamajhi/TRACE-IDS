@@ -22,7 +22,8 @@ def evaluate(cols, normalize) -> dict:
     (Xtr, ytr), (Xte, yte), (Xu, yu) = scaled_splits(cols, normalize=normalize)
     m = fit(Xtr, ytr)
     s, c = scores(yte, m.predict(Xte)), scores(yu, m.predict(Xu))
-    return {"same_acc": s["acc"], "cross_acc": c["acc"], "cross_f1": c["f1"], "gap": s["acc"] - c["acc"]}
+    return {"same_f1": s["f1"], "cross_recall": c["recall"], "cross_f1": c["f1"],
+            "cross_acc": c["acc"], "f1_gap": s["f1"] - c["f1"]}
 
 
 def main():
@@ -38,8 +39,8 @@ def main():
     print(f"invariant features selected: {keep}\n")
     print(tbl.to_string())
 
-    tbl["gap"].plot.bar(color="#c0392b", figsize=(6, 4), rot=15)
-    plt.ylabel("generalization gap (acc)"); plt.title("Cross-dataset generalization gap")
+    tbl["f1_gap"].plot.bar(color="#c0392b", figsize=(6, 4), rot=15)
+    plt.ylabel("generalization gap (F1)"); plt.title("Cross-dataset generalization gap (F1)")
     plt.tight_layout(); plt.savefig(RES / "gap.png", dpi=120); plt.close()
 
     inv[["cic", "unsw"]].plot.bar(figsize=(6, 4), rot=20)

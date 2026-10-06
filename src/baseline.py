@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
+from sklearn.metrics import accuracy_score, f1_score, recall_score, confusion_matrix
 
 OUT = Path("data/processed")
 SEED = 42  # GUARDRAILS B5: fixed seed so results reproduce.
@@ -49,7 +49,10 @@ def scaled_splits(cols=None, normalize=True):
 
 
 def fit(X, y):
-    return RandomForestClassifier(n_estimators=200, random_state=SEED, n_jobs=-1).fit(X, y)
+    # class_weight balanced: datasets are heavily imbalanced (UNSW-v3 ~4% attacks), so an
+    # unweighted forest just predicts "benign" and scores high accuracy while catching nothing.
+    return RandomForestClassifier(n_estimators=200, random_state=SEED, n_jobs=-1,
+                                  class_weight="balanced").fit(X, y)
 
 
 def fpr(y_true, y_pred) -> float:
@@ -59,6 +62,7 @@ def fpr(y_true, y_pred) -> float:
 
 def scores(y_true, y_pred) -> dict:
     return {"acc": accuracy_score(y_true, y_pred),
+            "recall": recall_score(y_true, y_pred, zero_division=0),  # attack detection rate
             "f1": f1_score(y_true, y_pred, zero_division=0),
             "fpr": fpr(y_true, y_pred)}
 
