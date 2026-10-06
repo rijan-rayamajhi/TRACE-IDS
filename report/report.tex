@@ -45,9 +45,9 @@ Forest trained on NF-CICIDS2018 scores 0.95 F1 in-dataset, then catches \emph{ze
 NF-UNSW-NB15.
 
 The usual repairs do not help. Rescaling each dataset to a common range, weighting the minority
-class, and selecting ``transferable'' features by SHAP all leave cross-dataset recall at zero. What
-does help is a little target data: a handful of labeled flows from the new network restores most of
-the detection. We measure how many are needed.
+class, and selecting ``transferable'' features by SHAP all leave cross-dataset recall at zero. A
+little target data helps: a handful of labeled flows from the new network restores most of the
+detection, and we measure how many are needed.
 
 \begin{itemize}
 \item On standardized NetFlow v3 data we show zero-shot cross-dataset detection fails outright
@@ -62,7 +62,7 @@ Cross-dataset generalization of ML-NIDS is known to be poor: within-dataset scor
 toward chance across datasets \cite{crossdataset}. Domain-invariant representation methods aim to
 close this gap \cite{dinids}, and SHAP has been used to study feature transfer \cite{shapfs}.
 Few-shot learning is the emerging practical direction, recovering strong cross-domain accuracy from
-a handful of target samples \cite{fewshot}. We contribute a clean, reproducible measurement on
+a handful of target samples \cite{fewshot}. We contribute a reproducible measurement on
 standardized NetFlow v3 data: the zero-shot failure, the fact that common fixes do not help, and a
 few-shot recovery curve.
 
@@ -88,11 +88,11 @@ retrain, evaluating on a fixed held-out target test set. $k=0$ is zero-shot. Bot
 z-scored by their own statistics so they share a comparable space.
 
 \section{Results and Discussion}
-Table~\ref{tab:cross} shows the zero-shot picture. In-dataset F1 is 0.95, but cross-dataset recall
+Table~\ref{tab:cross} reports the zero-shot results. In-dataset F1 is 0.95, but cross-dataset recall
 is 0.00 for every configuration: the detector labels all UNSW traffic benign and catches no attacks.
 Its 0.96 cross-dataset ``accuracy'' is purely the benign fraction. Alignment changes nothing,
 balanced weights do not rescue recall, and invariant-feature selection only lowers accuracy without
-raising recall. On standardized features, naive transfer simply does not work.
+raising recall.
 
 \begin{table}[t]
 \caption{Zero-shot transfer, NF-CICIDS2018 $\rightarrow$ NF-UNSW-NB15. Recall is attack detection.}
@@ -109,15 +109,14 @@ Alignment + invariant selection & 0.93 & 0.00 & 0.00 & 0.29 \\
 \end{tabular}
 \end{table}
 
-Figure~\ref{fig:fewshot} shows the fix. Adding just five labeled examples per class from the target
-network raises attack recall from 0.00 to 0.88; ten give 0.93, fifty give 0.99. Detection recovers
-almost completely with a trivial amount of target labeling.
+Figure~\ref{fig:fewshot} shows the fix. Adding five labeled examples per class from the target
+network raises attack recall from 0.00 to 0.88; ten give 0.93, and fifty give 0.99.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fewshot.png}
 \caption{Few-shot recovery. Zero-shot recall is 0.00; a handful of labeled target flows per class
-restores detection (five $\rightarrow$ 0.88, ten $\rightarrow$ 0.93, fifty $\rightarrow$ 0.99).}
+restores detection: 0.88 recall at five samples per class, 0.93 at ten, 0.99 at fifty.}
 \label{fig:fewshot}
 \end{figure}
 
@@ -129,9 +128,9 @@ datasets, which is why a source-only model does not transfer.}
 \label{fig:shap}
 \end{figure}
 
-The takeaway is practical. Attack signatures differ too much between networks for a source-only
-model to reuse (Fig.~\ref{fig:shap}), so some target labeling is unavoidable. Full relabeling is
-not: a few labeled flows per class on the new network are enough to redeploy a working detector.
+Attack signatures differ too much between networks for a source-only model to reuse
+(Fig.~\ref{fig:shap}), so some target labeling is unavoidable. A few labeled flows per class on the
+new network are enough to redeploy a working detector, without relabeling everything.
 
 \section{Conclusion}
 On standardized NetFlow v3 data, zero-shot cross-dataset intrusion detection fails completely, and
