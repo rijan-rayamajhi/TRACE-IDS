@@ -131,6 +131,15 @@ MIN\_IP\_PKT\_LEN) dominate, but their ranking and scale are not the same across
 boundary learned on CIC lands in the wrong place on UNSW. This is a distribution-shift problem, not a
 capacity problem: the same model fits each dataset well on its own.
 
+The mismatch runs deeper than feature scale. The two datasets come from different testbeds with
+different attack taxonomies \cite{netflow}. UNSW-NB15 traffic covers nine attack families: fuzzers,
+analysis, backdoors, DoS, exploits, generic, reconnaissance, shellcode, and worms. CICIDS2018
+instead contains brute-force, DoS, DDoS, web attacks, infiltration, and botnet traffic. The two sets
+overlap only in part, so many attack behaviors the model could learn from one never appear in the
+other. A classifier that has seen CICIDS2018 floods and botnet beacons has no template for UNSW
+exploit or fuzzer flows, which is one reason zero-shot recall drops to zero. Few-shot labeling helps
+because a few target examples give the model its first look at the families it is missing.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{shap_importance.png}
