@@ -131,7 +131,7 @@ MIN\_IP\_PKT\_LEN) dominate, but their ranking and scale are not the same across
 boundary learned on CIC lands in the wrong place on UNSW. This is a distribution-shift problem, not a
 capacity problem: the same model fits each dataset well on its own.
 
-The mismatch runs deeper than feature scale. The two datasets come from different testbeds with
+The datasets also differ in what attacks they contain. The two come from different testbeds with
 different attack taxonomies \cite{netflow}. UNSW-NB15 traffic covers nine attack families: fuzzers,
 analysis, backdoors, DoS, exploits, generic, reconnaissance, shellcode, and worms. CICIDS2018
 instead contains brute-force, DoS, DDoS, web attacks, infiltration, and botnet traffic. The two sets
