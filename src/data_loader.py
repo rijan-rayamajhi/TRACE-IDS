@@ -1,18 +1,15 @@
-"""Phase 1: load CIC-IDS2017 and UNSW-NB15, map to a shared schema, clean, save.
+"""Phase 1 (NetFlow v3): load NF-CICIDS2018-v3 and NF-UNSW-NB15-v3, clean, save.
 
-The whole obstacle of this project is that the two datasets DO NOT share column
-names or feature sets. This module does not pretend to know your exact columns —
-the two *_MAP dicts below are a starting point you MUST verify against your real
-downloaded CSVs:
+These two datasets share one standardized 55-column NetFlow schema, so there is no hand-mapping:
+we drop identifier columns (IPs, ports, timestamps, attack-category) that leak dataset identity,
+keep the ~47 flow-statistic features and the binary Label, and save a unified parquet per dataset.
 
-    python src/data_loader.py inspect data/raw/<some_file>.csv
+    python src/data_loader.py build      # writes data/processed/{cic,unsw}.parquet
+    python src/data_loader.py inspect data/raw/<file>.csv
+    python src/data_loader.py demo        # self-check, no real data
 
-That prints the actual column names + label values. Fix the maps to match, then:
-
-    python src/data_loader.py build
-
-No scaling/normalization happens here on purpose — scalers get fit on the TRAIN
-split only (Phase 2), otherwise you leak across the cross-dataset test.
+CIC is subsampled (frac below) because it has ~20M rows. Scaling is deferred to the train split
+(baseline.py), so nothing is normalized here.
 """
 from __future__ import annotations
 import sys
@@ -23,90 +20,72 @@ import pandas as pd
 RAW = Path("data/raw")
 OUT = Path("data/processed")
 
-# Unified feature schema: the conceptual flow features common to both datasets.
-UNIFIED = ["duration", "fwd_packets", "bwd_packets", "fwd_bytes", "bwd_bytes"]
+# Identifier / leakage columns to drop (environment-specific, memorized across a single dataset).
+ID_DROP = ["FLOW_START_MILLISECONDS", "FLOW_END_MILLISECONDS", "IPV4_SRC_ADDR", "IPV4_DST_ADDR",
+           "L4_SRC_PORT", "L4_DST_PORT", "Attack"]
+LABEL = "Label"
 
-# unified_name -> source column name. VERIFY every one against `inspect` output;
-# CIC-IDS2017 (CICFlowMeter) column names often carry leading spaces and vary by release.
-CIC_MAP = {
-    "duration": "Flow Duration",
-    "fwd_packets": "Total Fwd Packets",
-    "bwd_packets": "Total Backward Packets",
-    "fwd_bytes": "Total Length of Fwd Packets",
-    "bwd_bytes": "Total Length of Bwd Packets",
-}
-UNSW_MAP = {
-    "duration": "dur",
-    "fwd_packets": "spkts",
-    "bwd_packets": "dpkts",
-    "fwd_bytes": "sbytes",
-    "bwd_bytes": "dbytes",
-}
-
-# (label column, value meaning "benign"). UNSW ships a 0/1 `label`; CIC ships text.
-CIC_LABEL = ("Label", "BENIGN")
-UNSW_LABEL = ("label", 0)
+# (glob pattern, sampling fraction). CIC is huge, so subsample it.
+JOBS = [("cic", "cic*.csv", 0.10), ("unsw", "unsw*.csv", 1.0)]
 
 
 def inspect(csv_path: str) -> None:
     df = pd.read_csv(csv_path, nrows=5000)
-    df.columns = df.columns.str.strip()
     print(f"\n{csv_path}: {df.shape[1]} columns")
     for c in df.columns:
         print(f"  {c!r}")
-    for cand in ("Label", "label", "attack_cat"):
-        if cand in df.columns:
-            print(f"\n{cand} values: {df[cand].value_counts().to_dict()}")
+    if LABEL in df.columns:
+        print(f"\n{LABEL} values: {df[LABEL].value_counts().to_dict()}")
 
 
-def to_unified(df: pd.DataFrame, feat_map: dict, label: tuple) -> pd.DataFrame:
-    """Rename source columns to the unified schema and build a binary attack label (1=attack)."""
-    df = df.copy()
-    df.columns = df.columns.str.strip()
-    label_col, benign_val = label
-    missing = [src for src in list(feat_map.values()) + [label_col] if src not in df.columns]
-    if missing:
-        raise KeyError(f"columns not found (fix the map via `inspect`): {missing}")
-    out = pd.DataFrame({u: pd.to_numeric(df[src], errors="coerce") for u, src in feat_map.items()})
-    out["attack"] = (df[label_col] != benign_val).astype(int)
+def _read(path: Path, frac: float, seed: int = 42) -> pd.DataFrame:
+    """Chunked read, dropping ID columns; sample big files down to a manageable size."""
+    use = [c for c in pd.read_csv(path, nrows=0).columns if c not in ID_DROP]
+    parts = []
+    for chunk in pd.read_csv(path, usecols=use, chunksize=2_000_000, low_memory=False):
+        if frac < 1.0:
+            chunk = chunk.sample(frac=frac, random_state=seed)
+        parts.append(chunk)
+    return pd.concat(parts, ignore_index=True)
+
+
+def to_unified(df: pd.DataFrame) -> pd.DataFrame:
+    """Numeric features + binary attack label (1=attack); drop inf/NaN."""
+    if LABEL not in df.columns:
+        raise KeyError(f"{LABEL!r} column not found")
+    y = df[LABEL].astype(int)
+    X = df.drop(columns=[LABEL]).apply(pd.to_numeric, errors="coerce")
+    out = X.assign(attack=y).replace([np.inf, -np.inf], np.nan).dropna().reset_index(drop=True)
     return out
-
-
-def clean(df: pd.DataFrame) -> pd.DataFrame:
-    """Drop inf/NaN rows. No scaling here (fit scalers on train split only)."""
-    df = df.replace([np.inf, -np.inf], np.nan).dropna().reset_index(drop=True)
-    return df
-
-
-def _load_many(pattern: str) -> pd.DataFrame:
-    files = sorted(RAW.glob(pattern))
-    if not files:
-        raise FileNotFoundError(f"no files match {RAW}/{pattern} — download the dataset first")
-    return pd.concat((pd.read_csv(f, low_memory=False) for f in files), ignore_index=True)
 
 
 def build() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    jobs = [
-        ("cic", "cic*.csv", CIC_MAP, CIC_LABEL),
-        ("unsw", "unsw*.csv", UNSW_MAP, UNSW_LABEL),
-    ]
-    for name, pattern, feat_map, label in jobs:
-        df = clean(to_unified(_load_many(pattern), feat_map, label))
+    for name, pattern, frac in JOBS:
+        files = sorted(RAW.glob(pattern))
+        if not files:
+            raise FileNotFoundError(f"no files match {RAW}/{pattern} — download the dataset first")
+        df = to_unified(_read(files[0], frac))
         path = OUT / f"{name}.parquet"
         df.to_parquet(path, index=False)
-        print(f"{name}: {len(df):,} rows, attack rate {df['attack'].mean():.3f} -> {path}")
+        print(f"{name}: {len(df):,} rows, {df.shape[1]-1} features, "
+              f"attack rate {df['attack'].mean():.3f} -> {path}")
 
 
 def demo() -> None:
-    """Runnable self-check, no real data: fake source frames -> unified -> asserts."""
-    cic = pd.DataFrame({**{src: [1.0, 2.0] for src in CIC_MAP.values()}, "Label": ["BENIGN", "DoS"]})
-    unsw = pd.DataFrame({**{src: [1, 2] for src in UNSW_MAP.values()}, "label": [0, 1]})
-    a, b = to_unified(cic, CIC_MAP, CIC_LABEL), to_unified(unsw, UNSW_MAP, UNSW_LABEL)
-    assert list(a.columns) == list(b.columns) == UNIFIED + ["attack"], "schemas must match"
-    assert set(a["attack"]) == set(b["attack"]) == {0, 1}, "both classes must survive mapping"
-    assert clean(a).shape == a.shape, "clean dropped rows it shouldn't have"
-    print("demo OK: unified schema aligns and binary label is correct across both datasets")
+    """Runnable self-check, no real data: fake NetFlow-like frame -> unified -> asserts."""
+    rng = np.random.default_rng(0)
+    df = pd.DataFrame({
+        "IPV4_SRC_ADDR": ["1.2.3.4"] * 6, "L4_SRC_PORT": rng.integers(0, 9999, 6),
+        "IN_BYTES": rng.integers(1, 9999, 6), "IN_PKTS": rng.integers(1, 99, 6),
+        "FLOW_DURATION_MILLISECONDS": rng.integers(1, 9999, 6),
+        "Attack": ["Benign", "DoS"] * 3, "Label": [0, 1, 0, 1, 0, 1],
+    })
+    out = to_unified(df.drop(columns=[c for c in ID_DROP if c in df.columns]))
+    assert "attack" in out.columns and set(out["attack"]) == {0, 1}, "binary label must survive"
+    assert "IPV4_SRC_ADDR" not in out.columns, "ID columns must be dropped before this point"
+    assert out.drop(columns="attack").select_dtypes("number").shape[1] == out.shape[1] - 1, "features numeric"
+    print("demo OK: NetFlow rows unify to numeric features + binary attack label")
 
 
 if __name__ == "__main__":
