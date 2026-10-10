@@ -30,9 +30,16 @@ Working title candidate: *"Is It Transfer? Source Data Adds Nothing to Few-Shot 
 **Also fixed:** the old loader dropped 122k UNSW flows (28% of attacks) over two sparse columns; those columns
 are now dropped instead (45 features, attack rate 5.4%). **All numbers in the old `report.tex` are invalid.**
 
-**To make the claim publishable (Week 2–3):** all 12 dataset pairs; XGBoost; one real transfer method
-(fine-tuning or a simple domain-adaptation baseline) so "source adds nothing" isn't just a weak-RF artifact.
-Always report recall, FPR and F1 together.
+### Update (2026-10-10 evening) — E2, E3, E4 done; claim survives every check
+
+| Experiment | Result |
+|---|---|
+| **E2** CIC↔UNSW, RF/GBT/MLP × pooled/IW/finetune (`e2_transfer.py`) | 90 paired Wilcoxon tests: source better 0, worse 25, n.s. 65 |
+| **E3** all 12 directed pairs of 4 NF-v3 datasets (`e3_analysis.py`, `results/e3_heatmap.png`) | 540 tests (p<0.05): **help 34 (6%), no diff 353 (65%), hurt 153 (28%)**; median ΔF1 −0.011; fine-tuning worst (72 hurt / 10 help). Exception: ToN→CIC RF, source +0.10–0.13 F1 at k=5–10. Zero-shot fails on every pair (all-attack or all-benign). Caveat: none survive Holm over 540 (min p = 0.002 with 10 seeds) → claim "no consistent benefit; harm ≫ help", not per-cell harm |
+| **E4a** Atif & Ali Set C zero-shot, v3 (`e4_checks.py zeroshot`) | UNSW→CIC best F1 0.21 (balanced test), balanced accuracy ≤ 0.52 → their 0.81 does **not** reproduce; balanced test roughly doubles F1 vs natural rates. Caveats: v3 not v2, RF/GBT not XGBoost, feature sets reconstructed |
+| **E4b** TAN-IDS 5%-label budget (`e4_checks.py budget`; 70k–83k target labels) | target-only F1 0.96–1.00 ≈ pooled ≈ fine-tune (all within ±0.006, except GBT fine-tune −0.053 UNSW→CIC). The target labels alone explain TAN-IDS's recovery |
+
+**Next:** mechanism (per-attack-family, dataset distance) → author reads 5 key papers + `/ars-mark-read` → write with ARS.
 
 ---
 
