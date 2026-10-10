@@ -23,6 +23,9 @@ OUT = Path("data/processed")
 # Identifier / leakage columns to drop (environment-specific, memorized across a single dataset).
 ID_DROP = ["FLOW_START_MILLISECONDS", "FLOW_END_MILLISECONDS", "IPV4_SRC_ADDR", "IPV4_DST_ADDR",
            "L4_SRC_PORT", "L4_DST_PORT", "Attack"]
+# Columns that are empty for many flows. Dropping the ROWS instead removed 122k UNSW flows,
+# 28% of all attacks (76% of "Generic"), and skewed the attack rate 5.4% -> 4.1%.
+SPARSE_DROP = ["SRC_TO_DST_SECOND_BYTES", "DST_TO_SRC_SECOND_BYTES"]
 LABEL = "Label"
 
 # (glob pattern, sampling fraction). CIC is huge, so subsample it.
@@ -40,7 +43,7 @@ def inspect(csv_path: str) -> None:
 
 def _read(path: Path, frac: float, seed: int = 42) -> pd.DataFrame:
     """Chunked read, dropping ID columns; sample big files down to a manageable size."""
-    use = [c for c in pd.read_csv(path, nrows=0).columns if c not in ID_DROP]
+    use = [c for c in pd.read_csv(path, nrows=0).columns if c not in ID_DROP + SPARSE_DROP]
     parts = []
     for chunk in pd.read_csv(path, usecols=use, chunksize=2_000_000, low_memory=False):
         if frac < 1.0:
@@ -55,7 +58,11 @@ def to_unified(df: pd.DataFrame) -> pd.DataFrame:
         raise KeyError(f"{LABEL!r} column not found")
     y = df[LABEL].astype(int)
     X = df.drop(columns=[LABEL]).apply(pd.to_numeric, errors="coerce")
-    out = X.assign(attack=y).replace([np.inf, -np.inf], np.nan).dropna().reset_index(drop=True)
+    out = X.assign(attack=y).replace([np.inf, -np.inf], np.nan)
+    n = len(out)
+    out = out.dropna().reset_index(drop=True)
+    if n - len(out):
+        print(f"  dropped {n - len(out):,} rows with NaN/inf ({(n - len(out)) / n:.2%})")
     return out
 
 
