@@ -4,7 +4,8 @@ These two datasets share one standardized 55-column NetFlow schema, so there is 
 we drop identifier columns (IPs, ports, timestamps, attack-category) that leak dataset identity,
 keep the ~47 flow-statistic features and the binary Label, and save a unified parquet per dataset.
 
-    python src/data_loader.py build      # writes data/processed/{cic,unsw}.parquet
+    python src/data_loader.py build      # writes data/processed/{cic,unsw,ton,bot}.parquet
+    python src/data_loader.py build ton  # only the named datasets
     python src/data_loader.py inspect data/raw/<file>.csv
     python src/data_loader.py demo        # self-check, no real data
 
@@ -28,8 +29,12 @@ ID_DROP = ["FLOW_START_MILLISECONDS", "FLOW_END_MILLISECONDS", "IPV4_SRC_ADDR", 
 SPARSE_DROP = ["SRC_TO_DST_SECOND_BYTES", "DST_TO_SRC_SECOND_BYTES"]
 LABEL = "Label"
 
-# (glob pattern, sampling fraction). CIC is huge, so subsample it.
-JOBS = [("cic", "cic*.csv", 0.10), ("unsw", "unsw*.csv", 1.0)]
+# (name, glob pattern, sampling fraction). Big datasets are subsampled to ~2M flows each.
+JOBS = [("cic", "cic*.csv", 0.10), ("unsw", "unsw*.csv", 1.0),
+        ("ton", "ton*.csv", 0.075), ("bot", "bot*.csv", 0.12)]
+# Per-dataset override: keep ALL benign flows. BoT-IoT is 99.7% attacks, so uniform sampling
+# leaves too few benign flows to measure false alarms when it is the target.
+KEEP_ALL_BENIGN = {"bot"}
 
 
 def inspect(csv_path: str) -> None:
@@ -41,12 +46,15 @@ def inspect(csv_path: str) -> None:
         print(f"\n{LABEL} values: {df[LABEL].value_counts().to_dict()}")
 
 
-def _read(path: Path, frac: float, seed: int = 42) -> pd.DataFrame:
+def _read(path: Path, frac: float, seed: int = 42, keep_benign: bool = False) -> pd.DataFrame:
     """Chunked read, dropping ID columns; sample big files down to a manageable size."""
     use = [c for c in pd.read_csv(path, nrows=0).columns if c not in ID_DROP + SPARSE_DROP]
     parts = []
     for chunk in pd.read_csv(path, usecols=use, chunksize=2_000_000, low_memory=False):
-        if frac < 1.0:
+        if frac < 1.0 and keep_benign:
+            ben = chunk[chunk[LABEL] == 0]
+            chunk = pd.concat([ben, chunk[chunk[LABEL] != 0].sample(frac=frac, random_state=seed)])
+        elif frac < 1.0:
             chunk = chunk.sample(frac=frac, random_state=seed)
         parts.append(chunk)
     return pd.concat(parts, ignore_index=True)
@@ -66,13 +74,15 @@ def to_unified(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def build() -> None:
+def build(only: list[str] | None = None) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     for name, pattern, frac in JOBS:
+        if only and name not in only:
+            continue
         files = sorted(RAW.glob(pattern))
         if not files:
             raise FileNotFoundError(f"no files match {RAW}/{pattern} — download the dataset first")
-        df = to_unified(_read(files[0], frac))
+        df = to_unified(_read(files[0], frac, keep_benign=name in KEEP_ALL_BENIGN))
         path = OUT / f"{name}.parquet"
         df.to_parquet(path, index=False)
         print(f"{name}: {len(df):,} rows, {df.shape[1]-1} features, "
@@ -100,6 +110,6 @@ if __name__ == "__main__":
     if cmd == "inspect":
         inspect(sys.argv[2])
     elif cmd == "build":
-        build()
+        build(sys.argv[2:] or None)       # e.g. `build ton bot` rebuilds only those
     else:
         demo()
