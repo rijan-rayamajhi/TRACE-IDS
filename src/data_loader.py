@@ -46,9 +46,11 @@ def inspect(csv_path: str) -> None:
         print(f"\n{LABEL} values: {df[LABEL].value_counts().to_dict()}")
 
 
-def _read(path: Path, frac: float, seed: int = 42, keep_benign: bool = False) -> pd.DataFrame:
-    """Chunked read, dropping ID columns; sample big files down to a manageable size."""
-    use = [c for c in pd.read_csv(path, nrows=0).columns if c not in ID_DROP + SPARSE_DROP]
+def _read(path: Path, frac: float, seed: int = 42, keep_benign: bool = False,
+          extra: tuple[str, ...] = ()) -> pd.DataFrame:
+    """Chunked read, dropping ID columns (except `extra`); sample big files down to a manageable size."""
+    drop = [c for c in ID_DROP + SPARSE_DROP if c not in extra]
+    use = [c for c in pd.read_csv(path, nrows=0).columns if c not in drop]
     parts = []
     for chunk in pd.read_csv(path, usecols=use, chunksize=2_000_000, low_memory=False):
         if frac < 1.0 and keep_benign:
@@ -60,18 +62,20 @@ def _read(path: Path, frac: float, seed: int = 42, keep_benign: bool = False) ->
     return pd.concat(parts, ignore_index=True)
 
 
-def to_unified(df: pd.DataFrame) -> pd.DataFrame:
-    """Numeric features + binary attack label (1=attack); drop inf/NaN."""
+def to_unified(df: pd.DataFrame, return_mask: bool = False):
+    """Numeric features + binary attack label (1=attack); drop inf/NaN.
+    With return_mask, also return the boolean mask of input rows that were kept."""
     if LABEL not in df.columns:
         raise KeyError(f"{LABEL!r} column not found")
     y = df[LABEL].astype(int)
     X = df.drop(columns=[LABEL]).apply(pd.to_numeric, errors="coerce")
     out = X.assign(attack=y).replace([np.inf, -np.inf], np.nan)
     n = len(out)
-    out = out.dropna().reset_index(drop=True)
+    keep = out.notna().all(axis=1).to_numpy()
+    out = out[keep].reset_index(drop=True)
     if n - len(out):
         print(f"  dropped {n - len(out):,} rows with NaN/inf ({(n - len(out)) / n:.2%})")
-    return out
+    return (out, keep) if return_mask else out
 
 
 def build(only: list[str] | None = None) -> None:
@@ -87,6 +91,25 @@ def build(only: list[str] | None = None) -> None:
         df.to_parquet(path, index=False)
         print(f"{name}: {len(df):,} rows, {df.shape[1]-1} features, "
               f"attack rate {df['attack'].mean():.3f} -> {path}")
+
+
+def build_families(only: list[str] | None = None) -> None:
+    """Sidecar data/processed/<name>_family.parquet: the attack-family name of every row of
+    <name>.parquet, row-aligned. Re-reads the raw CSV with the same sampling and verifies the
+    rebuilt features match the existing parquet exactly, so earlier results stay valid."""
+    for name, pattern, frac in JOBS:
+        if only and name not in only:
+            continue
+        df = _read(sorted(RAW.glob(pattern))[0], frac, keep_benign=name in KEEP_ALL_BENIGN,
+                   extra=("Attack",))
+        fam = df.pop("Attack").astype(str).str.strip()
+        out, keep = to_unified(df, return_mask=True)
+        fam = fam[keep].reset_index(drop=True)
+        pd.testing.assert_frame_equal(out, pd.read_parquet(OUT / f"{name}.parquet"), check_dtype=False)
+        assert ((fam.str.lower() == "benign") == (out["attack"] == 0)).all(), f"{name}: family/label mismatch"
+        fam.to_frame("family").to_parquet(OUT / f"{name}_family.parquet", index=False)
+        print(f"{name}: families verified against {name}.parquet -> {fam.value_counts().to_dict()}",
+              flush=True)
 
 
 def demo() -> None:
@@ -109,6 +132,8 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "demo"
     if cmd == "inspect":
         inspect(sys.argv[2])
+    elif cmd == "families":
+        build_families(sys.argv[2:] or None)
     elif cmd == "build":
         build(sys.argv[2:] or None)       # e.g. `build ton bot` rebuilds only those
     else:
