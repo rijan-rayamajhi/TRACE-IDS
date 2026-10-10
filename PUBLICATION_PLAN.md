@@ -39,7 +39,9 @@ are now dropped instead (45 features, attack rate 5.4%). **All numbers in the ol
 | **E4a** Atif & Ali Set C zero-shot, v3 (`e4_checks.py zeroshot`) | UNSW→CIC best F1 0.21 (balanced test), balanced accuracy ≤ 0.52 → their 0.81 does **not** reproduce; balanced test roughly doubles F1 vs natural rates. Caveats: v3 not v2, RF/GBT not XGBoost, feature sets reconstructed |
 | **E4b** TAN-IDS 5%-label budget (`e4_checks.py budget`; 70k–83k target labels) | target-only F1 0.96–1.00 ≈ pooled ≈ fine-tune (all within ±0.006, except GBT fine-tune −0.053 UNSW→CIC). The target labels alone explain TAN-IDS's recovery |
 
-**Next:** mechanism (per-attack-family, dataset distance) → author reads 5 key papers + `/ars-mark-read` → write with ARS.
+| **E5** mechanism (`e5_mechanism.py`; attack-family sidecars via `data_loader.py families`) | (1) Domain-classifier AUC 0.997–1.000 for every pair, also benign-vs-benign and **within the same attack category** (DoS vs DoS, DDoS, scanning, brute force, backdoor), z-scored or raw → the same attack looks different on every network. (2) Source doesn't help even on categories it shares with the target (median Δrecall ≤ 0; RF k=10 median −0.02); zero-shot recall on shared categories (~0.28) is no better than on unshared (~0.31–0.43). (3) Pooled lowers FPR but costs recall (more conservative). (4) RF importance rank-correlation source vs target oracle 0.25–0.83; higher overlap loosely tracks source benefit (RF Spearman 0.59, p=0.04, n=12, exploratory — ToN→CIC has 0.83 and is the one pair where the source helps). Domain AUC can't predict benefit (ceiling, r=0.06) |
+
+**Next:** (a) feature-ablation follow-up: how many top-separating features must be removed before domains become hard to tell apart? (answers "is separability one artifact column?"); (b) author reads 5 key papers + `/ars-mark-read`; (c) write with ARS.
 
 ---
 
