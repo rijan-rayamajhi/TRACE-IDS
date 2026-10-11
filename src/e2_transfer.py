@@ -17,11 +17,16 @@ Methods:
 
 Protocol identical to E1 (leak-free): per seed, target split 50/50 into unlabeled pool / test;
 source z-scored by its training sample, target by the pool; few-shot draws nested across k.
+--scaling shared instead z-scores both domains with ONE set of statistics (source sample + unlabeled
+target pool; still leak-free). Per-domain scaling maps the same categorical code (e.g. PROTOCOL = 6)
+to a different value per domain (E5 follow-up); shared scaling removes that. For RF/GBT it is
+equivalent to raw features (trees are invariant to a monotone transform shared by all rows).
 
     python src/e2_transfer.py            # full: both directions, 10 seeds
     python src/e2_transfer.py --quick    # smoke test
     python src/e2_transfer.py --datasets cic unsw ton bot --out all   # all 12 directed pairs
                                          # (pairs already in results/e2_runs_all.csv are skipped)
+    python src/e2_transfer.py --datasets cic unsw ton bot --scaling shared --out all_shared
 
 Writes results/e2_runs.csv, results/e2_summary.csv, results/e2_transfer.png
 """
@@ -115,14 +120,18 @@ def finetune(model, base, Xk, yk, seed):
     return m
 
 
-def run_one(Xs, ys, Xt, yt, seed, source_n, test_n):
+def run_one(Xs, ys, Xt, yt, seed, source_n, test_n, scaling="domain"):
     rng = np.random.default_rng(seed)
     src_idx = stratified_sample(ys, source_n, seed)
     Xpool, Xtest, ypool, ytest = train_test_split(Xt, yt, test_size=0.5, random_state=seed, stratify=yt)
     test_idx = stratified_sample(ytest, test_n, seed)
     Xtest, ytest = Xtest.loc[test_idx], ytest.loc[test_idx]
-    ms, ss = stats(Xs.loc[src_idx]); Xsrc = z(Xs.loc[src_idx], ms, ss); ysrc = ys.loc[src_idx]
-    mp, sp = stats(Xpool); Xpool = z(Xpool, mp, sp); Xtest = z(Xtest, mp, sp)
+    if scaling == "shared":
+        ms, ss = stats(pd.concat([Xs.loc[src_idx], Xpool])); mp, sp = ms, ss
+    else:
+        (ms, ss), (mp, sp) = stats(Xs.loc[src_idx]), stats(Xpool)
+    Xsrc, ysrc = z(Xs.loc[src_idx], ms, ss), ys.loc[src_idx]
+    Xpool, Xtest = z(Xpool, mp, sp), z(Xtest, mp, sp)
 
     iw, ess = importance_weights(Xsrc, Xpool, seed)
     atk_order = rng.permutation(ypool.index[ypool == 1].to_numpy())
@@ -180,6 +189,7 @@ def main():
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--datasets", nargs="+", default=["cic", "unsw"])
     ap.add_argument("--out", default="", help="output tag, e.g. 'all' -> e2_runs_all.csv")
+    ap.add_argument("--scaling", choices=["domain", "shared"], default="domain")
     a = ap.parse_args()
     seeds = SEEDS[:1] if a.quick else SEEDS
     source_n, test_n = (20_000, 20_000) if a.quick else (100_000, 200_000)
@@ -197,7 +207,7 @@ def main():
                 continue                                    # resumable: skip finished work
             t = time.time()
             new = pd.DataFrame([{"direction": d, **r}
-                                for r in run_one(*data[src], *data[tgt], seed, source_n, test_n)])
+                                for r in run_one(*data[src], *data[tgt], seed, source_n, test_n, a.scaling)])
             runs = pd.concat([runs, new], ignore_index=True)
             runs.to_csv(out_runs, index=False)              # checkpoint after every seed
             print(f"{d} seed {seed} done in {time.time() - t:.0f}s", flush=True)

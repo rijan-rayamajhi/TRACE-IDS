@@ -6,10 +6,12 @@ F1(method) - F1(target-only). Verdict: help / hurt if p < 0.05, else no differen
 over all comparisons. Also reports zero-shot (k=0) F1, recall and FPR per pair.
 
     python src/e3_analysis.py
+    python src/e3_analysis.py --tag shared    # reads e2_runs_all_shared.csv, writes e3_*_shared.*
 
 Writes results/e3_significance.csv, results/e3_zeroshot.csv, results/e3_heatmap.png
 """
 from __future__ import annotations
+import argparse
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -67,14 +69,18 @@ def heatmap(sig, path):
 
 
 def main():
-    runs = pd.read_csv(RES / "e2_runs_all.csv")
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--tag", default="", help="'shared' -> e2_runs_all_shared.csv, e3_*_shared.*")
+    tag = ap.parse_args().tag
+    t = f"_{tag}" if tag else ""
+    runs = pd.read_csv(RES / f"e2_runs_all{t}.csv")
     sig = compare(runs)
-    sig.to_csv(RES / "e3_significance.csv", index=False)
-    heatmap(sig, RES / "e3_heatmap.png")
+    sig.to_csv(RES / f"e3_significance{t}.csv", index=False)
+    heatmap(sig, RES / f"e3_heatmap{t}.png")
 
     zs = (runs[(runs.k == 0) & (runs.method == "pooled")]
           .groupby(["direction", "model"])[["f1", "recall", "fpr"]].mean().round(3))
-    zs.to_csv(RES / "e3_zeroshot.csv")
+    zs.to_csv(RES / f"e3_zeroshot{t}.csv")
 
     print(f"{len(sig)} comparisons (source method vs target-only, paired Wilcoxon over 10 seeds)\n")
     for col in ("verdict", "verdict_holm"):
@@ -85,7 +91,7 @@ def main():
     print("\nby pair:\n", pd.crosstab(sig.direction, sig.verdict).to_string())
     print("\nlargest helps:\n", sig[sig.verdict == "help"].nlargest(10, "delta_f1").round(4).to_string())
     print("\nzero-shot (k=0, source-only) mean over seeds:\n", zs.to_string())
-    print(f"\nwrote {RES}/e3_significance.csv, e3_zeroshot.csv, e3_heatmap.png")
+    print(f"\nwrote {RES}/e3_significance{t}.csv, e3_zeroshot{t}.csv, e3_heatmap{t}.png")
 
 
 if __name__ == "__main__":
