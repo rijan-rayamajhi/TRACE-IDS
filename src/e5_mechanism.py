@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import spearmanr
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
-from common import load, stats, z, stratified_sample, domain_class_weights, SEEDS, RES, OUT
+from common import load, stats, z, pair_stats, SCALING_TAG, stratified_sample, domain_class_weights, SEEDS, RES, OUT
 from e2_transfer import pretrain, finetune, fit_weighted, rf
 
 DATASETS = ["cic", "unsw", "ton", "bot"]
@@ -78,8 +78,8 @@ def run_families(data, seeds):
                 si = stratified_sample(ys, SOURCE_N, seed)
                 Xpool, ypool, Xtest, ytest = split(Xt, yt, seed)
                 ti = stratified_sample(ytest, TEST_N, seed)
-                ms, ss = stats(Xs.loc[si]); Xsrc, ysrc = z(Xs.loc[si], ms, ss), ys.loc[si]
-                mp, sp = stats(Xpool); Xp = z(Xpool, mp, sp); Xte, cte = z(Xtest.loc[ti], mp, sp), ct.loc[ti]
+                (ms, ss), (mp, sp) = pair_stats(Xs.loc[si], Xpool); Xsrc, ysrc = z(Xs.loc[si], ms, ss), ys.loc[si]
+                Xp = z(Xpool, mp, sp); Xte, cte = z(Xtest.loc[ti], mp, sp), ct.loc[ti]
                 atk = rng.permutation(ypool.index[ypool == 1].to_numpy())
                 ben = rng.permutation(ypool.index[ypool == 0].to_numpy())
                 oi = stratified_sample(ypool, 100_000, seed)
@@ -108,8 +108,8 @@ def run_families(data, seeds):
                                      "in_source": c in src_cats, "detected": p[cte.index.get_indexer(idx)].mean()})
                 print(f"families {src}->{tgt} seed {seed} done in {time.time() - t:.0f}s", flush=True)
     runs = pd.DataFrame(rows)
-    runs.to_csv(RES / "e5_families_runs.csv", index=False)
-    pd.DataFrame(imp_rows).to_csv(RES / "e5_importance.csv", index=False)
+    runs.to_csv(RES / f"e5_families_runs{SCALING_TAG}.csv", index=False)
+    pd.DataFrame(imp_rows).to_csv(RES / f"e5_importance{SCALING_TAG}.csv", index=False)
     return runs
 
 
@@ -118,7 +118,7 @@ def report_families(runs):
     summ = (atk.groupby(["direction", "category", "in_source", "model", "method", "k"])
                .agg(recall=("detected", "mean"), recall_std=("detected", "std"), n_test=("n_test", "mean"))
                .reset_index())
-    summ.to_csv(RES / "e5_families_summary.csv", index=False)
+    summ.to_csv(RES / f"e5_families_summary{SCALING_TAG}.csv", index=False)
     # benefit of the source on each category: pooled/finetune minus target-only, same seed
     key = ["direction", "seed", "model", "k", "category"]
     to = atk[atk.method == "target-only"].set_index(key)["detected"]
@@ -137,7 +137,7 @@ def report_families(runs):
     print(so[so.in_source].groupby(["category", "model"])["detected"].mean().unstack().round(3).to_string())
     ben = runs[runs.category == "benign"].groupby(["method", "model", "k"])["detected"].mean().round(3)
     print("\nfalse-positive rate on benign flows (mean over pairs):\n", ben.to_string())
-    imp = pd.read_csv(RES / "e5_importance.csv").groupby("direction")["importance_spearman"].mean().round(3)
+    imp = pd.read_csv(RES / f"e5_importance{SCALING_TAG}.csv").groupby("direction")["importance_spearman"].mean().round(3)
     print("\nRF feature-importance rank correlation, source model vs target oracle:\n", imp.to_string())
 
     fig, ax = plt.subplots(figsize=(8, 4.5))
@@ -147,7 +147,7 @@ def report_families(runs):
     ax.set_ylabel("Δ attack recall vs target-only (k=10)")
     ax.set_title("Source benefit per attack category: source lacks (False) vs has (True) the category")
     ax.legend(title="category in source")
-    plt.tight_layout(); plt.savefig(RES / "e5_families.png", dpi=120); plt.close()
+    plt.tight_layout(); plt.savefig(RES / f"e5_families{SCALING_TAG}.png", dpi=120); plt.close()
 
 
 # ---------------- B. domain distance ----------------

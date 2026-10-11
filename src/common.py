@@ -5,6 +5,7 @@ training time — the source training sample, and the UNLABELED target pool. The
 split is never used for statistics, sampling, or fitting.
 """
 from __future__ import annotations
+import os
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -14,6 +15,10 @@ from sklearn.metrics import confusion_matrix
 OUT = Path("data/processed")
 RES = Path("results")
 SEEDS = list(range(10))                 # GUARDRAILS B5: fixed seeds, reported as mean ± std
+# Scaling for E1/E4-budget/E5-families: "domain" = each domain z-scored by its own stats (original runs);
+# "shared" = both domains z-scored with one set of stats (source sample + unlabelled pool). Outputs get SCALING_TAG.
+SCALING = os.environ.get("TRACE_SCALING", "domain")
+SCALING_TAG = "" if SCALING == "domain" else f"_{SCALING}"
 TTL = ["MIN_TTL", "MAX_TTL"]            # IP-header TTL: known UNSW testbed artifact (Sarhan et al.)
 
 
@@ -29,6 +34,14 @@ def stats(X: pd.DataFrame):
 
 def z(X: pd.DataFrame, m, s) -> pd.DataFrame:
     return (X - m) / s
+
+
+def pair_stats(Xsrc: pd.DataFrame, Xpool: pd.DataFrame):
+    """(source stats, target stats) under SCALING. Shared uses source sample + unlabelled pool (leak-free)."""
+    if SCALING == "shared":
+        st = stats(pd.concat([Xsrc, Xpool]))
+        return st, st
+    return stats(Xsrc), stats(Xpool)
 
 
 def stratified_sample(y: pd.Series, n: int, seed: int) -> pd.Index:

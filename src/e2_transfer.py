@@ -27,6 +27,7 @@ equivalent to raw features (trees are invariant to a monotone transform shared b
     python src/e2_transfer.py --datasets cic unsw ton bot --out all   # all 12 directed pairs
                                          # (pairs already in results/e2_runs_all.csv are skipped)
     python src/e2_transfer.py --datasets cic unsw ton bot --scaling shared --out all_shared
+    python src/e2_transfer.py --datasets cic unsw ton bot --scaling shared --drop-ttl --out all_nottl_shared   # TTL check
 
 Writes results/e2_runs.csv, results/e2_summary.csv, results/e2_transfer.png
 """
@@ -43,7 +44,7 @@ from sklearn.frozen import FrozenEstimator
 from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
-from common import (load, stats, z, stratified_sample, domain_class_weights, scores, summarize,
+from common import (load, stats, z, stratified_sample, domain_class_weights, scores, summarize, TTL,
                     SEEDS, RES)
 
 K_VALUES = [0, 1, 5, 10, 50, 100]
@@ -190,6 +191,7 @@ def main():
     ap.add_argument("--datasets", nargs="+", default=["cic", "unsw"])
     ap.add_argument("--out", default="", help="output tag, e.g. 'all' -> e2_runs_all.csv")
     ap.add_argument("--scaling", choices=["domain", "shared"], default="domain")
+    ap.add_argument("--drop-ttl", action="store_true", help="drop MIN_TTL/MAX_TTL (as E1 -TTL)")
     a = ap.parse_args()
     seeds = SEEDS[:1] if a.quick else SEEDS
     source_n, test_n = (20_000, 20_000) if a.quick else (100_000, 200_000)
@@ -200,6 +202,8 @@ def main():
     out_runs = RES / f"e2_runs{tag}.csv"
     runs = pd.read_csv(out_runs) if out_runs.exists() and not a.quick else pd.DataFrame()
     data = {n: load(n) for n in a.datasets}
+    if a.drop_ttl:
+        data = {n: (X.drop(columns=TTL), y) for n, (X, y) in data.items()}
     for src, tgt in pairs:
         for seed in seeds:
             d = f"{src}->{tgt}"

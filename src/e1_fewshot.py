@@ -27,7 +27,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-from common import (load, stats, z, stratified_sample, fit, domain_class_weights, scores,
+from common import (load, stats, z, pair_stats, SCALING_TAG, stratified_sample, fit, domain_class_weights, scores,
                     summarize, SEEDS, TTL, RES)
 
 K_VALUES = [0, 1, 5, 10, 50, 100, 500]
@@ -44,8 +44,8 @@ def run_one(Xs, ys, Xt, yt, seed, source_n, test_n, n_trees):
     Xtest, ytest = Xtest.loc[test_idx], ytest.loc[test_idx]
 
     # leak-free alignment: source by its training sample, target by the unlabeled pool
-    ms, ss = stats(Xs.loc[src_idx]); Xsrc = z(Xs.loc[src_idx], ms, ss); ysrc = ys.loc[src_idx]
-    mp, sp = stats(Xpool); Xpool_z = z(Xpool, mp, sp); Xtest_z = z(Xtest, mp, sp)
+    (ms, ss), (mp, sp) = pair_stats(Xs.loc[src_idx], Xpool); Xsrc = z(Xs.loc[src_idx], ms, ss); ysrc = ys.loc[src_idx]
+    Xpool_z = z(Xpool, mp, sp); Xtest_z = z(Xtest, mp, sp)
 
     atk = ypool.index[ypool == 1].to_numpy()
     ben = ypool.index[ypool == 0].to_numpy()
@@ -99,7 +99,7 @@ def main():
     a = ap.parse_args()
     seeds = SEEDS[:1] if a.quick else SEEDS
     source_n, test_n, n_trees = (20_000, 20_000, 50) if a.quick else (100_000, 200_000, 100)
-    tag = "_quick" if a.quick else ""
+    tag = "_quick" if a.quick else SCALING_TAG
 
     data = {n: load(n) for n in {d for pair in DIRECTIONS for d in pair}}
     for n, (X, y) in data.items():

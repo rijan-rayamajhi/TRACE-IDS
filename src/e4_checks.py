@@ -27,7 +27,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import balanced_accuracy_score
 from sklearn.model_selection import train_test_split
-from common import load, stats, z, stratified_sample, domain_class_weights, scores, summarize, SEEDS, RES
+from common import load, stats, z, pair_stats, SCALING_TAG, stratified_sample, domain_class_weights, scores, summarize, SEEDS, RES
 from e2_transfer import pretrain, finetune, fit_weighted, rf, gbt
 
 DIRECTIONS = [("cic", "unsw"), ("unsw", "cic")]
@@ -100,8 +100,8 @@ def run_budget(data, frac=0.035):
             si = stratified_sample(ys, SOURCE_N, seed)
             Xpool, ypool, Xtest, ytest = split_target(Xt, yt, seed)
             ti = stratified_sample(ytest, TEST_N, seed)
-            ms, ss = stats(Xs.loc[si]); Xsrc, ysrc = z(Xs.loc[si], ms, ss), ys.loc[si]
-            mp, sp = stats(Xpool); Xte = z(Xtest.loc[ti], mp, sp); yte = ytest.loc[ti]
+            (ms, ss), (mp, sp) = pair_stats(Xs.loc[si], Xpool); Xsrc, ysrc = z(Xs.loc[si], ms, ss), ys.loc[si]
+            Xte = z(Xtest.loc[ti], mp, sp); yte = ytest.loc[ti]
             li = stratified_sample(ypool, n_lab, seed)        # stratified, like TAN-IDS
             Xk, yk = z(Xpool.loc[li], mp, sp), ypool.loc[li]
             Xmix, ymix = pd.concat([Xsrc, Xk]), pd.concat([ysrc, yk])
@@ -118,9 +118,9 @@ def run_budget(data, frac=0.035):
                                  "n_target_labels": len(yk), **scores(yte, m.predict(Xte))})
             print(f"budget {src}->{tgt} seed {seed} done in {time.time() - t:.0f}s", flush=True)
     runs = pd.DataFrame(rows)
-    runs.to_csv(RES / "e4_budget_runs.csv", index=False)
+    runs.to_csv(RES / f"e4_budget_runs{SCALING_TAG}.csv", index=False)
     summ = summarize(runs, ["direction", "model", "method"])
-    summ.to_csv(RES / "e4_budget_summary.csv", index=False)
+    summ.to_csv(RES / f"e4_budget_summary{SCALING_TAG}.csv", index=False)
     print("\nF1 at the TAN-IDS budget (mean over seeds):\n",
           summ.pivot_table(index=["direction", "model"], columns="method", values="f1_mean").round(3).to_string())
 
