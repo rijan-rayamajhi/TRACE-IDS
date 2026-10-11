@@ -8,7 +8,8 @@ over all comparisons. Also reports zero-shot (k=0) F1, recall and FPR per pair.
     python src/e3_analysis.py
     python src/e3_analysis.py --tag shared    # reads e2_runs_all_shared.csv, writes e3_*_shared.*
 
-Writes results/e3_significance.csv, results/e3_zeroshot.csv, results/e3_heatmap.png
+Writes results/e3_significance.csv, results/e3_zeroshot.csv (incl. balanced accuracy),
+results/e3_targetonly_bacc.csv, results/e3_heatmap.png
 """
 from __future__ import annotations
 import argparse
@@ -78,9 +79,13 @@ def main():
     sig.to_csv(RES / f"e3_significance{t}.csv", index=False)
     heatmap(sig, RES / f"e3_heatmap{t}.png")
 
+    runs = runs.assign(bacc=(runs.recall + 1 - runs.fpr) / 2)       # balanced accuracy, 0.5 = chance
     zs = (runs[(runs.k == 0) & (runs.method == "pooled")]
-          .groupby(["direction", "model"])[["f1", "recall", "fpr"]].mean().round(3))
+          .groupby(["direction", "model"])[["f1", "recall", "fpr", "bacc"]].mean().round(3))
     zs.to_csv(RES / f"e3_zeroshot{t}.csv")
+    to = runs[(runs.method == "target-only") & runs.k.isin([1, 5, 10])]
+    to_bacc = to.groupby(["direction", "k"])["bacc"].mean().unstack().round(3)
+    to_bacc.to_csv(RES / f"e3_targetonly_bacc{t}.csv")
 
     print(f"{len(sig)} comparisons (source method vs target-only, paired Wilcoxon over 10 seeds)\n")
     for col in ("verdict", "verdict_holm"):
@@ -91,7 +96,10 @@ def main():
     print("\nby pair:\n", pd.crosstab(sig.direction, sig.verdict).to_string())
     print("\nlargest helps:\n", sig[sig.verdict == "help"].nlargest(10, "delta_f1").round(4).to_string())
     print("\nzero-shot (k=0, source-only) mean over seeds:\n", zs.to_string())
-    print(f"\nwrote {RES}/e3_significance{t}.csv, e3_zeroshot{t}.csv, e3_heatmap{t}.png")
+    print("\nzero-shot balanced accuracy, best model per pair:\n",
+          zs["bacc"].groupby(level="direction").max().to_string())
+    print("\ntarget-only balanced accuracy (mean over models and seeds) at k = 1, 5, 10:\n", to_bacc.to_string())
+    print(f"\nwrote {RES}/e3_significance{t}.csv, e3_zeroshot{t}.csv, e3_targetonly_bacc{t}.csv, e3_heatmap{t}.png")
 
 
 if __name__ == "__main__":

@@ -13,9 +13,10 @@ categorical code (e.g. PROTOCOL = 6) to a different value per domain, which by i
 columns near-perfectly separable (cic-unsw PROTOCOL: raw AUC 0.57, z-scored 1.00). Raw answers
 "do the networks differ"; z-scored is what the E1-E5 models see. Subsets: all flows, benign only.
 
-    python src/e5_ablation.py [--quick]
+    python src/e5_ablation.py [--quick]      # single-feature check + greedy ablation
+    python src/e5_ablation.py --single       # single-feature check only (~3 min)
 
-Writes results/e5_ablation_{steps,summary}.csv, e5_ablation.png
+Writes results/e5_single_feature.csv, e5_ablation_{steps,summary}.csv, e5_ablation.png
 """
 from __future__ import annotations
 import argparse, time
@@ -117,14 +118,49 @@ def report(steps):
     plt.tight_layout(); plt.savefig(RES / "e5_ablation.png", dpi=120); plt.close()
 
 
+def single_feature(data, seed=0):
+    """Domain AUC of each feature ALONE, raw vs per-domain z-scored: shows that per-domain scaling
+    by itself makes categorical codes separable (the scaling confound)."""
+    rows = []
+    for i, src in enumerate(DATASETS):
+        for tgt in DATASETS[i + 1:]:
+            (Xs, ys), (Xt, yt) = data[src], data[tgt]
+            si = stratified_sample(ys, SOURCE_N, seed)
+            Xpool, _, _, _ = split(Xt, yt, seed)
+            n = min(N_PER_DOMAIN, len(si), len(Xpool))
+            for scaling in ("raw", "zscore"):
+                A, B = Xs.loc[si], Xpool
+                if scaling == "zscore":
+                    A, B = z(A, *stats(A)), z(B, *stats(B))
+                A, B = A.sample(n, random_state=seed), B.sample(n, random_state=seed)
+                d = np.r_[np.zeros(n), np.ones(n)]
+                for f in A.columns:
+                    X = pd.concat([A[[f]], B[[f]]])
+                    Xtr, Xho, dtr, dho = train_test_split(X, d, test_size=0.3, random_state=seed, stratify=d)
+                    clf = HistGradientBoostingClassifier(max_iter=50, random_state=seed).fit(Xtr, dtr)
+                    rows.append({"pair": f"{src}-{tgt}", "scaling": scaling, "feature": f,
+                                 "auc": roc_auc_score(dho, clf.predict_proba(Xho)[:, 1])})
+            print(f"single-feature {src}-{tgt} done", flush=True)
+    sf = pd.DataFrame(rows).pivot_table(index=["pair", "feature"], columns="scaling", values="auc")
+    sf["gain_from_zscore"] = sf.zscore - sf.raw
+    sf.round(4).to_csv(RES / "e5_single_feature.csv")
+    print("\nsingle-feature domain AUC, raw vs per-domain z-scored; largest gains from z-scoring:")
+    print(sf.sort_values("gain_from_zscore", ascending=False).head(15).round(3).to_string())
+    print("\nfeatures alone separating the domains with AUC >= 0.99 (count of 6 pairs x 45 features):")
+    print((sf[["raw", "zscore"]] >= 0.99).sum().to_string())
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--single", action="store_true", help="only the single-feature raw vs z-scored AUCs")
     a = ap.parse_args()
     seeds = SEEDS[:1] if a.quick else SEEDS[:3]
     RES.mkdir(exist_ok=True)
     data = {n: load(n) for n in DATASETS}
-    report(run(data, seeds))
+    single_feature(data)
+    if not a.single:
+        report(run(data, seeds))
 
 
 if __name__ == "__main__":
