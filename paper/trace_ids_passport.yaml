@@ -1,0 +1,1179 @@
+# TRACE-IDS paper - Material Passport (Schema 9). JSON-formatted YAML.
+# literature_corpus[] is adapter-owned: do not edit to record reading; use /ars-mark-read,
+# which writes trace_ids_passport_human_read_log.yaml next to this file.
+# Built 2026-10-11 from literature/references.json (41 refs, each verified against DOI/arXiv/publisher).
+{
+  "literature_corpus": [
+    {
+      "citation_key": "arp2022dos",
+      "title": "Dos and Don'ts of Machine Learning in Computer Security",
+      "authors": [
+        {
+          "family": "Arp",
+          "given": "Daniel"
+        },
+        {
+          "family": "Quiring",
+          "given": "Erwin"
+        },
+        {
+          "family": "Pendlebury",
+          "given": "Feargus"
+        },
+        {
+          "family": "Warnecke",
+          "given": "Alexander"
+        },
+        {
+          "family": "Pierazzi",
+          "given": "Fabio"
+        },
+        {
+          "family": "Wressnegger",
+          "given": "Christian"
+        },
+        {
+          "family": "Cavallaro",
+          "given": "Lorenzo"
+        },
+        {
+          "family": "Rieck",
+          "given": "Konrad"
+        }
+      ],
+      "year": 2022,
+      "source_pointer": "https://arxiv.org/abs/2010.09470",
+      "venue": "31st USENIX Security Symposium (USENIX Security 22)",
+      "arxiv_id": "2010.09470",
+      "tags": [
+        "introduction"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "geirhos2020shortcut",
+      "title": "Shortcut learning in deep neural networks",
+      "authors": [
+        {
+          "family": "Geirhos",
+          "given": "Robert"
+        },
+        {
+          "family": "Jacobsen",
+          "given": "Jörn-Henrik"
+        },
+        {
+          "family": "Michaelis",
+          "given": "Claudio"
+        },
+        {
+          "family": "Zemel",
+          "given": "Richard"
+        },
+        {
+          "family": "Brendel",
+          "given": "Wieland"
+        },
+        {
+          "family": "Bethge",
+          "given": "Matthias"
+        },
+        {
+          "family": "Wichmann",
+          "given": "Felix A."
+        }
+      ],
+      "year": 2020,
+      "source_pointer": "https://doi.org/10.1038/s42256-020-00257-z",
+      "venue": "Nature Machine Intelligence",
+      "doi": "10.1038/s42256-020-00257-z",
+      "arxiv_id": "2004.07780",
+      "tags": [
+        "introduction"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "goldschmidt2025network",
+      "title": "Network intrusion datasets: A survey, limitations, and recommendations",
+      "authors": [
+        {
+          "family": "Goldschmidt",
+          "given": "Patrik"
+        },
+        {
+          "family": "Chudá",
+          "given": "Daniela"
+        }
+      ],
+      "year": 2025,
+      "source_pointer": "https://doi.org/10.1016/j.cose.2025.104510",
+      "venue": "Computers & Security",
+      "doi": "10.1016/j.cose.2025.104510",
+      "arxiv_id": "2502.06688",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "roszeitis2026fewshot",
+      "title": "Few-Shot Learning for Network Intrusion Detection: Methods, Datasets, and Performance",
+      "authors": [
+        {
+          "family": "Roszeitis",
+          "given": "Arne"
+        },
+        {
+          "family": "Jüttner",
+          "given": "Victor"
+        },
+        {
+          "family": "Buchmann",
+          "given": "Erik"
+        }
+      ],
+      "year": 2026,
+      "source_pointer": "https://arxiv.org/abs/2609.11275",
+      "venue": "arXiv preprint",
+      "arxiv_id": "2609.11275",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "sarhan2022standard",
+      "title": "Towards a Standard Feature Set for Network Intrusion Detection System Datasets",
+      "authors": [
+        {
+          "family": "Sarhan",
+          "given": "Mohanad"
+        },
+        {
+          "family": "Layeghy",
+          "given": "Siamak"
+        },
+        {
+          "family": "Portmann",
+          "given": "Marius"
+        }
+      ],
+      "year": 2022,
+      "source_pointer": "https://doi.org/10.1007/s11036-021-01843-0",
+      "venue": "Mobile Networks and Applications",
+      "doi": "10.1007/s11036-021-01843-0",
+      "arxiv_id": "2101.11315",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "sarhan2021featureanalysis",
+      "title": "Feature Analysis for Machine Learning-based IoT Intrusion Detection",
+      "authors": [
+        {
+          "family": "Sarhan",
+          "given": "Mohanad"
+        },
+        {
+          "family": "Layeghy",
+          "given": "Siamak"
+        },
+        {
+          "family": "Portmann",
+          "given": "Marius"
+        }
+      ],
+      "year": 2021,
+      "source_pointer": "https://arxiv.org/abs/2108.12732",
+      "venue": "arXiv preprint",
+      "arxiv_id": "2108.12732",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "luay2025temporal",
+      "title": "Temporal Analysis of NetFlow Datasets for Network Intrusion Detection Systems",
+      "authors": [
+        {
+          "family": "Luay",
+          "given": "Majed"
+        },
+        {
+          "family": "Layeghy",
+          "given": "Siamak"
+        },
+        {
+          "family": "Hosseininoorbin",
+          "given": "Seyedehfaezeh"
+        },
+        {
+          "family": "Sarhan",
+          "given": "Mohanad"
+        },
+        {
+          "family": "Moustafa",
+          "given": "Nour"
+        },
+        {
+          "family": "Portmann",
+          "given": "Marius"
+        }
+      ],
+      "year": 2025,
+      "source_pointer": "https://arxiv.org/abs/2503.04404",
+      "venue": "arXiv preprint",
+      "arxiv_id": "2503.04404",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "luay2026timematters",
+      "title": "Time Matters: Temporal NetFlow Features for ML-Based Network Intrusion Detection",
+      "authors": [
+        {
+          "family": "Luay",
+          "given": "Majed"
+        },
+        {
+          "family": "Layeghy",
+          "given": "Siamak"
+        },
+        {
+          "family": "Noorbin",
+          "given": "Niloufar"
+        },
+        {
+          "family": "Sarhan",
+          "given": "Mohanad"
+        },
+        {
+          "family": "Kulatilleke",
+          "given": "Gayan"
+        },
+        {
+          "family": "Moustafa",
+          "given": "Nour"
+        },
+        {
+          "family": "Portmann",
+          "given": "Marius"
+        }
+      ],
+      "year": 2026,
+      "source_pointer": "https://doi.org/10.1109/ACCESS.2026.3688204",
+      "venue": "IEEE Access",
+      "doi": "10.1109/ACCESS.2026.3688204",
+      "arxiv_id": "2503.04404",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "hathanh2026tanids",
+      "title": "A transfer-aware, deployment-oriented evaluation framework for NetFlow-based intrusion detection systems (TAN-IDS)",
+      "authors": [
+        {
+          "family": "Ha Thanh",
+          "given": "Dung"
+        }
+      ],
+      "year": 2026,
+      "source_pointer": "https://doi.org/10.1371/journal.pone.0346801",
+      "venue": "PLOS One",
+      "doi": "10.1371/journal.pone.0346801",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "atif2026threeaxis",
+      "title": "A Three-Axis Stress Test of LLM vs Classical ML for Network Intrusion Detection under Distribution Shift and Adversarial Evasion",
+      "authors": [
+        {
+          "family": "Atif",
+          "given": "Muhammad Ebad"
+        },
+        {
+          "family": "Ali",
+          "given": "Muhammad Haider"
+        }
+      ],
+      "year": 2026,
+      "source_pointer": "https://arxiv.org/abs/2609.13511",
+      "venue": "arXiv preprint",
+      "arxiv_id": "2609.13511",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "hakim2026crossdomain",
+      "title": "Cross-Domain Generalization Failure in Lightweight Intrusion Detection Models for IIoT Networks",
+      "authors": [
+        {
+          "family": "Hakim",
+          "given": "MD Azizul"
+        },
+        {
+          "family": "Uddin",
+          "given": "Md Shihab"
+        },
+        {
+          "family": "Anis",
+          "given": "Talha Ibne"
+        }
+      ],
+      "year": 2026,
+      "source_pointer": "https://arxiv.org/abs/2607.00553",
+      "venue": "arXiv preprint",
+      "arxiv_id": "2607.00553",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "roy2026unmasking",
+      "title": "Unmasking Shortcut Learning in IoT Intrusion Detection: A Forensic, Multi-Paradigm Evaluation of Feature Dependence and Data Leakage",
+      "authors": [
+        {
+          "family": "Roy",
+          "given": "Uday Shankar"
+        },
+        {
+          "family": "Minu",
+          "given": "Mahbuba Jahan"
+        }
+      ],
+      "year": 2026,
+      "source_pointer": "https://arxiv.org/abs/2609.28725",
+      "venue": "arXiv preprint",
+      "arxiv_id": "2609.28725",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "xu2025multimodal",
+      "title": "Multimodal fusion based few-shot network intrusion detection system",
+      "authors": [
+        {
+          "family": "Xu",
+          "given": "Congyuan"
+        },
+        {
+          "family": "Zhan",
+          "given": "Yong"
+        },
+        {
+          "family": "Wang",
+          "given": "Zhiqiang"
+        },
+        {
+          "family": "Yang",
+          "given": "Jun"
+        }
+      ],
+      "year": 2025,
+      "source_pointer": "https://doi.org/10.1038/s41598-025-05217-4",
+      "venue": "Scientific Reports",
+      "doi": "10.1038/s41598-025-05217-4",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "kim2026prototype",
+      "title": "Prototype-Based Transferability Analysis for Few-Shot Domain Adaptation in Cross-Domain Intrusion Detection",
+      "authors": [
+        {
+          "family": "Kim",
+          "given": "Kangseok"
+        }
+      ],
+      "year": 2026,
+      "source_pointer": "https://doi.org/10.3390/app16146957",
+      "venue": "Applied Sciences",
+      "doi": "10.3390/app16146957",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "cantone2024cross",
+      "title": "Machine Learning in Network Intrusion Detection: A Cross-Dataset Generalization Study",
+      "authors": [
+        {
+          "family": "Cantone",
+          "given": "Marco"
+        },
+        {
+          "family": "Marrocco",
+          "given": "Claudio"
+        },
+        {
+          "family": "Bria",
+          "given": "Alessandro"
+        }
+      ],
+      "year": 2024,
+      "source_pointer": "https://doi.org/10.1109/ACCESS.2024.3472907",
+      "venue": "IEEE Access",
+      "doi": "10.1109/ACCESS.2024.3472907",
+      "arxiv_id": "2402.10974",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "moustafa2015unsw",
+      "title": "UNSW-NB15: a comprehensive data set for network intrusion detection systems (UNSW-NB15 network data set)",
+      "authors": [
+        {
+          "family": "Moustafa",
+          "given": "Nour"
+        },
+        {
+          "family": "Slay",
+          "given": "Jill"
+        }
+      ],
+      "year": 2015,
+      "source_pointer": "https://doi.org/10.1109/MilCIS.2015.7348942",
+      "venue": "2015 Military Communications and Information Systems Conference (MilCIS)",
+      "doi": "10.1109/MilCIS.2015.7348942",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "sharafaldin2018toward",
+      "title": "Toward Generating a New Intrusion Detection Dataset and Intrusion Traffic Characterization",
+      "authors": [
+        {
+          "family": "Sharafaldin",
+          "given": "Iman"
+        },
+        {
+          "family": "Habibi Lashkari",
+          "given": "Arash"
+        },
+        {
+          "family": "Ghorbani",
+          "given": "Ali A."
+        }
+      ],
+      "year": 2018,
+      "source_pointer": "https://doi.org/10.5220/0006639801080116",
+      "venue": "Proceedings of the 4th International Conference on Information Systems Security and Privacy (ICISSP)",
+      "doi": "10.5220/0006639801080116",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "moustafa2021tonnetwork",
+      "title": "A new distributed architecture for evaluating AI-based security systems at the edge: Network TON_IoT datasets",
+      "authors": [
+        {
+          "family": "Moustafa",
+          "given": "Nour"
+        }
+      ],
+      "year": 2021,
+      "source_pointer": "https://doi.org/10.1016/j.scs.2021.102994",
+      "venue": "Sustainable Cities and Society",
+      "doi": "10.1016/j.scs.2021.102994",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "alsaedi2020ton",
+      "title": "TON_IoT Telemetry Dataset: A New Generation Dataset of IoT and IIoT for Data-Driven Intrusion Detection Systems",
+      "authors": [
+        {
+          "family": "Alsaedi",
+          "given": "Abdullah"
+        },
+        {
+          "family": "Moustafa",
+          "given": "Nour"
+        },
+        {
+          "family": "Tari",
+          "given": "Zahir"
+        },
+        {
+          "family": "Mahmood",
+          "given": "Abdun"
+        },
+        {
+          "family": "Anwar",
+          "given": "Adnan"
+        }
+      ],
+      "year": 2020,
+      "source_pointer": "https://doi.org/10.1109/ACCESS.2020.3022862",
+      "venue": "IEEE Access",
+      "doi": "10.1109/ACCESS.2020.3022862",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "koroniotis2019bot",
+      "title": "Towards the development of realistic botnet dataset in the Internet of Things for network forensic analytics: Bot-IoT dataset",
+      "authors": [
+        {
+          "family": "Koroniotis",
+          "given": "Nickolaos"
+        },
+        {
+          "family": "Moustafa",
+          "given": "Nour"
+        },
+        {
+          "family": "Sitnikova",
+          "given": "Elena"
+        },
+        {
+          "family": "Turnbull",
+          "given": "Benjamin"
+        }
+      ],
+      "year": 2019,
+      "source_pointer": "https://doi.org/10.1016/j.future.2019.05.041",
+      "venue": "Future Generation Computer Systems",
+      "doi": "10.1016/j.future.2019.05.041",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "sarhan2021netflow",
+      "title": "NetFlow Datasets for Machine Learning-Based Network Intrusion Detection Systems",
+      "authors": [
+        {
+          "family": "Sarhan",
+          "given": "Mohanad"
+        },
+        {
+          "family": "Layeghy",
+          "given": "Siamak"
+        },
+        {
+          "family": "Moustafa",
+          "given": "Nour"
+        },
+        {
+          "family": "Portmann",
+          "given": "Marius"
+        }
+      ],
+      "year": 2021,
+      "source_pointer": "https://doi.org/10.1007/978-3-030-72802-1_9",
+      "venue": "Big Data Technologies and Applications (BDTA 2020), LNICST",
+      "doi": "10.1007/978-3-030-72802-1_9",
+      "arxiv_id": "2011.09144",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "engelen2021troubleshooting",
+      "title": "Troubleshooting an Intrusion Detection Dataset: the CICIDS2017 Case Study",
+      "authors": [
+        {
+          "family": "Engelen",
+          "given": "Gints"
+        },
+        {
+          "family": "Rimmer",
+          "given": "Vera"
+        },
+        {
+          "family": "Joosen",
+          "given": "Wouter"
+        }
+      ],
+      "year": 2021,
+      "source_pointer": "https://doi.org/10.1109/SPW53761.2021.00009",
+      "venue": "2021 IEEE Security and Privacy Workshops (SPW)",
+      "doi": "10.1109/SPW53761.2021.00009",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "lanvin2023errors",
+      "title": "Errors in the CICIDS2017 Dataset and the Significant Differences in Detection Performances It Makes",
+      "authors": [
+        {
+          "family": "Lanvin",
+          "given": "Maxime"
+        },
+        {
+          "family": "Gimenez",
+          "given": "Pierre-François"
+        },
+        {
+          "family": "Han",
+          "given": "Yufei"
+        },
+        {
+          "family": "Majorczyk",
+          "given": "Frédéric"
+        },
+        {
+          "family": "Mé",
+          "given": "Ludovic"
+        },
+        {
+          "family": "Totel",
+          "given": "Éric"
+        }
+      ],
+      "year": 2023,
+      "source_pointer": "https://doi.org/10.1007/978-3-031-31108-6_2",
+      "venue": "Risks and Security of Internet and Systems (CRiSIS 2022), Lecture Notes in Computer Science",
+      "doi": "10.1007/978-3-031-31108-6_2",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "flood2024bad",
+      "title": "Bad Design Smells in Benchmark NIDS Datasets",
+      "authors": [
+        {
+          "family": "Flood",
+          "given": "Robert"
+        },
+        {
+          "family": "Engelen",
+          "given": "Gints"
+        },
+        {
+          "family": "Aspinall",
+          "given": "David"
+        },
+        {
+          "family": "Desmet",
+          "given": "Lieven"
+        }
+      ],
+      "year": 2024,
+      "source_pointer": "https://doi.org/10.1109/EuroSP60621.2024.00042",
+      "venue": "2024 IEEE 9th European Symposium on Security and Privacy (EuroS&P)",
+      "doi": "10.1109/EuroSP60621.2024.00042",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "apruzzese2023sok",
+      "title": "SoK: Pragmatic Assessment of Machine Learning for Network Intrusion Detection",
+      "authors": [
+        {
+          "family": "Apruzzese",
+          "given": "Giovanni"
+        },
+        {
+          "family": "Laskov",
+          "given": "Pavel"
+        },
+        {
+          "family": "Schneider",
+          "given": "Johannes"
+        }
+      ],
+      "year": 2023,
+      "source_pointer": "https://doi.org/10.1109/EuroSP57164.2023.00042",
+      "venue": "2023 IEEE 8th European Symposium on Security and Privacy (EuroS&P)",
+      "doi": "10.1109/EuroSP57164.2023.00042",
+      "tags": [
+        "introduction"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "sommer2010outside",
+      "title": "Outside the Closed World: On Using Machine Learning for Network Intrusion Detection",
+      "authors": [
+        {
+          "family": "Sommer",
+          "given": "Robin"
+        },
+        {
+          "family": "Paxson",
+          "given": "Vern"
+        }
+      ],
+      "year": 2010,
+      "source_pointer": "https://doi.org/10.1109/SP.2010.25",
+      "venue": "2010 IEEE Symposium on Security and Privacy",
+      "doi": "10.1109/SP.2010.25",
+      "tags": [
+        "introduction"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "layeghy2023explainable",
+      "title": "Explainable Cross-domain Evaluation of ML-based Network Intrusion Detection Systems",
+      "authors": [
+        {
+          "family": "Layeghy",
+          "given": "Siamak"
+        },
+        {
+          "family": "Portmann",
+          "given": "Marius"
+        }
+      ],
+      "year": 2023,
+      "source_pointer": "https://doi.org/10.1016/j.compeleceng.2023.108692",
+      "venue": "Computers and Electrical Engineering",
+      "doi": "10.1016/j.compeleceng.2023.108692",
+      "arxiv_id": "2205.04112",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "sarhan2023zeroshot",
+      "title": "From zero-shot machine learning to zero-day attack detection",
+      "authors": [
+        {
+          "family": "Sarhan",
+          "given": "Mohanad"
+        },
+        {
+          "family": "Layeghy",
+          "given": "Siamak"
+        },
+        {
+          "family": "Gallagher",
+          "given": "Marcus"
+        },
+        {
+          "family": "Portmann",
+          "given": "Marius"
+        }
+      ],
+      "year": 2023,
+      "source_pointer": "https://doi.org/10.1007/s10207-023-00676-0",
+      "venue": "International Journal of Information Security",
+      "doi": "10.1007/s10207-023-00676-0",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "apruzzese2022cross",
+      "title": "The Cross-Evaluation of Machine Learning-Based Network Intrusion Detection Systems",
+      "authors": [
+        {
+          "family": "Apruzzese",
+          "given": "Giovanni"
+        },
+        {
+          "family": "Pajola",
+          "given": "Luca"
+        },
+        {
+          "family": "Conti",
+          "given": "Mauro"
+        }
+      ],
+      "year": 2022,
+      "source_pointer": "https://doi.org/10.1109/TNSM.2022.3157344",
+      "venue": "IEEE Transactions on Network and Service Management",
+      "doi": "10.1109/TNSM.2022.3157344",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "dhooge2020inter",
+      "title": "Inter-dataset generalization strength of supervised machine learning methods for intrusion detection",
+      "authors": [
+        {
+          "family": "D’hooge",
+          "given": "Laurens"
+        },
+        {
+          "family": "Wauters",
+          "given": "Tim"
+        },
+        {
+          "family": "Volckaert",
+          "given": "Bruno"
+        },
+        {
+          "family": "De Turck",
+          "given": "Filip"
+        }
+      ],
+      "year": 2020,
+      "source_pointer": "https://doi.org/10.1016/j.jisa.2020.102564",
+      "venue": "Journal of Information Security and Applications",
+      "doi": "10.1016/j.jisa.2020.102564",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "pan2010survey",
+      "title": "A Survey on Transfer Learning",
+      "authors": [
+        {
+          "family": "Pan",
+          "given": "Sinno Jialin"
+        },
+        {
+          "family": "Yang",
+          "given": "Qiang"
+        }
+      ],
+      "year": 2010,
+      "source_pointer": "https://doi.org/10.1109/TKDE.2009.191",
+      "venue": "IEEE Transactions on Knowledge and Data Engineering",
+      "doi": "10.1109/TKDE.2009.191",
+      "tags": [
+        "related-work"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "bendavid2010theory",
+      "title": "A theory of learning from different domains",
+      "authors": [
+        {
+          "family": "Ben-David",
+          "given": "Shai"
+        },
+        {
+          "family": "Blitzer",
+          "given": "John"
+        },
+        {
+          "family": "Crammer",
+          "given": "Koby"
+        },
+        {
+          "family": "Kulesza",
+          "given": "Alex"
+        },
+        {
+          "family": "Pereira",
+          "given": "Fernando"
+        },
+        {
+          "family": "Vaughan",
+          "given": "Jennifer Wortman"
+        }
+      ],
+      "year": 2010,
+      "source_pointer": "https://doi.org/10.1007/s10994-009-5152-4",
+      "venue": "Machine Learning",
+      "doi": "10.1007/s10994-009-5152-4",
+      "tags": [
+        "discussion"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "zhang2023negative",
+      "title": "A Survey on Negative Transfer",
+      "authors": [
+        {
+          "family": "Zhang",
+          "given": "Wen"
+        },
+        {
+          "family": "Deng",
+          "given": "Lingfei"
+        },
+        {
+          "family": "Zhang",
+          "given": "Lei"
+        },
+        {
+          "family": "Wu",
+          "given": "Dongrui"
+        }
+      ],
+      "year": 2023,
+      "source_pointer": "https://doi.org/10.1109/JAS.2022.106004",
+      "venue": "IEEE/CAA Journal of Automatica Sinica",
+      "doi": "10.1109/JAS.2022.106004",
+      "tags": [
+        "discussion"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "shimodaira2000improving",
+      "title": "Improving predictive inference under covariate shift by weighting the log-likelihood function",
+      "authors": [
+        {
+          "family": "Shimodaira",
+          "given": "Hidetoshi"
+        }
+      ],
+      "year": 2000,
+      "source_pointer": "https://doi.org/10.1016/S0378-3758(00)00115-4",
+      "venue": "Journal of Statistical Planning and Inference",
+      "doi": "10.1016/S0378-3758(00)00115-4",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "sugiyama2007covariate",
+      "title": "Covariate Shift Adaptation by Importance Weighted Cross Validation",
+      "authors": [
+        {
+          "family": "Sugiyama",
+          "given": "Masashi"
+        },
+        {
+          "family": "Krauledat",
+          "given": "Matthias"
+        },
+        {
+          "family": "Müller",
+          "given": "Klaus-Robert"
+        }
+      ],
+      "year": 2007,
+      "source_pointer": "https://jmlr.org/papers/v8/sugiyama07a.html",
+      "venue": "Journal of Machine Learning Research",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "ganin2016domain",
+      "title": "Domain-Adversarial Training of Neural Networks",
+      "authors": [
+        {
+          "family": "Ganin",
+          "given": "Yaroslav"
+        },
+        {
+          "family": "Ustinova",
+          "given": "Evgeniya"
+        },
+        {
+          "family": "Ajakan",
+          "given": "Hana"
+        },
+        {
+          "family": "Germain",
+          "given": "Pascal"
+        },
+        {
+          "family": "Larochelle",
+          "given": "Hugo"
+        },
+        {
+          "family": "Laviolette",
+          "given": "François"
+        },
+        {
+          "family": "Marchand",
+          "given": "Mario"
+        },
+        {
+          "family": "Lempitsky",
+          "given": "Victor"
+        }
+      ],
+      "year": 2016,
+      "source_pointer": "https://arxiv.org/abs/1505.07818",
+      "venue": "Journal of Machine Learning Research",
+      "arxiv_id": "1505.07818",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "rabanser2019failing",
+      "title": "Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift",
+      "authors": [
+        {
+          "family": "Rabanser",
+          "given": "Stephan"
+        },
+        {
+          "family": "Günnemann",
+          "given": "Stephan"
+        },
+        {
+          "family": "Lipton",
+          "given": "Zachary C."
+        }
+      ],
+      "year": 2019,
+      "source_pointer": "https://arxiv.org/abs/1810.11953",
+      "venue": "Advances in Neural Information Processing Systems 32 (NeurIPS 2019)",
+      "arxiv_id": "1810.11953",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "wilcoxon1945individual",
+      "title": "Individual Comparisons by Ranking Methods",
+      "authors": [
+        {
+          "family": "Wilcoxon",
+          "given": "Frank"
+        }
+      ],
+      "year": 1945,
+      "source_pointer": "https://doi.org/10.2307/3001968",
+      "venue": "Biometrics Bulletin",
+      "doi": "10.2307/3001968",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "holm1979simple",
+      "title": "A Simple Sequentially Rejective Multiple Test Procedure",
+      "authors": [
+        {
+          "family": "Holm",
+          "given": "Sture"
+        }
+      ],
+      "year": 1979,
+      "source_pointer": "https://www.jstor.org/stable/4615733",
+      "venue": "Scandinavian Journal of Statistics",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "demsar2006statistical",
+      "title": "Statistical Comparisons of Classifiers over Multiple Data Sets",
+      "authors": [
+        {
+          "family": "Demšar",
+          "given": "Janez"
+        }
+      ],
+      "year": 2006,
+      "source_pointer": "https://jmlr.org/papers/v7/demsar06a.html",
+      "venue": "Journal of Machine Learning Research",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    },
+    {
+      "citation_key": "grinsztajn2022why",
+      "title": "Why do tree-based models still outperform deep learning on typical tabular data?",
+      "authors": [
+        {
+          "family": "Grinsztajn",
+          "given": "Léo"
+        },
+        {
+          "family": "Oyallon",
+          "given": "Edouard"
+        },
+        {
+          "family": "Varoquaux",
+          "given": "Gaël"
+        }
+      ],
+      "year": 2022,
+      "source_pointer": "https://arxiv.org/abs/2207.08815",
+      "venue": "Advances in Neural Information Processing Systems 35 (NeurIPS 2022), Datasets and Benchmarks Track",
+      "arxiv_id": "2207.08815",
+      "tags": [
+        "method"
+      ],
+      "obtained_via": "manual",
+      "obtained_at": "2026-10-11"
+    }
+  ]
+}
