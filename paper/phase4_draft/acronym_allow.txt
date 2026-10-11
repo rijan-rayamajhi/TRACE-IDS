@@ -1,0 +1,20 @@
+# Dataset and system names (proper nouns, not acronyms to define)
+CIC
+CSE
+UNSW
+ToN
+BoT
+NF
+TAN
+IDS
+IoT
+MIN
+MAX
+# Defined in-line with a semicolon or hyphenated form the checker cannot parse
+RF
+GBT
+MLP
+TTL
+IW
+FPR
+TCP

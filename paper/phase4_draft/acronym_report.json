@@ -1,0 +1,224 @@
+{
+  "checker": "ars-acronym-check/1.0",
+  "input": "draft.md",
+  "input_sha256": "728e4973b2b1bd8e7dc0bc5b6a37391e92cd9ca49d21a3c21b9bacc4c79d3203",
+  "status": "partial",
+  "allowlist": {
+    "default": 29,
+    "user": [
+      "BoT",
+      "CIC",
+      "CSE",
+      "FPR",
+      "GBT",
+      "IDS",
+      "IW",
+      "IoT",
+      "MAX",
+      "MIN",
+      "MLP",
+      "NF",
+      "RF",
+      "TAN",
+      "TCP",
+      "TTL",
+      "ToN",
+      "UNSW"
+    ]
+  },
+  "coverage": {
+    "body": "checked",
+    "abstract_en": "not_requested",
+    "abstract_zh": "not_requested"
+  },
+  "scope_lines": {
+    "body": [
+      [
+        2,
+        4
+      ],
+      [
+        6,
+        28
+      ],
+      [
+        30,
+        30
+      ],
+      [
+        32,
+        36
+      ],
+      [
+        38,
+        42
+      ],
+      [
+        44,
+        48
+      ],
+      [
+        50,
+        54
+      ],
+      [
+        56,
+        56
+      ],
+      [
+        58,
+        71
+      ],
+      [
+        73,
+        77
+      ],
+      [
+        79,
+        92
+      ],
+      [
+        94,
+        96
+      ],
+      [
+        98,
+        100
+      ],
+      [
+        102,
+        102
+      ],
+      [
+        104,
+        108
+      ],
+      [
+        110,
+        112
+      ],
+      [
+        114,
+        134
+      ],
+      [
+        136,
+        142
+      ],
+      [
+        144,
+        148
+      ],
+      [
+        150,
+        150
+      ],
+      [
+        152,
+        156
+      ],
+      [
+        158,
+        164
+      ],
+      [
+        166,
+        170
+      ],
+      [
+        172,
+        176
+      ],
+      [
+        178,
+        178
+      ],
+      [
+        180,
+        182
+      ],
+      [
+        184,
+        186
+      ],
+      [
+        188,
+        190
+      ],
+      [
+        192,
+        194
+      ],
+      [
+        196,
+        198
+      ],
+      [
+        200,
+        209
+      ],
+      [
+        211,
+        214
+      ],
+      [
+        216,
+        224
+      ],
+      [
+        226,
+        228
+      ],
+      [
+        230,
+        232
+      ],
+      [
+        234,
+        236
+      ],
+      [
+        238,
+        240
+      ],
+      [
+        242,
+        245
+      ]
+    ]
+  },
+  "unread_sections": [],
+  "coverage_limits": [
+    {
+      "scope": "body",
+      "line": 7,
+      "acronym": "ML",
+      "reason": "unconfirmed_definition"
+    },
+    {
+      "scope": "body",
+      "line": 33,
+      "acronym": "DoS",
+      "reason": "unconfirmed_definition"
+    },
+    {
+      "scope": "body",
+      "line": 33,
+      "acronym": "SHAP",
+      "reason": "unconfirmed_definition"
+    },
+    {
+      "scope": "body",
+      "line": 61,
+      "acronym": "DDoS",
+      "reason": "unconfirmed_definition"
+    },
+    {
+      "scope": "body",
+      "line": 227,
+      "acronym": "CSV",
+      "reason": "unconfirmed_definition"
+    }
+  ],
+  "findings": []
+}

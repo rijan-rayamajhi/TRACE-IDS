@@ -27,14 +27,19 @@ for tag, f in [("per-domain", "e3_significance.csv"), ("shared", "e3_significanc
     p("by model\n", pd.crosstab(s.model, s.verdict).to_string())
     p("by k\n", pd.crosstab(s.k, s.verdict).to_string())
     p("by pair\n", pd.crosstab(s.direction, s.verdict).to_string())
+    p("median dF1 by k:", s.groupby("k").delta_f1.median().round(4).to_dict())
     e2 = s[s.direction.isin(["cic->unsw", "unsw->cic"])]
     p(f"E2 subset (CIC<->UNSW, {len(e2)} tests):", e2.verdict.value_counts().to_dict())
     z = pd.read_csv(R / ("e3_zeroshot.csv" if tag == "per-domain" else "e3_zeroshot_shared.csv"))
+    p("zero-shot per pair/model (f1, recall, fpr, bacc)\n", z.round(3).to_string(index=False))
     best = z.groupby("direction").bacc.max()
     p("zero-shot best bacc per pair\n", best.round(3).to_string())
     tb = pd.read_csv(R / ("e3_targetonly_bacc.csv" if tag == "per-domain" else "e3_targetonly_bacc_shared.csv"))
     p("target-only bacc (k=1,5,10)\n", tb.round(3).to_string(index=False))
 
+for tag, f in [("per-domain", "e2_runs_all.csv"), ("shared", "e2_runs_all_shared.csv")]:
+    ess = pd.read_csv(R / f).groupby("direction").iw_ess.mean()
+    p(f"\n## IW effective sample size (fraction of source), {tag}: min {ess.min():.4f} max {ess.max():.4f} median {ess.median():.4f}")
 zs = pd.read_csv(R / "e4_zeroshot_summary.csv")
 p("\n## E4a Atif & Ali replication: best F1 / bal_acc per direction, features, test (max over scaling & model)\n",
   zs.groupby(["direction", "features", "test"])[["f1_mean", "bal_acc_mean"]].max().round(3).to_string())
@@ -57,6 +62,9 @@ p("raw range removed_to_<0.9:", ab[ab.scaling == "raw"].groupby(["subset", "pair
 st = pd.read_csv(R / "e5_ablation_steps.csv")
 p("AUC after n removed (raw, mean over pairs&seeds)\n", st[(st.scaling == "raw") & st.n_removed.isin([0, 5, 10, 15, 20, 30])]
   .groupby(["subset", "n_removed"]).auc.mean().unstack(0).round(3).to_string())
+f5 = st[(st.scaling == "raw") & (st.n_removed < 5)].groupby(["pair", "seed", "subset"]).next_removed
+p("Runs with MIN_TTL or MAX_TTL among first 5 removed (raw):", int(f5.apply(lambda x: bool({"MIN_TTL", "MAX_TTL"} & set(x))).sum()),
+  "of", f5.ngroups)
 sf = pd.read_csv(R / "e5_single_feature.csv")
 p("\n## Single-feature AUC>=0.99: raw", int((sf.raw >= 0.99).sum()), "zscore", int((sf.zscore >= 0.99).sum()), "of", len(sf))
 p("cic-unsw PROTOCOL:", sf[(sf.pair == "cic-unsw") & (sf.feature == "PROTOCOL")][["raw", "zscore"]].round(3).to_dict("records"))

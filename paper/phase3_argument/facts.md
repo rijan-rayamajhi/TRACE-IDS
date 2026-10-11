@@ -82,7 +82,46 @@ ton->unsw     2     9       34
 unsw->bot     5    10       30
 unsw->cic     0    14       31
 unsw->ton     2     5       38
+median dF1 by k: {1: -0.0147, 5: -0.0254, 10: -0.029, 50: -0.0032, 100: -0.0002}
 E2 subset (CIC<->UNSW, 90 tests): {'no diff': 65, 'hurt': 25}
+zero-shot per pair/model (f1, recall, fpr, bacc)
+ direction model    f1  recall   fpr  bacc
+ bot->cic   GBT 0.273   0.912 0.712 0.600
+ bot->cic   MLP 0.311   0.921 0.596 0.662
+ bot->cic    RF 0.230   1.000 1.000 0.500
+ bot->ton   GBT 0.572   0.931 0.846 0.542
+ bot->ton   MLP 0.579   0.755 0.546 0.605
+ bot->ton    RF 0.561   0.998 0.999 0.499
+bot->unsw   GBT 0.105   0.870 0.844 0.513
+bot->unsw   MLP 0.116   0.954 0.832 0.561
+bot->unsw    RF 0.103   0.997 0.991 0.503
+ cic->bot   GBT 0.015   0.008 0.005 0.501
+ cic->bot   MLP 0.334   0.206 0.612 0.297
+ cic->bot    RF 0.000   0.000 0.000 0.500
+ cic->ton   GBT 0.015   0.008 0.013 0.498
+ cic->ton   MLP 0.358   0.334 0.330 0.502
+ cic->ton    RF 0.000   0.000 0.000 0.500
+cic->unsw   GBT 0.010   0.018 0.165 0.427
+cic->unsw   MLP 0.012   0.045 0.327 0.359
+cic->unsw    RF 0.000   0.000 0.000 0.500
+ ton->bot   GBT 0.144   0.090 0.095 0.498
+ ton->bot   MLP 0.538   0.386 0.045 0.671
+ ton->bot    RF 0.031   0.017 0.158 0.429
+ ton->cic   GBT 0.065   0.070 0.099 0.485
+ ton->cic   MLP 0.162   0.313 0.396 0.458
+ ton->cic    RF 0.034   0.020 0.001 0.509
+ton->unsw   GBT 0.039   0.032 0.050 0.491
+ton->unsw   MLP 0.062   0.194 0.313 0.440
+ton->unsw    RF 0.000   0.000 0.004 0.498
+unsw->bot   GBT 0.000   0.000 0.006 0.497
+unsw->bot   MLP 0.725   0.576 0.156 0.710
+unsw->bot    RF 0.060   0.043 0.121 0.461
+unsw->cic   GBT 0.063   0.098 0.075 0.512
+unsw->cic   MLP 0.164   0.282 0.305 0.488
+unsw->cic    RF 0.199   0.473 0.457 0.508
+unsw->ton   GBT 0.086   0.075 0.010 0.532
+unsw->ton   MLP 0.373   0.281 0.065 0.608
+unsw->ton    RF 0.481   0.389 0.066 0.662
 zero-shot best bacc per pair
  direction
 bot->cic     0.662
@@ -148,7 +187,46 @@ ton->unsw     1    13       31
 unsw->bot     9     3       33
 unsw->cic     0    20       25
 unsw->ton     3     3       39
+median dF1 by k: {1: -0.026, 5: -0.0367, 10: -0.0328, 50: -0.0258, 100: -0.0173}
 E2 subset (CIC<->UNSW, 90 tests): {'no diff': 52, 'hurt': 38}
+zero-shot per pair/model (f1, recall, fpr, bacc)
+ direction model    f1  recall   fpr  bacc
+ bot->cic   GBT 0.468   0.738 0.217 0.760
+ bot->cic   MLP 0.352   0.463 0.158 0.652
+ bot->cic    RF 0.359   0.918 0.477 0.720
+ bot->ton   GBT 0.570   0.815 0.674 0.570
+ bot->ton   MLP 0.606   0.688 0.371 0.658
+ bot->ton    RF 0.647   0.816 0.455 0.681
+bot->unsw   GBT 0.081   0.244 0.317 0.464
+bot->unsw   MLP 0.081   0.305 0.378 0.464
+bot->unsw    RF 0.095   0.743 0.792 0.476
+ cic->bot   GBT 0.119   0.065 0.130 0.468
+ cic->bot   MLP 0.215   0.126 0.608 0.259
+ cic->bot    RF 0.117   0.063 0.068 0.498
+ cic->ton   GBT 0.275   0.194 0.125 0.535
+ cic->ton   MLP 0.356   0.319 0.292 0.514
+ cic->ton    RF 0.111   0.071 0.134 0.469
+cic->unsw   GBT 0.009   0.026 0.283 0.372
+cic->unsw   MLP 0.054   0.194 0.369 0.413
+cic->unsw    RF 0.002   0.001 0.001 0.500
+ ton->bot   GBT 0.173   0.104 0.095 0.505
+ ton->bot   MLP 0.247   0.162 0.110 0.526
+ ton->bot    RF 0.105   0.057 0.082 0.488
+ ton->cic   GBT 0.059   0.062 0.137 0.462
+ ton->cic   MLP 0.163   0.337 0.420 0.459
+ ton->cic    RF 0.220   0.208 0.101 0.553
+ton->unsw   GBT 0.028   0.051 0.142 0.455
+ton->unsw   MLP 0.062   0.262 0.417 0.422
+ton->unsw    RF 0.009   0.004 0.001 0.502
+unsw->bot   GBT 0.084   0.046 0.273 0.387
+unsw->bot   MLP 0.756   0.619 0.241 0.689
+unsw->bot    RF 0.712   0.592 0.227 0.683
+unsw->cic   GBT 0.179   0.223 0.120 0.552
+unsw->cic   MLP 0.263   0.680 0.524 0.578
+unsw->cic    RF 0.210   0.543 0.531 0.506
+unsw->ton   GBT 0.162   0.149 0.318 0.415
+unsw->ton   MLP 0.675   0.622 0.138 0.742
+unsw->ton    RF 0.574   0.496 0.161 0.668
 zero-shot best bacc per pair
  direction
 bot->cic     0.760
@@ -177,6 +255,10 @@ ton->unsw 0.647 0.901 0.936
 unsw->bot 0.654 0.820 0.856
 unsw->cic 0.610 0.726 0.823
 unsw->ton 0.568 0.772 0.779
+
+## IW effective sample size (fraction of source), per-domain: min 0.0503 max 0.6784 median 0.3426
+
+## IW effective sample size (fraction of source), shared: min 0.0009 max 0.0380 median 0.0084
 
 ## E4a Atif & Ali replication: best F1 / bal_acc per direction, features, test (max over scaling & model)
                               f1_mean  bal_acc_mean
@@ -260,6 +342,7 @@ n_removed
 15         0.997   0.988
 20         0.986   0.934
 30         0.864   0.858
+Runs with MIN_TTL or MAX_TTL among first 5 removed (raw): 24 of 36
 
 ## Single-feature AUC>=0.99: raw 13 zscore 231 of 270
 cic-unsw PROTOCOL: [{'raw': 0.565, 'zscore': 1.0}]
