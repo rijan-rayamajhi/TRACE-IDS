@@ -1,6 +1,6 @@
 # Paper Outline — TRACE-IDS
 
-*Phase 2 (structure). Inputs: `../paper_configuration_record.md`, `../phase1_literature/literature_search_report.md`. Generated 2026-10-11. Needs the author's approval before any drafting.*
+*✅ Approved by the author 2026-10-11 ("approve outline"). Phase 2 (structure). Inputs: `../paper_configuration_record.md`, `../phase1_literature/literature_search_report.md`. Generated 2026-10-11. Needs the author's approval before any drafting.*
 
 **Working title:** *Is It Transfer? Source Data Adds Nothing to Few-Shot Cross-Dataset Intrusion Detection on NetFlow*
 (Alternative: *Few Labels, No Transfer: …*. The title is the author's choice.)
@@ -19,7 +19,7 @@ The paper tests the assumption behind recent few-shot cross-dataset NIDS work (T
 
 1. **Data and protocol.** We use the four NetFlow v3 datasets and a leak-free, 10-seed protocol. Each adaptation method is compared against the baseline those works omit: training on the same k target flows alone.
 2. **Results.** The source gives no consistent benefit and often hurts (540 paired tests, 12 pairs, 3 models, 3 methods). Zero-shot transfer is weak and pair-dependent. A positive zero-shot result from prior work does not reproduce.
-3. **Mechanism.** Each network occupies its own region of feature space. Two robustness checks show the result is not an artifact: it holds on raw features (22–40 of 45 features must go before the domains blur) and under shared scaling. The shared-scaling check also exposes per-domain normalization as a hidden confound.
+3. **Mechanism.** Each network occupies its own region of feature space. Two robustness checks show the result is not an artifact: it holds on raw features (23–40 of 45 features must go before the domains blur) and under shared scaling. The shared-scaling check also exposes per-domain normalization as a hidden confound.
 4. **Practical message.** Before crediting a source dataset, compare against target-only training at the same label budget.
 
 ## Sub-questions (each section names the one it serves)
@@ -44,7 +44,7 @@ The paper tests the assumption behind recent few-shot cross-dataset NIDS work (T
 ## Detailed Outline
 
 ### Abstract (~200 words, English)
-**Serves:** all SQs. Covers the problem (prior work credits the source without a target-only baseline), the setup (4 NF v3 datasets, 12 pairs, 3 models × 3 methods, 10 seeds), the headline result (source helps in 6% of 540 tests and hurts in 28%; 8% / 38% under shared scaling), the mechanism (domains are separable, AUC ≥ 0.997), and the recommendation (always report target-only).
+**Serves:** all SQs. Covers the problem (prior work credits the source without a target-only baseline), the setup (4 NF v3 datasets, 12 pairs, 3 models × 3 methods, 10 seeds), the headline result (source helps in 6% of 540 tests and hurts in 28%; 8% / 38% under shared scaling), the mechanism (domains are separable, AUC ≥ 0.996), and the recommendation (always report target-only).
 
 ### 1. Introduction (~900 words)
 **Purpose:** Establish why "does the source help?" is an open and consequential question, and state contributions.
@@ -84,15 +84,15 @@ The paper tests the assumption behind recent few-shot cross-dataset NIDS work (T
 - 4.1 *Single pair, single model (E1).* CIC↔UNSW with RF: source + k is within noise of target-only at every k. → `results/e1_summary.csv`, **Fig. 1** `e1_recovery.png`
 - 4.2 *Stronger baselines (E2).* 3 models × 3 methods on CIC↔UNSW: 90 tests, source better 0, worse 25. → `e3_significance.csv` (CIC↔UNSW rows), **Fig. 2** `e2_transfer.png`
 - 4.3 *All 12 pairs (E3).* **Table 2**, the core result: verdict counts by method, model and k, with a per-domain column (help 34 / no diff 353 / hurt 153) and a shared column (41 / 294 / 205). Median ΔF1 −0.011 / −0.025. Holm: no single cell significant, so the claim is stated as a pattern. Fine-tuning is worst under per-domain scaling (72 hurt / 10 help); under shared scaling, fine-tuning and importance weighting hurt about equally (73 vs 74). **Fig. 3** heatmaps (`e3_heatmap.png`, `e3_heatmap_shared.png`).
-- 4.4 *Zero-shot (SQ2).* Best-model balanced accuracy is 0.68–0.76 on 4 pairs and ~0.5 elsewhere; target-only at k=10 reaches 0.78–0.94 and beats zero-shot on every pair (`e3_zeroshot*.csv`, `e3_targetonly_bacc*.csv`). Atif & Ali's Set C 0.81 does not reproduce (best 0.21; `e4_zeroshot_summary.csv`).
+- 4.4 *Zero-shot (SQ2).* Best-model balanced accuracy is 0.61–0.71 on 5 pairs and ~0.5 elsewhere (shared scaling: 0.68–0.76 on 4); target-only at k=10 reaches 0.78–0.94 and beats zero-shot on every pair under both scalings (`e3_zeroshot*.csv`, `e3_targetonly_bacc*.csv`). Atif & Ali's Set C 0.81 does not reproduce (Set C F1 0.21, balanced accuracy ≤ 0.55 for every feature set; `e4_zeroshot_summary.csv`).
 - 4.5 *TAN-IDS budget (E4b).* At a 5% label budget, target-only ≈ pooled ≈ fine-tune (`e4_budget_summary.csv`).
 - **Transition:** if the source carries no usable signal, Section 5 asks why.
 
 ### 5. Results: Why Doesn't the Source Help? (~1,000 words)
 **Purpose:** Answer SQ3 and SQ4.
-- 5.1 *Domains are separable* (E5-B): AUC ≥ 0.997 for every pair, including benign-only and the same attack category (`e5_distance.csv`).
+- 5.1 *Domains are separable* (E5-B): AUC ≥ 0.996 for every pair (minimum: DoS vs DoS), including benign-only and the same attack category (`e5_distance.csv`).
 - 5.2 *Shared attack types don't transfer* (E5-A): there is no gain on categories the source contains; adding the source lowers FPR but costs recall (`e5_families_summary.csv`, **Fig. 4** `e5_families.png`). RF importance overlap of 0.25–0.83 loosely tracks benefit; this is exploratory, n=12.
-- 5.3 *Not one artifact column* (SQ4): on raw features, 22–40 of 45 features must be removed before AUC < 0.9. TTL is removed first and barely matters. E1's −TTL curves match the full-feature curves (`e5_ablation_summary.csv`, **Fig. 5** `e5_ablation.png`).
+- 5.3 *Not one artifact column* (SQ4): on raw features, 23–40 of 45 features must be removed before AUC < 0.9 (all flows; 17–39 benign-only); TTL is among the first removed. In E1, removing TTL lowers few-shot F1 for every method alike (CIC→UNSW k=5: 0.70→0.54 source+k, 0.70→0.50 target-only), so it does not change the source-vs-target comparison (`e5_ablation_summary.csv`, **Fig. 5** `e5_ablation.png`).
 - 5.4 *The scaling confound* (SQ4): single features with AUC ≥ 0.99 number 13/270 raw vs 231/270 after per-domain z-scoring (`e5_single_feature.csv`). Under shared scaling the source still doesn't help, and the ToN→CIC exception disappears (9 helps → 0).
 - **Transition:** Section 6 interprets these findings against prior claims.
 

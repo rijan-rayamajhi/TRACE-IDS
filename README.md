@@ -29,14 +29,14 @@ Every number below is printed by committed code into `results/` (see [Reproduce]
    (`results/e3_significance_shared.csv`). Per-domain scaling: 34 / 353 / 153
    (`results/e3_significance.csv`; its CIC↔UNSW rows are the 90 E2 tests: 0 / 65 / 25). No single
    comparison survives Holm correction over 540, so the claim is about the pattern, not any one cell.
-2. **Zero-shot transfer is weak and pair-dependent.** Best-model balanced accuracy 0.68–0.76 on 4 of
-   12 pairs, about 0.5 on the rest; target-only with 10 labelled flows per class (0.78–0.94) beats the
+2. **Zero-shot transfer is weak and pair-dependent.** Best-model balanced accuracy 0.61–0.71 on 5 of
+   12 pairs (0.68–0.76 on 4 under shared scaling), about 0.5 on the rest; target-only with 10 labelled flows per class (0.78–0.94) beats the
    best zero-shot model on every pair (`results/e3_zeroshot_shared.csv`, `e3_targetonly_bacc_shared.csv`). A reported zero-shot F1 of 0.81 (Atif & Ali, NetFlow v2) does not reproduce on v3
-   (best 0.21; `results/e4_zeroshot_summary.csv`). At TAN-IDS's 5% label budget, target-only matches
+   (their Set C: F1 0.21; balanced accuracy ≤ 0.55 for every feature set; `results/e4_zeroshot_summary.csv`). At TAN-IDS's 5% label budget, target-only matches
    pooled and fine-tuned models (`results/e4_budget_summary.csv`).
 3. **Why: every network sits in its own region of feature space.** A domain classifier separates
-   every pair with AUC ≥ 0.997, also within benign traffic and within the *same* attack category
-   (`results/e5_distance.csv`). On raw features this is not one artifact column: 22–40 of the 45
+   every pair with AUC ≥ 0.996, also within benign traffic and within the *same* attack category
+   (`results/e5_distance.csv`). On raw features this is not one artifact column: 23–40 of the 45
    features must be removed (most-relied-on first, TTL first) before AUC falls below 0.9
    (`results/e5_ablation_summary.csv`).
 4. **Per-domain z-scoring is a confound.** Scaling each dataset by its own statistics maps the same
