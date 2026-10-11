@@ -566,3 +566,26 @@ ton->bot      6    28       11  -22
 unsw->cic     0    23       22  -23
 ton->cic      0    31       14  -31
 cic->ton      0    32       13  -32
+
+## Spearman(raw domain AUC, mean shared source benefit) over 12 pairs: rho = 0.028, p = 0.931
+
+## Spearman(raw domain AUC, mean per-domain source benefit) over 12 pairs: rho = -0.438, p = 0.154
+
+## Shared f1: per-pair means — Wilcoxon over 12 pairs p = 0.016; negative 9/12, sign test p = 0.146
+  mean by source: {'bot': -0.0314, 'cic': -0.0812, 'ton': -0.0531, 'unsw': -0.0097}
+  mean by target: {'bot': -0.0545, 'cic': -0.0247, 'ton': -0.0224, 'unsw': -0.0738}
+
+## Shared bacc: per-pair means — Wilcoxon over 12 pairs p = 0.077; negative 9/12, sign test p = 0.146
+  mean by source: {'bot': -0.0003, 'cic': -0.0417, 'ton': -0.0322, 'unsw': 0.0019}
+  mean by target: {'bot': -0.0089, 'cic': -0.0034, 'ton': -0.0079, 'unsw': -0.0519}
+
+## Within-category raw domain AUC: n per side (min-max), mean AUC, seed SD
+                 n_min  n_max  auc_min  auc_mean
+subset                                         
+cat:backdoor      188    213   1.0000    1.0000
+cat:bruteforce   2785   2874   0.9998    1.0000
+cat:ddos         6560  15146   0.9999    1.0000
+cat:dos           226   1574   0.9937    0.9993
+cat:scanning      698   4995   0.9986    0.9996
+max across-seed SD of within-category AUC: 0.0022
+E6 control: seeds [0, 1, 2] raw AUC range 0.491 - 0.507

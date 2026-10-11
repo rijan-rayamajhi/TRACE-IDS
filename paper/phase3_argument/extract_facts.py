@@ -128,3 +128,31 @@ nt = vm[(vm.scaling == "no-TTL (shared)") & (vm.metric == "f1")].groupby("direct
 nt["net"] = nt.get("help", 0) - nt.get("hurt", 0)
 p("\n## No-TTL (shared) F1 verdicts by pair\n", nt.sort_values("net", ascending=False).to_string())
 OUT.write_text("\n".join(L) + "\n")
+
+# ---- revision round 2 (review R2-2, R2-3, R2-11)
+from scipy.stats import spearmanr, binomtest  # noqa: E402
+DS = ["cic", "unsw", "ton", "bot"]
+dist = pd.read_csv(R / "e5_distance.csv")
+raw_auc = dist[(dist.subset == "all") & (dist.scaling == "raw")].groupby("pair").auc.mean()
+for tag, f in [("shared", "e3_significance_shared.csv"), ("per-domain", "e3_significance.csv")]:
+    ben = pd.read_csv(R / f).groupby("direction").delta_f1.mean()
+    pa = ben.index.map(lambda d: raw_auc.get("-".join(sorted(d.split("->"), key=DS.index)), np.nan))
+    r, pv = spearmanr(pa, ben.to_numpy(), nan_policy="omit")
+    p(f"\n## Spearman(raw domain AUC, mean {tag} source benefit) over 12 pairs: rho = {r:.3f}, p = {pv:.3f}")
+for metric in ("f1", "bacc"):
+    c = vm[(vm.scaling == "shared") & (vm.metric == metric)]
+    pm = c.groupby("direction").delta.mean()
+    src = pm.groupby(pm.index.str.split("->").str[0]).mean().round(4).to_dict()
+    tgt = pm.groupby(pm.index.str.split("->").str[1]).mean().round(4).to_dict()
+    p(f"\n## Shared {metric}: per-pair means — Wilcoxon over 12 pairs p = {wilcoxon(pm).pvalue:.3f}; "
+      f"negative {int((pm < 0).sum())}/12, sign test p = {binomtest(int((pm < 0).sum()), 12).pvalue:.3f}")
+    p(f"  mean by source: {src}\n  mean by target: {tgt}")
+cat = dist[dist.subset.str.startswith("cat:") & (dist.scaling == "raw")].dropna(subset=["auc"])
+p("\n## Within-category raw domain AUC: n per side (min-max), mean AUC, seed SD\n",
+  cat.groupby("subset").agg(n_min=("n", "min"), n_max=("n", "max"), auc_min=("auc", "min"),
+                            auc_mean=("auc", "mean")).round(4).to_string())
+p("max across-seed SD of within-category AUC:", round(cat.groupby(["pair", "subset"]).auc.std().max(), 4))
+ctl = pd.read_csv(R / "e6_domain_control.csv")
+p("E6 control: seeds", sorted(ctl.seed.unique().tolist()), "raw AUC range", round(ctl[ctl.scaling == "raw"].auc.min(), 3), "-",
+  round(ctl[ctl.scaling == "raw"].auc.max(), 3))
+OUT.write_text("\n".join(L) + "\n")

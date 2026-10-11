@@ -1,9 +1,9 @@
 # Citation Audit (Phase 5a)
 
-- In-text citations: 83; distinct sources: 41; corpus size: 41
+- In-text citations: 80; distinct sources: 41; corpus size: 41
 - Orphans (cited, not in corpus): none
 - Uncited corpus entries: none
-- Every citation has a slug + anchor: True; anchor kinds: {'section': 83}
+- Every citation has a slug + anchor: True; anchor kinds: {'section': 80}
 - Verified records (DOI/arXiv/publisher opened): 41/41
 - Self-citations: 0 (41 sources; author has no prior publications in the corpus)
 
@@ -47,8 +47,8 @@ Before submission, the author should read at least the ones that carry an argume
 - `engelen2021troubleshooting` — cited 1×
 - `flood2024bad` — cited 2×
 - `ganin2016domain` — cited 2×
-- `geirhos2020shortcut` — cited 2×
-- `goldschmidt2025network` — cited 3×
+- `geirhos2020shortcut` — cited 1×
+- `goldschmidt2025network` — cited 2×
 - `grinsztajn2022why` — cited 1×
 - `holm1979simple` — cited 1×
 - `koroniotis2019bot` — cited 1×
@@ -64,7 +64,7 @@ Before submission, the author should read at least the ones that carry an argume
 - `sarhan2021netflow` — cited 1×
 - `sarhan2023zeroshot` — cited 1×
 - `sharafaldin2018toward` — cited 1×
-- `shimodaira2000improving` — cited 3×
+- `shimodaira2000improving` — cited 2×
 - `sommer2010outside` — cited 1×
 - `sugiyama2007covariate` — cited 2×
 - `wilcoxon1945individual` — cited 1×
