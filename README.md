@@ -28,21 +28,31 @@ Every number below is printed by committed code into `results/` (see [Reproduce]
    no difference in 294 (54%), hurts in 205 (38%); median ΔF1 −0.025
    (`results/e3_significance_shared.csv`). Per-domain scaling: 34 / 353 / 153
    (`results/e3_significance.csv`; its CIC↔UNSW rows are the 90 E2 tests: 0 / 65 / 25). No single
-   comparison survives Holm correction over 540, so the claim is about the pattern, not any one cell.
+   comparison can survive Holm correction over 540 with 10 seeds, so the main estimate is pooled: averaged
+   over the 12 pairs the source lowers F1 by 0.044 (95% pair-bootstrap CI −0.066 to −0.022; per-domain
+   −0.038, CI −0.064 to −0.017). On balanced accuracy: 35 helps / 214 hurts, mean −0.018
+   (`results/e6_pooled_effect.csv`, `e6_verdicts_by_metric.csv`). Benefit is rare and pair-dependent:
+   the best pair under shared scaling is UNSW→BoT (9 helps, 3 hurts).
 2. **Zero-shot transfer is weak and pair-dependent.** Best-model balanced accuracy 0.61–0.71 on 5 of
    12 pairs (0.68–0.76 on 4 under shared scaling), about 0.5 on the rest; target-only with 10 labelled flows per class (0.78–0.94) beats the
    best zero-shot model on every pair (`results/e3_zeroshot_shared.csv`, `e3_targetonly_bacc_shared.csv`). A reported zero-shot F1 of 0.81 (Atif & Ali, NetFlow v2) does not reproduce on v3
    (their Set C: F1 0.21; balanced accuracy ≤ 0.55 for every feature set; `results/e4_zeroshot_summary.csv`). At TAN-IDS's 5% label budget, target-only matches
    pooled and fine-tuned models (`results/e4_budget_summary.csv`).
-3. **Why: every network sits in its own region of feature space.** A domain classifier separates
+3. **Consistent with this, every network sits in its own region of feature space.** A domain classifier separates
    every pair with AUC ≥ 0.996, also within benign traffic and within the *same* attack category
    (`results/e5_distance.csv`). On raw features this is not one artifact column: 23–40 of the 45
-   features must be removed (most-relied-on first, TTL first) before AUC falls below 0.9
-   (`results/e5_ablation_summary.csv`).
+   features must be removed (most-relied-on first; TTL is among the first five in 24 of 36 runs) before
+   AUC falls below 0.9 (`results/e5_ablation_summary.csv`). Negative control: two random halves of one
+   dataset give AUC 0.50 on raw features (`results/e6_domain_control.csv`). Without MIN_TTL/MAX_TTL,
+   across all 12 pairs (shared scaling) the source does slightly worse: 42 helps / 228 hurts, mean ΔF1
+   −0.056 (CI −0.080 to −0.030; `results/e2_runs_all_nottl_shared.csv`, `e6_pooled_effect.csv`), A per-domain
+   RF check (CIC→UNSW, `results/e1_runs.csv`) favoured the source at k = 5 and 10 without TTL, but under
+   shared scaling the same check shows the source worse (−0.263 F1 at k = 5, p = 0.002; `results/e1_runs_shared.csv`).
 4. **Per-domain z-scoring is a confound.** Scaling each dataset by its own statistics maps the same
    code (e.g. `PROTOCOL` = 6, or an all-zero FTP column) to different values per dataset. Single
    features that alone separate two datasets with AUC ≥ 0.99: 13 of 270 (6 pairs × 45) on raw values,
-   231 after per-domain z-scoring (`results/e5_single_feature.csv`). With one shared scaling the
+   231 after per-domain z-scoring (`results/e5_single_feature.csv`). Even two halves of the *same*
+   dataset, each z-scored on its own, separate with AUC 1.00 (`results/e6_domain_control.csv`). With one shared scaling the
    transfer result holds and strengthens, and the one pair where the source seemed to help
    (ToN→CIC: 9 helps → 0, 18 hurts) turns out to be a scaling artifact.
 

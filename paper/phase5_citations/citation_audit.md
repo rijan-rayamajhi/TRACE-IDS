@@ -1,9 +1,9 @@
 # Citation Audit (Phase 5a)
 
-- In-text citations: 84; distinct sources: 41; corpus size: 41
+- In-text citations: 83; distinct sources: 41; corpus size: 41
 - Orphans (cited, not in corpus): none
 - Uncited corpus entries: none
-- Every citation has a slug + anchor: True; anchor kinds: {'section': 84}
+- Every citation has a slug + anchor: True; anchor kinds: {'section': 83}
 - Verified records (DOI/arXiv/publisher opened): 41/41
 - Self-citations: 0 (41 sources; author has no prior publications in the corpus)
 

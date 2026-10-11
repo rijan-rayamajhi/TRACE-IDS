@@ -4,14 +4,14 @@
 #   ./run_all.sh            # everything, in order (~10 h on an 8-core laptop; keep it on AC power)
 #   ./run_all.sh e3 e5      # only the named stages (each stage needs the ones before it to have run once)
 #
-# Stages: data e1 e2 e3 e3shared e4 e5 ablation. Expects data/raw/{cic,unsw,ton,bot}_*.csv (see README).
+# Stages: data e1 e2 e3 e3shared e4 e5 ablation shared nottl e6. Expects data/raw/{cic,unsw,ton,bot}_*.csv (see README).
 # Long stages (e2, e3, e3shared) checkpoint after every seed and resume if re-run.
 set -euo pipefail
 cd "$(dirname "$0")"
 PY=${PY:-.venv/bin/python}
 mkdir -p results
 STAGES=("$@")
-[ ${#STAGES[@]} -eq 0 ] && STAGES=(data e1 e2 e3 e3shared e4 e5 ablation)
+[ ${#STAGES[@]} -eq 0 ] && STAGES=(data e1 e2 e3 e3shared e4 e5 ablation shared nottl e6)
 
 run() {                       # run <log name> <script + args>: tee output into results/<log>_log.txt
   local log=$1; shift
@@ -33,7 +33,11 @@ for s in "${STAGES[@]}"; do
     e4)       run e4       src/e4_checks.py all ;;                       # ~30 min: Atif & Ali zero-shot, TAN-IDS budget
     e5)       run e5       src/e5_mechanism.py all ;;                    # ~2.5 h: domain distance, attack families
     ablation) run e5_ablation src/e5_ablation.py ;;                      # ~1.2 h: greedy feature ablation
-    *)        echo "unknown stage: $s (use: data e1 e2 e3 e3shared e4 e5 ablation)"; exit 1 ;;
+    shared)   TRACE_SCALING=shared run e1_shared src/e1_fewshot.py      # ~20 min: E1 under shared scaling
+              TRACE_SCALING=shared run e4_shared src/e4_checks.py budget ;;  # ~10 min: TAN-IDS budget, shared
+    nottl)    run e2_nottl src/e2_transfer.py --datasets cic unsw ton bot --scaling shared --drop-ttl --out all_nottl_shared ;;  # ~3 h
+    e6)       run e6       src/e6_robustness.py all ;;                   # bacc verdicts, pooled CI, domain-AUC control
+    *)        echo "unknown stage: $s (use: data e1 e2 e3 e3shared e4 e5 ablation shared nottl e6)"; exit 1 ;;
   esac
 done
 echo "== $(date +%H:%M) done; outputs in results/"

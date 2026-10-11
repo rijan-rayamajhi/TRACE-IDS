@@ -284,7 +284,7 @@ unsw->cic A        balanced    0.540         0.541
           all      balanced    0.509         0.552
                    natural     0.208         0.552
 
-## E4b TAN-IDS 5% budget F1
+## E4b TAN-IDS 5% budget F1 (per-domain)
  method           finetune  pooled  source-only  target-only
 direction model                                            
 cic->unsw GBT      0.9979  0.9988       0.0101       0.9996
@@ -293,6 +293,17 @@ cic->unsw GBT      0.9979  0.9988       0.0101       0.9996
 unsw->cic GBT      0.9136  0.9666       0.0631       0.9667
           MLP      0.9656  0.9565       0.1639       0.9594
           RF       0.9662  0.9636       0.1994       0.9638
+
+## E4b TAN-IDS 5% budget F1 (shared)
+ method           finetune  pooled  source-only  target-only
+direction model                                            
+cic->unsw GBT      0.9974  0.9988       0.0089       0.9996
+          MLP      0.9982  0.9942       0.0535       0.9975
+          RF       0.9813  0.9989       0.0015       0.9990
+unsw->cic GBT      0.9422  0.9668       0.1786       0.9667
+          MLP      0.9659  0.9562       0.2625       0.9607
+          RF       0.9677  0.9636       0.2095       0.9638
+E4b target labels per run (shared): {'cic->unsw': 82789, 'unsw->cic': 70404}
 
 ## E5-B domain AUC (mean over seeds): min over pairs per subset/scaling
  subset          scaling
@@ -346,3 +357,212 @@ Runs with MIN_TTL or MAX_TTL among first 5 removed (raw): 24 of 36
 
 ## Single-feature AUC>=0.99: raw 13 zscore 231 of 270
 cic-unsw PROTOCOL: [{'raw': 0.565, 'zscore': 1.0}]
+
+## Verdicts by k, per-domain
+ verdict  help  hurt  no diff
+k                           
+1           9    27       72
+5           3    31       74
+10          4    35       69
+50          8    31       69
+100        10    29       69
+verdicts by pair (sorted by net), per-domain
+ verdict    help  hurt  no diff  net
+direction                          
+ton->cic      9     5       31    4
+unsw->ton     2     5       38   -3
+unsw->bot     5    10       30   -5
+ton->unsw     2     9       34   -7
+bot->ton      0     8       37   -8
+ton->bot      6    14       25   -8
+cic->ton      1    11       33  -10
+cic->unsw     0    11       34  -11
+bot->cic      3    16       26  -13
+unsw->cic     0    14       31  -14
+cic->bot      5    24       16  -19
+bot->unsw     1    26       18  -25
+unsw->bot helps at k, per-domain: {1: 3, 100: 2} hurts at k: {1: 1, 5: 4, 10: 3, 50: 1, 100: 1}
+bot->cic helps at k, per-domain: {1: 3} hurts at k: {1: 3, 5: 1, 10: 3, 50: 4, 100: 5}
+Benjamini-Hochberg (q=0.05) rejections, per-domain: 129 help 19 hurt 110
+
+## Verdicts by k, shared
+ verdict  help  hurt  no diff
+k                           
+1          11    28       69
+5           6    37       65
+10          5    35       68
+50          8    56       44
+100        11    49       48
+verdicts by pair (sorted by net), shared
+ verdict    help  hurt  no diff  net
+direction                          
+unsw->bot     9     3       33    6
+unsw->ton     3     3       39    0
+bot->cic     14    16       15   -2
+ton->unsw     1    13       31  -12
+cic->bot      7    21       17  -14
+ton->bot      6    23       16  -17
+cic->unsw     0    18       27  -18
+ton->cic      0    18       27  -18
+unsw->cic     0    20       25  -20
+bot->ton      1    22       22  -21
+cic->ton      0    23       22  -23
+bot->unsw     0    25       20  -25
+unsw->bot helps at k, shared: {1: 2, 10: 2, 50: 2, 100: 3} hurts at k: {50: 2, 100: 1}
+bot->cic helps at k, shared: {1: 7, 5: 5, 10: 2} hurts at k: {10: 3, 50: 6, 100: 7}
+Benjamini-Hochberg (q=0.05) rejections, shared: 179 help 29 hurt 150
+
+## E6 pooled mean delta over pairs, pair-bootstrap 95% CI
+         scaling metric  mean_delta  ci_low  ci_high  pairs_positive  n_pairs                                                  mean_delta_by_k
+     per-domain     f1     -0.0385 -0.0645  -0.0169               1       12   {1: -0.0521, 5: -0.051, 10: -0.043, 50: -0.0278, 100: -0.0183}
+     per-domain   bacc     -0.0142 -0.0225  -0.0058               3       12  {1: -0.0151, 5: -0.0199, 10: -0.0166, 50: -0.0116, 100: -0.008}
+         shared     f1     -0.0439 -0.0655  -0.0224               3       12  {1: -0.043, 5: -0.0688, 10: -0.0472, 50: -0.0345, 100: -0.0256}
+         shared   bacc     -0.0181 -0.0334  -0.0020               3       12 {1: -0.0053, 5: -0.0345, 10: -0.0246, 50: -0.0159, 100: -0.0099}
+no-TTL (shared)     f1     -0.0562 -0.0797  -0.0298               2       12 {1: -0.0459, 5: -0.0919, 10: -0.0685, 50: -0.0461, 100: -0.0287}
+no-TTL (shared)   bacc     -0.0293 -0.0473  -0.0111               3       12 {1: -0.0047, 5: -0.0555, 10: -0.0447, 50: -0.0253, 100: -0.0161}
+
+## E6 verdicts by metric
+ verdict                 help  hurt  no diff
+scaling         metric                     
+no-TTL (shared) bacc      35   254      251
+                f1        42   228      270
+per-domain      bacc      49   147      344
+                f1        34   153      353
+shared          bacc      35   214      291
+                f1        41   205      294
+BoT-target cells, bacc
+ verdict          help  hurt  no diff
+scaling                             
+no-TTL (shared)    17    37       81
+per-domain         32    15       88
+shared             13    36       86
+
+## E6 within-dataset domain AUC control (two random halves), mean over seeds
+ scaling     raw  zscore
+dataset                
+bot      0.5014     1.0
+cic      0.4986     1.0
+ton      0.5013     1.0
+unsw     0.4983     1.0
+
+## E1 (per-domain) paired source-vs-target-only, F1 (Wilcoxon over 10 seeds), all features vs -TTL
+ direction features   k              mode  delta  seeds_pos     p
+cic->unsw     -TTL   1          source+k -0.088          3 0.064
+cic->unsw     -TTL   1 source+k-weighted -0.100          2 0.027
+cic->unsw     -TTL   5          source+k  0.042          7 0.432
+cic->unsw     -TTL   5 source+k-weighted  0.167          8 0.037
+cic->unsw     -TTL  10          source+k  0.039          6 0.770
+cic->unsw     -TTL  10 source+k-weighted  0.147          8 0.014
+cic->unsw     -TTL  50          source+k -0.006          3 0.275
+cic->unsw     -TTL  50 source+k-weighted  0.006          4 0.625
+cic->unsw     -TTL 100          source+k  0.015          5 0.275
+cic->unsw     -TTL 100 source+k-weighted  0.005          3 0.770
+cic->unsw      all   1          source+k -0.047          2 0.160
+cic->unsw      all   1 source+k-weighted -0.025          3 0.770
+cic->unsw      all   5          source+k  0.003          6 1.000
+cic->unsw      all   5 source+k-weighted  0.056          6 0.432
+cic->unsw      all  10          source+k -0.036          2 0.084
+cic->unsw      all  10 source+k-weighted  0.020          4 0.770
+cic->unsw      all  50          source+k -0.041          0 0.002
+cic->unsw      all  50 source+k-weighted -0.007          0 0.002
+cic->unsw      all 100          source+k -0.004          1 0.014
+cic->unsw      all 100 source+k-weighted -0.004          1 0.027
+unsw->cic     -TTL   1          source+k  0.042          7 0.492
+unsw->cic     -TTL   1 source+k-weighted -0.003          5 1.000
+unsw->cic     -TTL   5          source+k  0.016          5 0.625
+unsw->cic     -TTL   5 source+k-weighted  0.048          7 0.160
+unsw->cic     -TTL  10          source+k  0.034          5 0.770
+unsw->cic     -TTL  10 source+k-weighted  0.076          7 0.064
+unsw->cic     -TTL  50          source+k  0.030          9 0.027
+unsw->cic     -TTL  50 source+k-weighted -0.004          5 0.695
+unsw->cic     -TTL 100          source+k  0.011          9 0.004
+unsw->cic     -TTL 100 source+k-weighted  0.003          7 0.275
+unsw->cic      all   1          source+k -0.034          2 0.131
+unsw->cic      all   1 source+k-weighted -0.031          2 0.322
+unsw->cic      all   5          source+k -0.020          4 0.846
+unsw->cic      all   5 source+k-weighted -0.003          6 0.770
+unsw->cic      all  10          source+k -0.025          2 0.275
+unsw->cic      all  10 source+k-weighted -0.024          4 0.557
+unsw->cic      all  50          source+k  0.030          8 0.049
+unsw->cic      all  50 source+k-weighted -0.015          3 0.193
+unsw->cic      all 100          source+k  0.006          5 0.846
+unsw->cic      all 100 source+k-weighted  0.003          5 0.625
+E1 (per-domain) mean F1 by direction/features/mode, k=1..10
+ features         -TTL                                    all                              
+mode         source+k source+k-weighted target-only source+k source+k-weighted target-only
+direction k                                                                               
+cic->unsw 1     0.074             0.062       0.162    0.107             0.130       0.154
+          5     0.542             0.667       0.500    0.700             0.754       0.697
+          10    0.635             0.743       0.596    0.775             0.832       0.811
+unsw->cic 1     0.344             0.299       0.302    0.262             0.266       0.297
+          5     0.426             0.459       0.411    0.390             0.407       0.410
+          10    0.573             0.614       0.539    0.530             0.531       0.555
+
+## E1 (shared) paired source-vs-target-only, F1 (Wilcoxon over 10 seeds), all features vs -TTL
+ direction features   k              mode  delta  seeds_pos     p
+cic->unsw     -TTL   1          source+k -0.129          1 0.010
+cic->unsw     -TTL   1 source+k-weighted -0.141          0 0.002
+cic->unsw     -TTL   5          source+k -0.316          1 0.004
+cic->unsw     -TTL   5 source+k-weighted -0.263          0 0.002
+cic->unsw     -TTL  10          source+k -0.144          3 0.275
+cic->unsw     -TTL  10 source+k-weighted -0.133          4 0.193
+cic->unsw     -TTL  50          source+k -0.015          5 0.432
+cic->unsw     -TTL  50 source+k-weighted -0.015          6 0.770
+cic->unsw     -TTL 100          source+k -0.001          6 0.922
+cic->unsw     -TTL 100 source+k-weighted  0.002          4 1.000
+cic->unsw      all   1          source+k -0.114          1 0.006
+cic->unsw      all   1 source+k-weighted -0.115          1 0.006
+cic->unsw      all   5          source+k -0.277          2 0.010
+cic->unsw      all   5 source+k-weighted -0.385          0 0.002
+cic->unsw      all  10          source+k -0.086          2 0.432
+cic->unsw      all  10 source+k-weighted -0.151          2 0.375
+cic->unsw      all  50          source+k -0.012          2 0.432
+cic->unsw      all  50 source+k-weighted -0.024          2 0.322
+cic->unsw      all 100          source+k -0.000          1 0.084
+cic->unsw      all 100 source+k-weighted -0.003          1 0.084
+unsw->cic     -TTL   1          source+k -0.028          4 0.492
+unsw->cic     -TTL   1 source+k-weighted -0.036          2 0.193
+unsw->cic     -TTL   5          source+k -0.024          3 0.557
+unsw->cic     -TTL   5 source+k-weighted -0.042          4 0.322
+unsw->cic     -TTL  10          source+k -0.062          1 0.014
+unsw->cic     -TTL  10 source+k-weighted -0.073          1 0.064
+unsw->cic     -TTL  50          source+k -0.057          2 0.014
+unsw->cic     -TTL  50 source+k-weighted -0.111          0 0.002
+unsw->cic     -TTL 100          source+k -0.049          0 0.002
+unsw->cic     -TTL 100 source+k-weighted -0.069          0 0.002
+unsw->cic      all   1          source+k -0.025          4 0.432
+unsw->cic      all   1 source+k-weighted -0.043          3 0.232
+unsw->cic      all   5          source+k -0.021          5 0.846
+unsw->cic      all   5 source+k-weighted -0.042          3 0.375
+unsw->cic      all  10          source+k -0.101          1 0.004
+unsw->cic      all  10 source+k-weighted -0.124          0 0.002
+unsw->cic      all  50          source+k -0.054          1 0.027
+unsw->cic      all  50 source+k-weighted -0.071          0 0.002
+unsw->cic      all 100          source+k -0.027          0 0.002
+unsw->cic      all 100 source+k-weighted -0.040          1 0.004
+E1 (shared) mean F1 by direction/features/mode, k=1..10
+ features         -TTL                                    all                              
+mode         source+k source+k-weighted target-only source+k source+k-weighted target-only
+direction k                                                                               
+cic->unsw 1     0.034             0.022       0.163    0.041             0.039       0.155
+          5     0.183             0.236       0.500    0.421             0.312       0.697
+          10    0.450             0.461       0.594    0.726             0.661       0.811
+unsw->cic 1     0.274             0.266       0.302    0.270             0.252       0.295
+          5     0.381             0.364       0.406    0.381             0.360       0.402
+          10    0.477             0.465       0.538    0.454             0.430       0.555
+
+## No-TTL (shared) F1 verdicts by pair
+ verdict    help  hurt  no diff  net
+direction                          
+unsw->bot    15     0       30   15
+ton->unsw     0     4       41   -4
+bot->unsw     5    15       25  -10
+bot->cic      6    18       21  -12
+cic->unsw     0    13       32  -13
+bot->ton      4    21       20  -17
+cic->bot      6    24       15  -18
+unsw->ton     0    19       26  -19
+ton->bot      6    28       11  -22
+unsw->cic     0    23       22  -23
+ton->cic      0    31       14  -31
+cic->ton      0    32       13  -32

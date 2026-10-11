@@ -4,6 +4,7 @@
 """
 import warnings
 from pathlib import Path
+import numpy as np
 import pandas as pd
 
 warnings.filterwarnings("ignore")
@@ -43,8 +44,10 @@ for tag, f in [("per-domain", "e2_runs_all.csv"), ("shared", "e2_runs_all_shared
 zs = pd.read_csv(R / "e4_zeroshot_summary.csv")
 p("\n## E4a Atif & Ali replication: best F1 / bal_acc per direction, features, test (max over scaling & model)\n",
   zs.groupby(["direction", "features", "test"])[["f1_mean", "bal_acc_mean"]].max().round(3).to_string())
-b = pd.read_csv(R / "e4_budget_summary.csv")
-p("\n## E4b TAN-IDS 5% budget F1\n", b.pivot_table(index=["direction", "model"], columns="method", values="f1_mean").round(4).to_string())
+for btag, bfile in [("per-domain", "e4_budget_summary.csv"), ("shared", "e4_budget_summary_shared.csv")]:
+    b = pd.read_csv(R / bfile)
+    p(f"\n## E4b TAN-IDS 5% budget F1 ({btag})\n", b.pivot_table(index=["direction", "model"], columns="method", values="f1_mean").round(4).to_string())
+p("E4b target labels per run (shared):", pd.read_csv(R / "e4_budget_runs_shared.csv").groupby("direction").n_target_labels.first().to_dict())
 
 d = pd.read_csv(R / "e5_distance.csv")
 m = d.groupby(["pair", "subset", "scaling"]).auc.mean().dropna()
@@ -71,3 +74,57 @@ p("cic-unsw PROTOCOL:", sf[(sf.pair == "cic-unsw") & (sf.feature == "PROTOCOL")]
 
 OUT.write_text("\n".join(L) + "\n")
 print(f"wrote {OUT} ({len(L)} blocks)")
+
+# ---- revision round 1 (review findings 3, 4, 9, 12): verdicts by k / by pair, BH, E6 robustness
+
+
+def bh(pv, q=0.05):
+    """Benjamini-Hochberg step-up: boolean rejections at FDR q."""
+    pv = np.asarray(pv); o = np.argsort(pv); m = len(pv)
+    ok = pv[o] <= q * np.arange(1, m + 1) / m
+    r = np.zeros(m, bool)
+    if ok.any():
+        r[o[: np.max(np.nonzero(ok)) + 1]] = True
+    return r
+
+for tag, f in [("per-domain", "e3_significance.csv"), ("shared", "e3_significance_shared.csv")]:
+    s = pd.read_csv(R / f)
+    p(f"\n## Verdicts by k, {tag}\n", s.groupby("k").verdict.value_counts().unstack(fill_value=0).to_string())
+    bp = s.groupby("direction").verdict.value_counts().unstack(fill_value=0)
+    bp["net"] = bp.get("help", 0) - bp.get("hurt", 0)
+    p(f"verdicts by pair (sorted by net), {tag}\n", bp.sort_values("net", ascending=False).to_string())
+    for d in ("unsw->bot", "bot->cic"):
+        p(f"{d} helps at k, {tag}:", s[(s.direction == d) & (s.verdict == "help")].k.value_counts().sort_index().to_dict(),
+          "hurts at k:", s[(s.direction == d) & (s.verdict == "hurt")].k.value_counts().sort_index().to_dict())
+    rej = bh(s.p)
+    p(f"Benjamini-Hochberg (q=0.05) rejections, {tag}:", int(rej.sum()), "help", int((rej & (s.delta_f1 > 0)).sum()),
+      "hurt", int((rej & (s.delta_f1 < 0)).sum()))
+pe = pd.read_csv(R / "e6_pooled_effect.csv")
+p("\n## E6 pooled mean delta over pairs, pair-bootstrap 95% CI\n", pe.round(4).to_string(index=False))
+vm = pd.read_csv(R / "e6_verdicts_by_metric.csv")
+p("\n## E6 verdicts by metric\n", vm.groupby(["scaling", "metric"]).verdict.value_counts().unstack(fill_value=0).to_string())
+bb = vm[(vm.metric == "bacc") & vm.direction.str.endswith("->bot")]
+p("BoT-target cells, bacc\n", bb.groupby("scaling").verdict.value_counts().unstack(fill_value=0).to_string())
+ct = pd.read_csv(R / "e6_domain_control.csv")
+p("\n## E6 within-dataset domain AUC control (two random halves), mean over seeds\n",
+  ct.groupby(["dataset", "scaling"]).auc.mean().unstack().round(4).to_string())
+from scipy.stats import wilcoxon  # noqa: E402
+for e1tag, e1file in [("per-domain", "e1_runs.csv"), ("shared", "e1_runs_shared.csv")]:
+  e1 = pd.read_csv(R / e1file)
+  rows = []
+  for (d, feat, k), g in e1[e1.k.between(1, 100)].groupby(["direction", "features", "k"]):
+      t = g[g["mode"] == "target-only"].set_index("seed").f1
+      for m in ("source+k", "source+k-weighted"):
+          diff = g[g["mode"] == m].set_index("seed").f1 - t
+          rows.append({"direction": d, "features": feat, "k": k, "mode": m, "delta": round(diff.mean(), 3),
+                       "seeds_pos": int((diff > 0).sum()), "p": round(wilcoxon(diff).pvalue, 3)})
+  p(f"\n## E1 ({e1tag}) paired source-vs-target-only, F1 (Wilcoxon over 10 seeds), all features vs -TTL\n",
+    pd.DataFrame(rows).to_string(index=False))
+  p(f"E1 ({e1tag}) mean F1 by direction/features/mode, k=1..10\n", e1[e1.k.between(1, 10)].pivot_table(
+    index=["direction", "k"], columns=["features", "mode"], values="f1").round(3).to_string())
+  OUT.write_text("\n".join(L) + "\n")
+  print(f"wrote {OUT} ({len(L)} blocks)")
+nt = vm[(vm.scaling == "no-TTL (shared)") & (vm.metric == "f1")].groupby("direction").verdict.value_counts().unstack(fill_value=0)
+nt["net"] = nt.get("help", 0) - nt.get("hurt", 0)
+p("\n## No-TTL (shared) F1 verdicts by pair\n", nt.sort_values("net", ascending=False).to_string())
+OUT.write_text("\n".join(L) + "\n")
