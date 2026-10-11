@@ -22,7 +22,8 @@ run() {                       # run <log name> <script + args>: tee output into 
 for s in "${STAGES[@]}"; do
   case $s in
     data)     run data     src/data_loader.py build
-              run families src/data_loader.py families ;;               # attack-family sidecars for E5
+              run families src/data_loader.py families                  # attack-family sidecars for E5
+              run dataset_table src/dataset_table.py ;;                 # Table 1
     e1)       run e1       src/e1_fewshot.py ;;                          # ~40 min: CIC<->UNSW, RF, ±TTL
     e2)       run e2       src/e2_transfer.py ;;                         # ~30 min: CIC<->UNSW, 3 models x 4 methods
     e3)       run e2_all   src/e2_transfer.py --datasets cic unsw ton bot --out all   # ~3 h: 12 pairs

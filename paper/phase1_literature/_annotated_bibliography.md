@@ -6,7 +6,7 @@
 - **Verified via**: https://www.usenix.org/conference/usenixsecurity22/presentation/arp (BibTeX on page: pages 3971--3988, ISBN 978-1-939133-31-1); also http://export.arxiv.org/api/query?id_list=2010.09470
 - **Summary**: Systematically catalogues ten recurring pitfalls in learning-based security research (e.g., sampling bias, spurious correlations, data snooping, inappropriate baselines, lab-only evaluation) and measures their prevalence in top-tier security papers. Shows through case studies how these pitfalls inflate reported performance.
 - **Relevance**: Supports the framing that spurious correlations/dataset artifacts and inappropriate baselines (here: omitting a target-only baseline) are recognised ML-in-security pitfalls.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: No DOI (USENIX open proceedings). Distinguished Paper Award per USENIX page.
 
 ##### Geirhos et al. (2020). Shortcut learning in deep neural networks. `geirhos2020shortcut`
@@ -14,7 +14,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1038/s42256-020-00257-z
 - **Summary**: Perspective arguing that many deep-learning failures share one cause: shortcuts, i.e. decision rules that score well on standard benchmarks but fail to transfer to harder or real-world test conditions. Offers recommendations for interpretation and out-of-distribution benchmarking.
 - **Relevance**: Conceptual anchor for describing TTL/categorical-code separability as shortcut features that give high in-dataset accuracy but do not transfer across NetFlow datasets.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Crossref title is sentence case 'Shortcut learning in deep neural networks'; arXiv title is 'Shortcut Learning in Deep Neural Networks'. Published online 10 Nov 2020.
 
 ##### Apruzzese et al. (2023). SoK: Pragmatic Assessment of Machine Learning for Network Intrusion Detection. `apruzzese2023sok`
@@ -22,7 +22,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/EuroSP57164.2023.00042
 - **Summary**: Argues research evaluations of ML for NID ignore deployment factors and proposes 'pragmatic assessment', then re-assesses methods across many configurations, adversarial scenarios and hardware, validated with a practitioner user study.
 - **Relevance**: Supports the methodological framing that NIDS evaluation must reflect deployment conditions (here: realistic small target-label budgets).
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Full author names and pages 592-614 confirmed via Crossref DOI lookup.
 
 ##### Sommer & Paxson (2010). Outside the Closed World: On Using Machine Learning for Network Intrusion Detection. `sommer2010outside`
@@ -30,7 +30,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/SP.2010.25
 - **Summary**: Explains why ML anomaly detection is rarely deployed operationally: intrusion detection differs fundamentally from typical ML tasks (cost of errors, semantic gap, diversity of traffic, evaluation difficulty).
 - **Relevance**: Classic framing of the gap between lab evaluation and deployment on new networks.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 
 
 #### Section: related-work
@@ -40,7 +40,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1016/j.cose.2025.104510 ; http://export.arxiv.org/api/query?id_list=2502.06688
 - **Summary**: Systematic literature review of 89 public NIDS datasets compared on 13 properties, with a discussion of domain-specific challenges and common data limitations. Adds a dataset-popularity analysis and best-practice recommendations for dataset selection, generation and use.
 - **Relevance**: Supports background claims that NIDS benchmark datasets have documented quality limitations and that dataset choice affects robustness conclusions.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: arXiv v3 is the accepted version; journal article number 104510, September 2025 issue.
 
 ##### Roszeitis et al. (2026). Few-Shot Learning for Network Intrusion Detection: Methods, Datasets, and Performance. `roszeitis2026fewshot`
@@ -48,7 +48,7 @@
 - **Verified via**: http://export.arxiv.org/api/query?id_list=2609.11275
 - **Summary**: PRISMA-2020-style systematic review of few-shot NIDS work 2022-2026 (1,358 records screened down to 21 studies). Finds meta-learning and CNNs dominate, most studies use five or fewer shots, CIC-IDS2017/CSE-CIC-IDS2018 dominate, and missing parameters/code limit reproducibility.
 - **Relevance**: Supports the few-shot NIDS background and the claim that the field rarely uses common protocols or baselines, motivating a target-only k-shot baseline.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Preprint, v1 10 Sep 2026; not peer reviewed as far as the arXiv record shows. I only read the abstract, so I have not checked whether it reports how many of the 21 studies include a target-only baseline.
 
 ##### Sarhan et al. (2021). Feature Analysis for Machine Learning-based IoT Intrusion Detection. `sarhan2021featureanalysis`
@@ -56,8 +56,8 @@
 - **Verified via**: http://export.arxiv.org/api/query?id_list=2108.12732
 - **Summary**: Ranks NIDS features with chi-square, information gain and correlation, then measures the marginal benefit of adding features for DFF and RF classifiers on UNSW-NB15, CSE-CIC-IDS2018 and ToN-IoT in both original and NetFlow formats. Accuracy rises quickly and saturates after a few features.
 - **Relevance**: Supports the observation that a small number of NetFlow features carries most of the predictive signal, which is relevant to why removing a few dataset-identifying features (e.g. TTL) changes behaviour.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
-- **Notes**: CHECK: this is NOT the NetFlow-v2 datasets paper. If you meant the NetFlow datasets paper, use sarhan2022standard (2101.11315) or sarhan2021netflow (2011.09144). The arXiv record (v2, Nov 2022) lists no journal DOI. A Crossref search found only a Research Square preprint with the same title (DOI 10.21203/rs.3.rs-2035633/v1, 2022), which I did not open separately. arXiv admin note: substantial overlap with 2108.12722, which was published in Digital Communications and Networks as 'Feature extraction for machine learning-based intrusion detection in IoT networks' (DOI 10.1016/j.dcan.2022.08.012).
+- **Method weaknesses**: not assessed (read scope: full_text; AI agent, not author)
+- **Notes**: CHECK: this is NOT the NetFlow-v2 datasets paper. If you meant the NetFlow datasets paper, use sarhan2022standard (2101.11315) or sarhan2021netflow (2011.09144). The arXiv record (v2, Nov 2022) lists no journal DOI. A Crossref search found only a Research Square preprint with the same title (DOI 10.21203/rs.3.rs-2035633/v1, 2022), which I did not open separately. arXiv admin note: substantial overlap with 2108.12722, which was published in Digital Communications and Networks as 'Feature extraction for machine learning-based intrusion detection in IoT networks' (DOI 10.1016/j.dcan.2022.08.012). | TTL VERIFIED (2026-10-11, full text read by AI agent; arXiv v2 PDF): Section 5.1.1, pp.10-12: the top-ranked features by chi-square, information gain and correlation are all TTL-based (sttl, dttl, ct_state_ttl) in UNSW-NB15; a single TTL feature reaches close to full-feature AUC (Fig. 2); authors attribute it to testbed design ('placement of attack and victim nodes'), call it 'similar to what could be called a hidden label', and remove the three TTL features. Conclusion p.19 repeats the recommendation. NOTE: concerns the ORIGINAL UNSW-NB15 features, not NetFlow v3.
 
 ##### Ha Thanh (2026). A transfer-aware, deployment-oriented evaluation framework for NetFlow-based intrusion detection systems (TAN-IDS). `hathanh2026tanids`
 - **Type**: journal-article — PLOS One, vol. 21, no. 4, pp. e0346801 — DOI 10.1371/journal.pone.0346801
@@ -121,7 +121,7 @@
 - **Verified via**: http://export.arxiv.org/api/query?id_list=2609.28725
 - **Summary**: On the CyberFlowIoT-GICAP benchmark (3.6M flows, 126 PCAP sessions), with PCAP-disjoint splits, behaviour-only features give about 92.6% macro-F1 for LightGBM/RF/MLP alike. Adding raw timestamps lets tree models reach 99.28%, exposing temporal shortcuts. Random-flow splitting inflates attack recall by up to 14 points, and some attacks (DNS beaconing) drop to 0% recall without contextual features.
 - **Relevance**: Recent evidence that IoT NIDS benchmarks contain testbed shortcuts (static IP/MAC, timestamps) that inflate accuracy, supporting the dataset-artifact background.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Preprint, 'Currently under review' per arXiv comment. Different dataset (not NetFlow v3).
 
 ##### Xu et al. (2025). Multimodal fusion based few-shot network intrusion detection system. `xu2025multimodal`
@@ -161,7 +161,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/ACCESS.2024.3472907 ; http://export.arxiv.org/api/query?id_list=2402.10974
 - **Summary**: Trains four classifiers on CIC-IDS-2017, CSE-CIC-IDS2018, LycoS-IDS2017 and a new corrected LycoS-Unicas-IDS2018, and evaluates every cross-dataset pair. Same-dataset accuracy is near perfect, but cross-dataset accuracy is mostly near chance. Visualisation reveals dataset anomalies that hinder generalisation.
 - **Relevance**: Core citation for cross-dataset generalisation failure of ML NIDS.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: IEEE DOI = 10.1109/ACCESS.2024.3472907 (confirmed). The arXiv version has a DIFFERENT title: 'On the Cross-Dataset Generalization of Machine Learning for Network Intrusion Detection'. Cite the IEEE title.
 
 ##### Engelen et al. (2021). Troubleshooting an Intrusion Detection Dataset: the CICIDS2017 Case Study. `engelen2021troubleshooting`
@@ -169,14 +169,14 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/SPW53761.2021.00009
 - **Summary**: Audits the CICIDS2017 collection pipeline and finds problems in traffic generation, flow construction, feature extraction and labelling. Over 20% of traces are reconstructed or relabelled, which changes ML benchmark results.
 - **Relevance**: Evidence that NIDS benchmark artifacts and labelling errors affect evaluation (dataset-artifact background).
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 
 ##### Lanvin et al. (2023). Errors in the CICIDS2017 Dataset and the Significant Differences in Detection Performances It Makes. `lanvin2023errors`
 - **Type**: chapter — Risks and Security of Internet and Systems (CRiSIS 2022), Lecture Notes in Computer Science, pp. 18-33 — DOI 10.1007/978-3-031-31108-6_2
 - **Verified via**: https://api.crossref.org/works/10.1007/978-3-031-31108-6_2
 - **Summary**: Identifies labelling and capture flaws in CICIDS2017 (packet misordering, duplication, mislabelled attacks) and measures how correcting them changes supervised detection results.
 - **Relevance**: Supports the claim that benchmark labelling and capture artifacts materially change NIDS evaluation.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Abstract obtained via Semantic Scholar API; metadata via Crossref.
 
 ##### Flood et al. (2024). Bad Design Smells in Benchmark NIDS Datasets. `flood2024bad`
@@ -184,7 +184,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/EuroSP60621.2024.00042
 - **Summary**: Manual analysis of seven highly cited NIDS benchmarks finds six 'data design smells', proposes heuristics to measure them, and shows how they bias experiments and downstream literature.
 - **Relevance**: Best available peer-reviewed support that benchmark design choices create exploitable artifacts. I could not confirm from the abstract whether it specifically discusses TTL in UNSW-NB15.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Full author names and pages 658-675 confirmed via Crossref DOI lookup.
 
 ##### Layeghy & Portmann (2023). Explainable Cross-domain Evaluation of ML-based Network Intrusion Detection Systems. `layeghy2023explainable`
@@ -192,7 +192,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1016/j.compeleceng.2023.108692 ; http://export.arxiv.org/api/query?id_list=2205.04112 (arXiv record links this DOI)
 - **Summary**: Evaluates seven supervised and unsupervised models across four benchmark NIDS datasets in cross-domain settings. No model generalises across all datasets, and generalisation is highly asymmetric when source and target are swapped. SHAP attributes failures to features strongly tied to class in one dataset but not others.
 - **Relevance**: Direct prior evidence (NetFlow-based datasets from the same group) for pair-dependent, asymmetric zero-shot transfer and dataset-specific feature-label correspondences.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Summary is from the arXiv abstract. The arXiv preprint has a different title: 'On Generalisability of Machine Learning-based Network Intrusion Detection Systems'. Its record links this journal DOI, but I did not compare the two versions' contents.
 
 ##### Sarhan et al. (2023). From zero-shot machine learning to zero-day attack detection. `sarhan2023zeroshot`
@@ -200,21 +200,21 @@
 - **Verified via**: https://api.crossref.org/works/10.1007/s10207-023-00676-0
 - **Summary**: Proposes a zero-shot learning evaluation for ML NIDS, in which models map NetFlow features to semantic attributes, to measure detection of attack classes unseen in training (zero-day).
 - **Relevance**: Related NetFlow-dataset work on generalisation beyond training conditions. It concerns unseen classes rather than unseen networks, which helps position this study.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 
 ##### Apruzzese et al. (2022). The Cross-Evaluation of Machine Learning-Based Network Intrusion Detection Systems. `apruzzese2022cross`
 - **Type**: journal-article — IEEE Transactions on Network and Service Management, vol. 19, no. 4, pp. 5152-5169 — DOI 10.1109/TNSM.2022.3157344
 - **Verified via**: https://api.crossref.org/works/10.1109/tnsm.2022.3157344
 - **Summary**: Proposes the first formal model (XeNIDS) for cross-evaluating ML-NIDS across existing labelled datasets, showing it extends detection coverage and exposes risks hidden by single-dataset evaluation.
 - **Relevance**: Supports cross-dataset evaluation as a necessary protocol and the observation that cross-dataset results differ from in-dataset results.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 
 ##### D’hooge et al. (2020). Inter-dataset generalization strength of supervised machine learning methods for intrusion detection. `dhooge2020inter`
 - **Type**: journal-article — Journal of Information Security and Applications, vol. 54, pp. 102564 — DOI 10.1016/j.jisa.2020.102564
 - **Verified via**: https://api.crossref.org/works/10.1016/j.jisa.2020.102564
 - **Summary**: Trains 12 supervised learners on CIC-IDS2017 and CSE-CIC-IDS2018 and tests inter-dataset generalisation on the shared DoS and botnet classes. Models that classify well within a dataset generalise poorly to the related dataset.
 - **Relevance**: Early evidence of cross-dataset generalisation failure for NIDS.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Abstract via Semantic Scholar; the family name uses a typographic apostrophe (D’hooge).
 
 ##### Pan & Yang (2010). A Survey on Transfer Learning. `pan2010survey`
@@ -222,7 +222,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/TKDE.2009.191
 - **Summary**: Defines transfer learning settings (inductive, transductive, unsupervised) and categorises instance-, feature-, parameter- and relational-knowledge transfer. It also discusses negative transfer.
 - **Relevance**: Standard definition of the transfer setting (labelled source plus few labelled target) and of instance re-weighting approaches.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 
 
 #### Section: method
@@ -232,8 +232,8 @@
 - **Verified via**: https://api.crossref.org/works/10.1007/s11036-021-01843-0 ; http://export.arxiv.org/api/query?id_list=2101.11315
 - **Summary**: Argues that dataset-specific proprietary feature sets prevent cross-dataset comparison of ML-based NIDS and proposes standard NetFlow-based feature sets. Evaluates a 12-feature and a 43-feature NetFlow variant (the NetFlow v2 feature set).
 - **Relevance**: Primary citation for the standardised NetFlow feature set that makes the four NF datasets share a common schema, which this study relies on.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
-- **Notes**: Online 10 Nov 2021, issue Feb 2022. Cite year 2022 for the issue (or 2021 for online-first). arXiv admin note: substantial overlap with arXiv:2011.09144.
+- **Method weaknesses**: not assessed (read scope: full_text; AI agent, not author)
+- **Notes**: Online 10 Nov 2021, issue Feb 2022. Cite year 2022 for the issue (or 2021 for online-first). arXiv admin note: substantial overlap with arXiv:2011.09144. | TTL VERIFIED (2026-10-11, full text read by AI agent; arXiv v2 PDF): Section 4 Evaluation, p.8: 'For the UNSW-NB15 and NF-UNSW-NB15-v2 datasets, The Time To Live (TTL)-based features are dropped due to their extreme correlation with the labels.'
 
 ##### Luay et al. (2025). Temporal Analysis of NetFlow Datasets for Network Intrusion Detection Systems. `luay2025temporal`
 - **Type**: preprint — arXiv preprint — arXiv 2503.04404
@@ -255,7 +255,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/ACCESS.2026.3688204
 - **Summary**: Peer-reviewed version of arXiv 2503.04404. Its abstract (via OpenAlex) is identical to the arXiv abstract: it releases NetFlow datasets with temporal features and provides temporal and time-frequency analysis.
 - **Relevance**: Peer-reviewed citation for the NetFlow v3 datasets; prefer citing this alongside or instead of the arXiv version.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: DISCREPANCY: Crossref lists 7 authors including 'Noorbin, Niloufar' and 'Kulatilleke, Gayan', whereas arXiv lists 6 authors including 'Seyedehfaezeh Hosseininoorbin'. I did not read the published full text, so I cannot tell whether its content differs from arXiv v3 (e.g. it may add ML experiments). Check the IEEE PDF before citing specific claims.
 
 ##### Moustafa & Slay (2015). UNSW-NB15: a comprehensive data set for network intrusion detection systems (UNSW-NB15 network data set). `moustafa2015unsw`
@@ -263,7 +263,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/MilCIS.2015.7348942
 - **Summary**: Introduces UNSW-NB15, generated at the UNSW Canberra Cyber Range Lab by mixing real modern normal traffic with synthetic contemporary attacks (IXIA PerfectStorm), as a replacement for KDD98/KDDCUP99/NSL-KDD. Describes feature generation and availability.
 - **Relevance**: Original source dataset underlying NF-UNSW-NB15-v3.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Published Nov 2015.
 
 ##### Sharafaldin et al. (2018). Toward Generating a New Intrusion Detection Dataset and Intrusion Traffic Characterization. `sharafaldin2018toward`
@@ -271,7 +271,7 @@
 - **Verified via**: https://api.crossref.org/works/10.5220/0006639801080116
 - **Summary**: Reviews eleven IDS datasets since 1998 as outdated or unrealistic and presents a new dataset generated from profiled benign behaviour and common attack scenarios, with flow features extracted by CICFlowMeter.
 - **Relevance**: Standard citation for the CIC dataset family underlying NF-CSE-CIC-IDS2018-v3.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: CAUTION: this ICISSP 2018 paper introduces CICIDS2017. CSE-CIC-IDS2018 has no separate peer-reviewed paper and is conventionally cited to this paper plus the UNB/CIC dataset web page. The NF3 paper does the same (its ref [23]). Crossref author family name: 'Habibi Lashkari'.
 
 ##### Moustafa (2021). A new distributed architecture for evaluating AI-based security systems at the edge: Network TON_IoT datasets. `moustafa2021tonnetwork`
@@ -279,7 +279,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1016/j.scs.2021.102994
 - **Summary**: Presents the UNSW Canberra IoT testbed (SDN/NFV, edge-fog-cloud) used to execute normal and attack scenarios and collect the network portion of the TON_IoT datasets.
 - **Relevance**: Primary citation for the network traffic of ToN-IoT, the source of NF-ToN-IoT-v3 (also the reference used by the NF3 paper).
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Use together with or instead of alsaedi2020ton (the telemetry part).
 
 ##### Alsaedi et al. (2020). TON_IoT Telemetry Dataset: A New Generation Dataset of IoT and IIoT for Data-Driven Intrusion Detection Systems. `alsaedi2020ton`
@@ -287,7 +287,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/ACCESS.2020.3022862
 - **Summary**: Introduces the telemetry (IoT/IIoT sensor) part of TON_IoT with binary and attack-type labels and evaluates ML IDSs on it.
 - **Relevance**: Companion ToN_IoT dataset paper; cite alongside moustafa2021tonnetwork.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: This covers telemetry data, not the network flows used by NF-ToN-IoT.
 
 ##### Koroniotis et al. (2019). Towards the development of realistic botnet dataset in the Internet of Things for network forensic analytics: Bot-IoT dataset. `koroniotis2019bot`
@@ -295,7 +295,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1016/j.future.2019.05.041
 - **Summary**: Presents Bot-IoT, combining legitimate and simulated IoT traffic with botnet attacks captured in a realistic testbed, and evaluates it with statistical and ML methods.
 - **Relevance**: Original source dataset underlying NF-BoT-IoT-v3.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Nov 2019 issue. arXiv version 1811.00701 (not opened).
 
 ##### Sarhan et al. (2021). NetFlow Datasets for Machine Learning-Based Network Intrusion Detection Systems. `sarhan2021netflow`
@@ -303,7 +303,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1007/978-3-030-72802-1_9 ; http://export.arxiv.org/api/query?id_list=2011.09144
 - **Summary**: Generates NetFlow-format versions of UNSW-NB15, BoT-IoT, ToN-IoT and CSE-CIC-IDS2018 from their PCAPs (the v1 NF datasets) to provide a common feature set for cross-dataset evaluation.
 - **Relevance**: Origin of the NF dataset series (v1) that NF-v3 extends.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Part B addition.
 
 ##### Shimodaira (2000). Improving predictive inference under covariate shift by weighting the log-likelihood function. `shimodaira2000improving`
@@ -311,7 +311,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1016/S0378-3758(00)00115-4
 - **Summary**: Introduces covariate shift and shows that weighting the log-likelihood by the density ratio of test to training inputs corrects estimation under misspecification.
 - **Relevance**: Foundational citation for the importance-weighted transfer variant.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Abstract not available through the APIs (publisher elides it); summary is from general knowledge of this paper's well-known content. Metadata verified.
 
 ##### Sugiyama et al. (2007). Covariate Shift Adaptation by Importance Weighted Cross Validation. `sugiyama2007covariate`
@@ -319,7 +319,7 @@
 - **Verified via**: https://jmlr.org/papers/v8/sugiyama07a.html
 - **Summary**: Proposes importance-weighted cross-validation (IWCV), which is unbiased under covariate shift, for model selection when training and test input distributions differ.
 - **Relevance**: Supports importance weighting under covariate shift (method background) and the need for weighted validation.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: JMLR page shows '8(35):985-1005, 2007'; no DOI.
 
 ##### Ganin et al. (2016). Domain-Adversarial Training of Neural Networks. `ganin2016domain`
@@ -327,7 +327,7 @@
 - **Verified via**: https://jmlr.org/papers/v17/15-239.html ; http://export.arxiv.org/api/query?id_list=1505.07818
 - **Summary**: Learns features that are discriminative for the task but indistinguishable between source and target domains, using a gradient-reversal layer against a domain classifier, motivated by domain-adaptation theory.
 - **Relevance**: Motivates the domain classifier as a measure of shift: if a classifier separates domains (AUC about 1), invariant features have not been found.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: The JMLR page renders the 7th author as 'Mario March' (truncated). arXiv lists 'Mario Marchand', which I use.
 
 ##### Rabanser et al. (2019). Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift. `rabanser2019failing`
@@ -335,7 +335,7 @@
 - **Verified via**: https://proceedings.neurips.cc/paper_files/paper/2019/hash/846c260d715e5b854ffad5f70a516c88-Abstract.html ; http://export.arxiv.org/api/query?id_list=1810.11953
 - **Summary**: Compares methods for detecting dataset shift (dimensionality reduction plus two-sample tests, and domain classifiers) across shift types. A domain-discriminating classifier is useful for characterising shift, and simple approaches often work well.
 - **Relevance**: Supports using a domain classifier as a shift detector and characteriser (the AUC about 1 separability analysis).
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: NeurIPS page lists the author as 'Zachary Lipton' and arXiv as 'Zachary C. Lipton'. Page numbers not recorded; no DOI.
 
 ##### Wilcoxon (1945). Individual Comparisons by Ranking Methods. `wilcoxon1945individual`
@@ -343,7 +343,7 @@
 - **Verified via**: https://api.crossref.org/works/10.2307/3001968
 - **Summary**: Introduces rank-based tests for paired and unpaired comparisons, including the signed-rank test for paired differences.
 - **Relevance**: Citation for the paired Wilcoxon signed-rank tests (540 tests).
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Crossref gives first page 80 only; the commonly cited range 80-83 is UNVERIFIED here.
 
 ##### Holm (1979). A Simple Sequentially Rejective Multiple Test Procedure. `holm1979simple`
@@ -351,7 +351,7 @@
 - **Verified via**: https://api.openalex.org/works?search=simple%20sequentially%20rejective%20multiple%20test%20procedure (record W2121044470)
 - **Summary**: Introduces the step-down (Holm) procedure, which controls the family-wise error rate and is uniformly more powerful than plain Bonferroni.
 - **Relevance**: Citation for the Holm correction applied to the Wilcoxon tests.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Verified via OpenAlex only (title, author, year, vol 6, pp 65-70); the JSTOR page blocked automated access. OpenAlex lists DOI 10.2307/4615733, but doi.org returned HTTP 404, so doi is set to null. Issue number (2) is UNVERIFIED and left null.
 
 ##### Demšar (2006). Statistical Comparisons of Classifiers over Multiple Data Sets. `demsar2006statistical`
@@ -359,7 +359,7 @@
 - **Verified via**: https://jmlr.org/papers/v7/demsar06a.html
 - **Summary**: Reviews practice and recommends non-parametric tests for comparing classifiers over multiple data sets: the Wilcoxon signed-ranks test for two classifiers and Friedman with post-hoc tests (CD diagrams) for more.
 - **Relevance**: Justifies using Wilcoxon signed-rank tests for paired classifier/strategy comparisons.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: JMLR page shows 7(1):1-30, 2006; no DOI.
 
 ##### Grinsztajn et al. (2022). Why do tree-based models still outperform deep learning on typical tabular data?. `grinsztajn2022why`
@@ -367,7 +367,7 @@
 - **Verified via**: https://papers.nips.cc/paper_files/paper/2022/hash/0378c7692da36807bdec87ab043cdadc-Abstract-Datasets_and_Benchmarks.html ; http://export.arxiv.org/api/query?id_list=2207.08815
 - **Summary**: Benchmarks deep learning against tree ensembles (XGBoost, RF) on 45 medium-sized tabular datasets with extensive tuning. Trees remain state of the art, and the paper analyses the inductive biases behind this.
 - **Relevance**: Optional: justifies RF/GBT as strong tabular baselines alongside an MLP.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: TITLE DIFFERS: the NeurIPS proceedings title includes 'typical' ('...on typical tabular data?'); arXiv v1 omits it. Use the NeurIPS title. Author names have accents on the NeurIPS page omitted; arXiv uses Léo/Gaël.
 
 
@@ -378,7 +378,7 @@
 - **Verified via**: https://api.crossref.org/works/10.1007/s10994-009-5152-4
 - **Summary**: Bounds target error by source error plus a classifier-induced divergence between domains that can be estimated from unlabelled data. Also analyses how to weight a small labelled target set against a large source set.
 - **Relevance**: Theoretical basis for using a domain classifier as a divergence measure, and for why combining source and few target labels can fail when divergence is large. Directly matches this study's design.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)
 - **Notes**: Online Oct 2009, issue May 2010; cite 2010.
 
 ##### Zhang et al. (2023). A Survey on Negative Transfer. `zhang2023negative`
@@ -386,4 +386,4 @@
 - **Verified via**: https://api.crossref.org/works/10.1109/JAS.2022.106004
 - **Summary**: Defines negative transfer (source data reducing target performance), reviews its causes, and surveys over fifty mitigation approaches grouped into domain-similarity estimation, safe transfer and NT mitigation.
 - **Relevance**: Supports interpreting cases where pooled, weighted or fine-tuned source data underperform target-only training as negative transfer.
-- **Method weaknesses**: not assessed (read scope: abstract_only)
+- **Method weaknesses**: not assessed (read scope: abstract_only; AI agent, not author)

@@ -202,9 +202,9 @@
     "abstract_summary": "Argues that dataset-specific proprietary feature sets prevent cross-dataset comparison of ML-based NIDS and proposes standard NetFlow-based feature sets. Evaluates a 12-feature and a 43-feature NetFlow variant (the NetFlow v2 feature set).",
     "relevance": "Primary citation for the standardised NetFlow feature set that makes the four NF datasets share a common schema, which this study relies on.",
     "section": "method",
-    "read_scope": "abstract_only",
+    "read_scope": "full_text",
     "method_weaknesses": null,
-    "notes": "Online 10 Nov 2021, issue Feb 2022. Cite year 2022 for the issue (or 2021 for online-first). arXiv admin note: substantial overlap with arXiv:2011.09144."
+    "notes": "Online 10 Nov 2021, issue Feb 2022. Cite year 2022 for the issue (or 2021 for online-first). arXiv admin note: substantial overlap with arXiv:2011.09144. | TTL VERIFIED (2026-10-11, full text read by AI agent; arXiv v2 PDF): Section 4 Evaluation, p.8: 'For the UNSW-NB15 and NF-UNSW-NB15-v2 datasets, The Time To Live (TTL)-based features are dropped due to their extreme correlation with the labels.'"
   },
   {
     "citation_key": "sarhan2021featureanalysis",
@@ -237,9 +237,9 @@
     "abstract_summary": "Ranks NIDS features with chi-square, information gain and correlation, then measures the marginal benefit of adding features for DFF and RF classifiers on UNSW-NB15, CSE-CIC-IDS2018 and ToN-IoT in both original and NetFlow formats. Accuracy rises quickly and saturates after a few features.",
     "relevance": "Supports the observation that a small number of NetFlow features carries most of the predictive signal, which is relevant to why removing a few dataset-identifying features (e.g. TTL) changes behaviour.",
     "section": "related-work",
-    "read_scope": "abstract_only",
+    "read_scope": "full_text",
     "method_weaknesses": null,
-    "notes": "CHECK: this is NOT the NetFlow-v2 datasets paper. If you meant the NetFlow datasets paper, use sarhan2022standard (2101.11315) or sarhan2021netflow (2011.09144). The arXiv record (v2, Nov 2022) lists no journal DOI. A Crossref search found only a Research Square preprint with the same title (DOI 10.21203/rs.3.rs-2035633/v1, 2022), which I did not open separately. arXiv admin note: substantial overlap with 2108.12722, which was published in Digital Communications and Networks as 'Feature extraction for machine learning-based intrusion detection in IoT networks' (DOI 10.1016/j.dcan.2022.08.012)."
+    "notes": "CHECK: this is NOT the NetFlow-v2 datasets paper. If you meant the NetFlow datasets paper, use sarhan2022standard (2101.11315) or sarhan2021netflow (2011.09144). The arXiv record (v2, Nov 2022) lists no journal DOI. A Crossref search found only a Research Square preprint with the same title (DOI 10.21203/rs.3.rs-2035633/v1, 2022), which I did not open separately. arXiv admin note: substantial overlap with 2108.12722, which was published in Digital Communications and Networks as 'Feature extraction for machine learning-based intrusion detection in IoT networks' (DOI 10.1016/j.dcan.2022.08.012). | TTL VERIFIED (2026-10-11, full text read by AI agent; arXiv v2 PDF): Section 5.1.1, pp.10-12: the top-ranked features by chi-square, information gain and correlation are all TTL-based (sttl, dttl, ct_state_ttl) in UNSW-NB15; a single TTL feature reaches close to full-feature AUC (Fig. 2); authors attribute it to testbed design ('placement of attack and victim nodes'), call it 'similar to what could be called a hidden label', and remove the three TTL features. Conclusion p.19 repeats the recommendation. NOTE: concerns the ORIGINAL UNSW-NB15 features, not NetFlow v3."
   },
   {
     "citation_key": "luay2025temporal",

@@ -38,7 +38,12 @@ No distributional skew advisory triggered:
 
 ## Corrections to earlier assumptions (act on these before drafting)
 
-1. **TTL artifact support is thin.** The NetFlow v3 paper (`luay2025temporal`) does **not** warn about TTL or any artifact feature (Sections 1–6 checked). The only verified source that states the TTL mechanism is Atif & Ali (`atif2026threeaxis`, §3.3), on NetFlow v2, and it shows no TTL distributions. `PUBLICATION_PLAN.md` also attributes a "TTL = hidden label" statement to Sarhan et al. 2108.12732 §5.1.1. That paper is actually a feature-ranking study (`sarhan2021featureanalysis`), and it was screened on its abstract only, so **that citation is not yet confirmed**. Someone must open 2108.12732 and 2101.11315 and check the TTL statements before the paper cites them for TTL.
+1. **TTL artifact: now verified (2026-10-11).** The NetFlow v3 paper (`luay2025temporal`) does **not** warn about TTL (Sections 1–6 checked). TTL support comes from three sources, each read in full by an AI agent:
+   - Sarhan et al. 2108.12732 (`sarhan2021featureanalysis`), §5.1.1, pp. 10–12: on the original UNSW-NB15 features, a single TTL feature reaches close to full-feature AUC. The authors attribute this to testbed design and call it "similar to … a 'hidden label'".
+   - Sarhan et al. 2101.11315 (`sarhan2022standard`), §4, p. 8: TTL features are dropped from UNSW-NB15 and NF-UNSW-NB15-v2 "due to their extreme correlation with the labels."
+   - Atif & Ali §3.3 (NF v2): TTL is described as a source-host artifact.
+
+   **No source checks NF v3**, so this paper's E1 (−TTL) and E5 ablation are the first test of TTL on v3 within this search.
 2. **2503.04404** was published as *"Time Matters: Temporal NetFlow Features for ML-Based Network Intrusion Detection"*, IEEE Access 14:66899–66913 (2026), DOI 10.1109/ACCESS.2026.3688204 (`luay2026timematters`). The author list differs from the arXiv record. Cite the published version for the NF v3 datasets once its full text is checked.
 3. **Kim 2026** is about host logs (Linux syscalls ↔ Windows Sysmon), not network flows. Cite it for target-only baselines in few-shot domain adaptation, not as NetFlow work.
 4. **Xu et al. 2025 and Kim 2026 *do* include a target-only baseline.** The paper must say "few NIDS studies", not "no study". Within this search, the NetFlow-specific gap still holds (see *Identified Gaps*).
