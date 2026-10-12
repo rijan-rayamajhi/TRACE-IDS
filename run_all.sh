@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Rebuild every table and figure of the paper from the raw NetFlow v3 CSVs (GUARDRAILS B1/B2).
+# Rebuild every table and figure of the paper from the raw NetFlow v3 CSVs.
 #
 #   ./run_all.sh            # everything, in order (~10 h on an 8-core laptop; keep it on AC power)
 #   ./run_all.sh e3 e5      # only the named stages (each stage needs the ones before it to have run once)

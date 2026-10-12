@@ -1,16 +1,16 @@
 # TRACE-IDS
 
-**Does source data help few-shot cross-dataset intrusion detection?** A leak-free, multi-seed study
-on the four NetFlow v3 datasets (NF-CICIDS2018-v3, NF-UNSW-NB15-v3, NF-ToN-IoT-v3, NF-BoT-IoT-v3).
+**Is it transfer? Does source data help few-shot cross-dataset intrusion detection?**
+A leak-free, multi-seed study on the four NetFlow v3 datasets (NF-CICIDS2018-v3, NF-UNSW-NB15-v3,
+NF-ToN-IoT-v3, NF-BoT-IoT-v3).
 
-> **Status (2026-10-11): experiments complete, paper in preparation.** Plan and full results log:
-> [`PUBLICATION_PLAN.md`](PUBLICATION_PLAN.md).
->
-> **The earlier version of this project is withdrawn.** Its headline ("per-dataset z-score alignment
-> lifts cross-dataset F1 from 0.00 to 0.51"), the few-shot numbers in `report/report.tex`, and
-> `report/TRACE-IDS.pdf` are invalid: the old loader dropped 28% of UNSW-NB15 attacks, normalization
-> leaked target-test statistics, and results came from a single seed. Per-domain z-scoring is now a
-> known *confound* (see finding 4), not a contribution.
+📄 **Paper (preprint):** Rijan Rayamajhi, *Is It Transfer? A Target-Only Control Finds No Consistent Source
+Benefit in Few-Shot Cross-Dataset Intrusion Detection on NetFlow*, Preprints.org, 2026.
+DOI: [10.20944/preprints202610.1041.v1](https://doi.org/10.20944/preprints202610.1041.v1) — not yet peer-reviewed.
+
+**In one sentence:** when a detector moves to a new network and a few target flows are labelled, a model
+trained on those labels alone does as well as or better than models that also use another network's data;
+averaged over 12 dataset pairs the source lowers F1 by 0.044 (95% CI −0.066 to −0.022).
 
 ## Question
 
@@ -82,30 +82,64 @@ sparse columns, keeps 45 flow features + binary label, and subsamples the large 
 
 ```
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt   # Python 3.9, pinned versions
-./run_all.sh                 # every stage, ~10 h on an 8-core laptop (keep it on AC power)
-./run_all.sh e3shared        # or one stage at a time: data e1 e2 e3 e3shared e4 e5 ablation
+./run_all.sh                 # every stage, ~14 h on an 8-core laptop (keep it on AC power)
+./run_all.sh e3shared        # or one stage at a time (see table)
 ```
 
 | Stage | Script | Question | Main outputs (`results/`) |
 |---|---|---|---|
-| data | `data_loader.py build`, `families` | unified parquet + attack-family sidecars | `data/processed/*.parquet` |
+| data | `data_loader.py build`, `families`; `dataset_table.py` | unified parquet, attack families, Table 1 | `data/processed/*.parquet`, `dataset_table.csv` |
 | e1 | `e1_fewshot.py` | CIC↔UNSW, RF: source+k vs target-only, ±TTL | `e1_summary.csv`, `e1_recovery.png` |
 | e2 | `e2_transfer.py` | CIC↔UNSW, 3 models × 4 methods | `e2_summary.csv`, `e2_transfer.png` |
-| e3 | `e2_transfer.py --out all`, `e3_analysis.py` | all 12 pairs, significance | `e3_significance.csv`, `e3_heatmap.png` |
-| e3shared | same, `--scaling shared` / `--tag shared` | scaling-confound check | `e3_significance_shared.csv`, `e3_heatmap_shared.png` |
-| e4 | `e4_checks.py all` | Atif & Ali zero-shot; TAN-IDS 5% budget | `e4_zeroshot_summary.csv`, `e4_budget_summary.csv` |
+| e3 | `e2_transfer.py --out all`, `e3_analysis.py` | all 12 pairs, per-domain scaling | `e3_significance.csv`, `e3_heatmap.png` |
+| e3shared | same with `--scaling shared` | all 12 pairs, shared scaling (main setting) | `e3_significance_shared.csv`, `e3_heatmap_shared.png` |
+| e4 | `e4_checks.py all` | Atif & Ali zero-shot replication; TAN-IDS 5% budget | `e4_zeroshot_summary.csv`, `e4_budget_summary.csv` |
 | e5 | `e5_mechanism.py all` | domain distance, per-attack-family recall | `e5_distance.csv`, `e5_families_summary.csv` |
-| ablation | `e5_ablation.py` | is separability one column? | `e5_ablation_summary.csv`, `e5_ablation.png` |
+| ablation | `e5_ablation.py` (+ `--single`) | is separability one column? | `e5_ablation_summary.csv`, `e5_single_feature.csv` |
+| shared | `e1_fewshot.py`, `e4_checks.py budget` with `TRACE_SCALING=shared` | E1 and budget check, shared scaling | `e1_runs_shared.csv`, `e4_budget_summary_shared.csv` |
+| nottl | `e2_transfer.py --drop-ttl --scaling shared` | all 12 pairs without TTL | `e2_runs_all_nottl_shared.csv` |
+| e6 | `e6_robustness.py all` | balanced-accuracy verdicts, pooled CI, separability sanity check | `e6_*.csv` |
 
 Protocol (all stages, `src/common.py`): per seed the target is split 50/50 into an unlabelled pool
 and a test set; normalization statistics come only from the source sample and the unlabelled pool;
 few-shot draws are nested across k; seeds 0–9.
 
-`baseline.py`, `fewshot.py`, `invariant.py`, `reliability.py`, `evaluate.py` belong to the withdrawn
-earlier version and are kept only for history.
+## Repository layout
+
+```
+src/                 experiment code (one script per stage above)
+run_all.sh           rebuilds every result from the raw CSVs
+results/             outputs (not committed; regenerated by run_all.sh)
+paper/               how the paper was written, step by step:
+  phase1_literature/   verified references (references.json)
+  phase3_argument/     extract_facts.py → facts.md: every number the paper uses, printed from results/
+  phase4_draft/        the manuscript in Markdown (draft.md)
+  phase6_review/       two rounds of internal review and how they were addressed
+  phase7_latex/        LaTeX source of the preprint (main.tex, references.bib, figures/)
+```
+
+An earlier version of this project (a per-dataset "alignment" result) was withdrawn after a data-loading
+bug, normalization leakage and single-seed runs were found; it remains only in git history.
+
+## How to cite
+
+```bibtex
+@misc{rayamajhi2026transfer,
+  author = {Rayamajhi, Rijan},
+  title  = {Is It Transfer? {A} Target-Only Control Finds No Consistent Source Benefit in Few-Shot
+            Cross-Dataset Intrusion Detection on {NetFlow}},
+  year   = {2026},
+  howpublished = {Preprints.org},
+  doi    = {10.20944/preprints202610.1041.v1}
+}
+```
 
 ## Scope
 
 Offline, batch, single machine, no GPU. Measured: binary flow classification on four public NetFlow v3
 datasets. Not measured: real-time deployment, adversarial evasion, other feature sets or deep models
 beyond a small MLP. A cross-dataset result on public testbeds is not a claim about real networks.
+
+## Contact
+
+Rijan Rayamajhi · rayamajhirijan5051@gmail.com · ORCID [0009-0007-0344-7552](https://orcid.org/0009-0007-0344-7552)

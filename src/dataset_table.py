@@ -1,4 +1,4 @@
-"""Table 1 of the paper: the four processed NetFlow v3 datasets (GUARDRAILS B1 — printed by code).
+"""Table 1 of the paper: the four processed NetFlow v3 datasets (printed by code).
 
     python src/dataset_table.py
 

@@ -14,7 +14,7 @@ from sklearn.metrics import confusion_matrix
 
 OUT = Path("data/processed")
 RES = Path("results")
-SEEDS = list(range(10))                 # GUARDRAILS B5: fixed seeds, reported as mean ± std
+SEEDS = list(range(10))                 # fixed seeds, reported as mean ± std
 # Scaling for E1/E4-budget/E5-families: "domain" = each domain z-scored by its own stats (original runs);
 # "shared" = both domains z-scored with one set of stats (source sample + unlabelled pool). Outputs get SCALING_TAG.
 SCALING = os.environ.get("TRACE_SCALING", "domain")

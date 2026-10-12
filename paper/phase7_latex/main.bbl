@@ -1,0 +1,126 @@
+\begin{thebibliography}{99}
+
+\bibitem{cantone2024cross}
+M. Cantone, C. Marrocco, and A. Bria, ``Machine Learning in Network Intrusion Detection: A Cross-Dataset Generalization Study,'' \emph{IEEE Access}, vol. 12, pp. 144489--144508, 2024, doi: \url{10.1109/ACCESS.2024.3472907}.
+
+\bibitem{apruzzese2022cross}
+G. Apruzzese, L. Pajola, and M. Conti, ``The Cross-Evaluation of Machine Learning-Based Network Intrusion Detection Systems,'' \emph{IEEE Transactions on Network and Service Management}, vol. 19, no. 4, pp. 5152--5169, 2022, doi: \url{10.1109/TNSM.2022.3157344}.
+
+\bibitem{dhooge2020inter}
+L. D'hooge, T. Wauters, B. Volckaert, and F. De Turck, ``Inter-dataset generalization strength of supervised machine learning methods for intrusion detection,'' \emph{Journal of Information Security and Applications}, vol. 54, Art. no. 102564, 2020, doi: \url{10.1016/j.jisa.2020.102564}.
+
+\bibitem{layeghy2023explainable}
+S. Layeghy and M. Portmann, ``Explainable Cross-domain Evaluation of ML-based Network Intrusion Detection Systems,'' \emph{Computers and Electrical Engineering}, vol. 108, Art. no. 108692, 2023, doi: \url{10.1016/j.compeleceng.2023.108692}.
+
+\bibitem{sommer2010outside}
+R. Sommer and V. Paxson, ``Outside the Closed World: On Using Machine Learning for Network Intrusion Detection,'' in \emph{2010 IEEE Symposium on Security and Privacy}, 2010, pp. 305--316, doi: \url{10.1109/SP.2010.25}.
+
+\bibitem{hathanh2026tanids}
+D. Ha Thanh, ``A transfer-aware, deployment-oriented evaluation framework for NetFlow-based intrusion detection systems (TAN-IDS),'' \emph{PLOS One}, vol. 21, no. 4, Art. no. e0346801, 2026, doi: \url{10.1371/journal.pone.0346801}.
+
+\bibitem{hakim2026crossdomain}
+M. A. Hakim, M. S. Uddin, and T. I. Anis, ``Cross-Domain Generalization Failure in Lightweight Intrusion Detection Models for IIoT Networks,'' arXiv preprint arXiv:2607.00553, 2026.
+
+\bibitem{roszeitis2026fewshot}
+A. Roszeitis, V. J{\"u}ttner, and E. Buchmann, ``Few-Shot Learning for Network Intrusion Detection: Methods, Datasets, and Performance,'' arXiv preprint arXiv:2609.11275, 2026.
+
+\bibitem{arp2022dos}
+D. Arp et al., ``Dos and Don'ts of Machine Learning in Computer Security,'' in \emph{31st USENIX Security Symposium (USENIX Security 22)}, 2022, pp. 3971--3988.
+
+\bibitem{luay2025temporal}
+M. Luay, S. Layeghy, S. Hosseininoorbin, M. Sarhan, N. Moustafa, and M. Portmann, ``Temporal Analysis of NetFlow Datasets for Network Intrusion Detection Systems,'' arXiv preprint arXiv:2503.04404, 2025.
+
+\bibitem{atif2026threeaxis}
+M. E. Atif and M. H. Ali, ``A Three-Axis Stress Test of LLM vs Classical ML for Network Intrusion Detection under Distribution Shift and Adversarial Evasion,'' arXiv preprint arXiv:2609.13511, 2026.
+
+\bibitem{sarhan2023zeroshot}
+M. Sarhan, S. Layeghy, M. Gallagher, and M. Portmann, ``From zero-shot machine learning to zero-day attack detection,'' \emph{International Journal of Information Security}, vol. 22, no. 4, pp. 947--959, 2023, doi: \url{10.1007/s10207-023-00676-0}.
+
+\bibitem{xu2025multimodal}
+C. Xu, Y. Zhan, Z. Wang, and J. Yang, ``Multimodal fusion based few-shot network intrusion detection system,'' \emph{Scientific Reports}, vol. 15, no. 1, Art. no. 21986, 2025, doi: \url{10.1038/s41598-025-05217-4}.
+
+\bibitem{kim2026prototype}
+K. Kim, ``Prototype-Based Transferability Analysis for Few-Shot Domain Adaptation in Cross-Domain Intrusion Detection,'' \emph{Applied Sciences}, vol. 16, no. 14, Art. no. 6957, 2026, doi: \url{10.3390/app16146957}.
+
+\bibitem{geirhos2020shortcut}
+R. Geirhos et al., ``Shortcut learning in deep neural networks,'' \emph{Nature Machine Intelligence}, vol. 2, no. 11, pp. 665--673, 2020, doi: \url{10.1038/s42256-020-00257-z}.
+
+\bibitem{engelen2021troubleshooting}
+G. Engelen, V. Rimmer, and W. Joosen, ``Troubleshooting an Intrusion Detection Dataset: the CICIDS2017 Case Study,'' in \emph{2021 IEEE Security and Privacy Workshops (SPW)}, 2021, pp. 7--12, doi: \url{10.1109/SPW53761.2021.00009}.
+
+\bibitem{lanvin2023errors}
+M. Lanvin, P. Gimenez, Y. Han, F. Majorczyk, L. M{\'e}, and {\'E}. Totel, ``Errors in the CICIDS2017 Dataset and the Significant Differences in Detection Performances It Makes,'' in \emph{Risks and Security of Internet and Systems (CRiSIS 2022), Lecture Notes in Computer Science}, 2023, pp. 18--33, doi: \url{10.1007/978-3-031-31108-6_2}.
+
+\bibitem{flood2024bad}
+R. Flood, G. Engelen, D. Aspinall, and L. Desmet, ``Bad Design Smells in Benchmark NIDS Datasets,'' in \emph{2024 IEEE 9th European Symposium on Security and Privacy (EuroS\&P)}, 2024, pp. 658--675, doi: \url{10.1109/EuroSP60621.2024.00042}.
+
+\bibitem{goldschmidt2025network}
+P. Goldschmidt and D. Chud{\'a}, ``Network intrusion datasets: A survey, limitations, and recommendations,'' \emph{Computers \& Security}, vol. 156, Art. no. 104510, 2025, doi: \url{10.1016/j.cose.2025.104510}.
+
+\bibitem{roy2026unmasking}
+U. S. Roy and M. J. Minu, ``Unmasking Shortcut Learning in IoT Intrusion Detection: A Forensic, Multi-Paradigm Evaluation of Feature Dependence and Data Leakage,'' arXiv preprint arXiv:2609.28725, 2026.
+
+\bibitem{apruzzese2023sok}
+G. Apruzzese, P. Laskov, and J. Schneider, ``SoK: Pragmatic Assessment of Machine Learning for Network Intrusion Detection,'' in \emph{2023 IEEE 8th European Symposium on Security and Privacy (EuroS\&P)}, 2023, pp. 592--614, doi: \url{10.1109/EuroSP57164.2023.00042}.
+
+\bibitem{sarhan2021featureanalysis}
+M. Sarhan, S. Layeghy, and M. Portmann, ``Feature Analysis for Machine Learning-based IoT Intrusion Detection,'' arXiv preprint arXiv:2108.12732, 2021.
+
+\bibitem{sarhan2022standard}
+M. Sarhan, S. Layeghy, and M. Portmann, ``Towards a Standard Feature Set for Network Intrusion Detection System Datasets,'' \emph{Mobile Networks and Applications}, vol. 27, no. 1, pp. 357--370, 2022, doi: \url{10.1007/s11036-021-01843-0}.
+
+\bibitem{pan2010survey}
+S. J. Pan and Q. Yang, ``A Survey on Transfer Learning,'' \emph{IEEE Transactions on Knowledge and Data Engineering}, vol. 22, no. 10, pp. 1345--1359, 2010, doi: \url{10.1109/TKDE.2009.191}.
+
+\bibitem{zhang2023negative}
+W. Zhang, L. Deng, L. Zhang, and D. Wu, ``A Survey on Negative Transfer,'' \emph{IEEE/CAA Journal of Automatica Sinica}, vol. 10, no. 2, pp. 305--329, 2023, doi: \url{10.1109/JAS.2022.106004}.
+
+\bibitem{bendavid2010theory}
+S. Ben-David, J. Blitzer, K. Crammer, A. Kulesza, F. Pereira, and J. W. Vaughan, ``A theory of learning from different domains,'' \emph{Machine Learning}, vol. 79, no. 1-2, pp. 151--175, 2010, doi: \url{10.1007/s10994-009-5152-4}.
+
+\bibitem{shimodaira2000improving}
+H. Shimodaira, ``Improving predictive inference under covariate shift by weighting the log-likelihood function,'' \emph{Journal of Statistical Planning and Inference}, vol. 90, no. 2, pp. 227--244, 2000, doi: \url{10.1016/S0378-3758(00)00115-4}.
+
+\bibitem{sugiyama2007covariate}
+M. Sugiyama, M. Krauledat, and K. M{\"u}ller, ``Covariate Shift Adaptation by Importance Weighted Cross Validation,'' \emph{Journal of Machine Learning Research}, vol. 8, no. 35, pp. 985--1005, 2007.
+
+\bibitem{ganin2016domain}
+Y. Ganin et al., ``Domain-Adversarial Training of Neural Networks,'' \emph{Journal of Machine Learning Research}, vol. 17, no. 59, pp. 1--35, 2016.
+
+\bibitem{luay2026timematters}
+M. Luay et al., ``Time Matters: Temporal NetFlow Features for ML-Based Network Intrusion Detection,'' \emph{IEEE Access}, vol. 14, pp. 66899--66913, 2026, doi: \url{10.1109/ACCESS.2026.3688204}.
+
+\bibitem{sarhan2021netflow}
+M. Sarhan, S. Layeghy, N. Moustafa, and M. Portmann, ``NetFlow Datasets for Machine Learning-Based Network Intrusion Detection Systems,'' in \emph{Big Data Technologies and Applications (BDTA 2020), LNICST}, 2021, pp. 117--135, doi: \url{10.1007/978-3-030-72802-1_9}.
+
+\bibitem{moustafa2015unsw}
+N. Moustafa and J. Slay, ``UNSW-NB15: a comprehensive data set for network intrusion detection systems (UNSW-NB15 network data set),'' in \emph{2015 Military Communications and Information Systems Conference (MilCIS)}, 2015, pp. 1--6, doi: \url{10.1109/MilCIS.2015.7348942}.
+
+\bibitem{sharafaldin2018toward}
+I. Sharafaldin, A. Habibi Lashkari, and A. A. Ghorbani, ``Toward Generating a New Intrusion Detection Dataset and Intrusion Traffic Characterization,'' in \emph{Proceedings of the 4th International Conference on Information Systems Security and Privacy (ICISSP)}, 2018, pp. 108--116, doi: \url{10.5220/0006639801080116}.
+
+\bibitem{moustafa2021tonnetwork}
+N. Moustafa, ``A new distributed architecture for evaluating AI-based security systems at the edge: Network TON\_IoT datasets,'' \emph{Sustainable Cities and Society}, vol. 72, Art. no. 102994, 2021, doi: \url{10.1016/j.scs.2021.102994}.
+
+\bibitem{alsaedi2020ton}
+A. Alsaedi, N. Moustafa, Z. Tari, A. Mahmood, and A. Anwar, ``TON\_IoT Telemetry Dataset: A New Generation Dataset of IoT and IIoT for Data-Driven Intrusion Detection Systems,'' \emph{IEEE Access}, vol. 8, pp. 165130--165150, 2020, doi: \url{10.1109/ACCESS.2020.3022862}.
+
+\bibitem{koroniotis2019bot}
+N. Koroniotis, N. Moustafa, E. Sitnikova, and B. Turnbull, ``Towards the development of realistic botnet dataset in the Internet of Things for network forensic analytics: Bot-IoT dataset,'' \emph{Future Generation Computer Systems}, vol. 100, pp. 779--796, 2019, doi: \url{10.1016/j.future.2019.05.041}.
+
+\bibitem{grinsztajn2022why}
+L. Grinsztajn, E. Oyallon, and G. Varoquaux, ``Why do tree-based models still outperform deep learning on typical tabular data?,'' in \emph{Advances in Neural Information Processing Systems 35 (NeurIPS 2022), Datasets and Benchmarks Track}, 2022.
+
+\bibitem{wilcoxon1945individual}
+F. Wilcoxon, ``Individual Comparisons by Ranking Methods,'' \emph{Biometrics Bulletin}, vol. 1, no. 6, p. 80, 1945, doi: \url{10.2307/3001968}.
+
+\bibitem{demsar2006statistical}
+J. Dem{\v{s}}ar, ``Statistical Comparisons of Classifiers over Multiple Data Sets,'' \emph{Journal of Machine Learning Research}, vol. 7, no. 1, pp. 1--30, 2006.
+
+\bibitem{holm1979simple}
+S. Holm, ``A Simple Sequentially Rejective Multiple Test Procedure,'' \emph{Scandinavian Journal of Statistics}, vol. 6, pp. 65--70, 1979.
+
+\bibitem{rabanser2019failing}
+S. Rabanser, S. G{\"u}nnemann, and Z. C. Lipton, ``Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift,'' in \emph{Advances in Neural Information Processing Systems 32 (NeurIPS 2019)}, 2019.
+
+\end{thebibliography}

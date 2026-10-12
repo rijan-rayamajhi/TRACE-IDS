@@ -1,4 +1,4 @@
-"""E5 — mechanism: WHY doesn't source data help? (PUBLICATION_PLAN, Step 6)
+"""E5 — mechanism: WHY doesn't source data help?
 
 E3 showed source data gives no consistent benefit over target-only across 12 pairs. Three probes:
 

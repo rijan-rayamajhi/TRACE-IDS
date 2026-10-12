@@ -1,4 +1,4 @@
-"""E1 — the decisive experiments (PUBLICATION_PLAN Step 2).
+"""E1 — the decisive experiments.
 
 For each direction (source -> target), seed, and k labeled target flows per class:
   * mode "source+k":   train on a source sample + k target flows/class  (k=0 is zero-shot)

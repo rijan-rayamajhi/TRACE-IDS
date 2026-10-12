@@ -206,7 +206,7 @@ def main():
 \usepackage{{url}}
 
 \title{{{inline(title)}}}
-\author{{Rijan Rayamajhi\\ \texttt{{rayamajhirijan5051@gmail.com}}}}  % TODO(author): add affiliation if any
+\author{{Rijan Rayamajhi\\ Independent Researcher\\ \texttt{{rayamajhirijan5051@gmail.com}}\\ ORCID: \href{{https://orcid.org/0009-0007-0344-7552}}{{0009-0007-0344-7552}}}}
 \date{{}}
 
 \begin{{document}}

@@ -7,3 +7,7 @@ __pycache__/
 .ipynb_checkpoints/
 results/*
 !results/.gitkeep
+
+# local build artefacts
+paper/phase7_latex/arxiv_upload.zip
+.DS_Store

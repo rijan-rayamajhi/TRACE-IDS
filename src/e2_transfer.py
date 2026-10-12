@@ -1,4 +1,4 @@
-"""E2 — is "source adds nothing" just a weak-baseline artifact? (PUBLICATION_PLAN, RQ2 robustness)
+"""E2 — is "source adds nothing" just a weak-baseline artifact?
 
 E1 showed pooled source+k ~= target-only for a Random Forest. A reviewer will say pooling is a weak
 way to use source data. E2 gives the source every reasonable chance: 3 model families x 4 methods.

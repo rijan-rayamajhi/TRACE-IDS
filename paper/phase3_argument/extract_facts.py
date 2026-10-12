@@ -1,4 +1,4 @@
-"""Print every number the paper uses, read from results/ (GUARDRAILS B1). Writes facts.md next to this file.
+"""Print every number the paper uses, read from results/. Writes facts.md next to this file.
 
     .venv/bin/python paper/phase3_argument/extract_facts.py
 """

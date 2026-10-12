@@ -10,7 +10,7 @@ keep the ~47 flow-statistic features and the binary Label, and save a unified pa
     python src/data_loader.py demo        # self-check, no real data
 
 CIC is subsampled (frac below) because it has ~20M rows. Scaling is deferred to the train split
-(baseline.py), so nothing is normalized here.
+(src/common.py, per experiment), so nothing is normalized here.
 """
 from __future__ import annotations
 import sys
