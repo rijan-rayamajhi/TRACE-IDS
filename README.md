@@ -143,3 +143,7 @@ beyond a small MLP. A cross-dataset result on public testbeds is not a claim abo
 ## Contact
 
 Rijan Rayamajhi · rayamajhirijan5051@gmail.com · ORCID [0009-0007-0344-7552](https://orcid.org/0009-0007-0344-7552)
+
+## License
+
+Code: [MIT](LICENSE). The paper itself is distributed by Preprints.org under CC BY 4.0.
